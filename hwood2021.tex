@@ -5,6 +5,7 @@
 %\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
 \usepackage[breaklinks=true, colorlinks=true, linkcolor=red, urlcolor=blue, citecolor=black]{hyperref}
 \urlstyle{rm}
+\usepackage{amsmath}
 \usepackage{mathptmx}
 \usepackage{graphicx}
 \usepackage{amssymb}
@@ -15,6 +16,9 @@
 \usepackage{booktabs}
 \usepackage[font=small,labelfont=bf]{caption}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep}
+\setlist[enumerate]{noitemsep}
 
 \def\bfr{\bf\color{red}}
 \def\geohub{{\tt geohub}}
@@ -22,6 +26,7 @@
 \def\ntracts{39}
 \def\nprof{8}
 \def\nvol{31}
+\def\resp{respectively}
 
 \title{\bf
 	Results of the 2021 Volunteer Greater Hollywood Homeless Count
@@ -92,71 +97,102 @@ Census tracts.
 \section{Methodology}
 \label{sec:procedure}
 
-Our \Count\ adhered as closely as possible to the official LHASA 2020 PIT data collection and 
-analysis protocols. The event took place on 25 February 2021 beginning at 7.00 PM. This date and time
-correspond to roughly one month after and four hours earlier than the official event would have occurred. 
-Ancillary data in other census tracts suggests that the date offset is unlikely to substantially erode 
-comparability between this and past datasets, though {\bfr what can we say about time of day effects}.
+Our \Count\ took place on 25 February 2021 beginning at 7.00 PM. This date and time correspond to 
+roughly one month later and four hours earlier than the official event would have occurred. Beyond
+those choices, our program adhered as closely as possible to the official LHASA 2020 PIT data 
+collection and analysis protocols. Ancillary data from regularly monitored census tracts suggests 
+that the date offset is unlikely to substantially erode comparability between this and past datasets, 
+though {\bfr we have less purchase on time-of-day effects}.
 
-The \Count\ was based out of {\it The Center at Blessed Sacrament} (``The Center''), a major service 
+The \Count\ was based out of The Center at Blessed Sacrament (``The Center''), a major service 
 provider in Hollywood. All volunteer teams launched from and returned to this location as they would 
-in previous years to a LHASA community counting hub. The major difference was that training was 
-performed remotely as a COVID precaution.
+in previous years to a LAHSA community count hub. The major difference was that training was 
+performed remotely as a COVID precaution, and volunteer counters never left their vehicles.
 
 \subsection{Data Acquisition}
 \label{sec:acquisition}
 
 The \Count\ covered the \ntracts\ US Census tracts constituting the LAHSA-defined Hollywood 
-and East Hollywood Continua of Care (CoC). As such, our results are integrable at the tract, CoC, 
-and Greater Hollywood community levels. The Appendix presents tract-level tallies and raw
+(21 tracts) and East Hollywood (18) Continua of Care (CoC). Our \Count\ did not recognize census 
+tract ``splits'' or sub-tracts---e.g., ``1905.10a''---which sets a coarser resolution floor to our results 
+compared to past PIT results. Beyond that, the only effect of that choice is to slightly modify of the 
+definition of the Hollywood CoC to include all of tract 1905.10 as opposed to only the ``a'' sub-tract. 
+This modification has a negligible effect on CoC-level results: since 2016, split 1905.10b has never been 
+observed to host more than 7 unsheltered people. The Appendix presents tract-level tallies and raw 
 individual/dwelling counts while the main text discusses CoC-level results. Greater Hollywood 
-results are available but not directly comparable to any official service geography and therefore
-serve a descriptive purpose only.
+results are available but serve only illustrative purposes as they are not directly comparable to any 
+official service geography. Figure \ref{fig:map} shows the \Count\ footprint.
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.9\linewidth]{map}
+	\caption{The 2021 volunteer \Count\ covered Greater Hollywood, comprising the 
+			officially recognized LAHSA Hollywood and East Hollywood Continua
+			of Care. The former stretches from Laurel Canyon Blvd to Western Ave,
+			the latter from Western to Hoover Ave. Hollywood is bounded to the north
+			and south respectively by Franklin	and Melrose Aves, with East Hollywood
+			bounded by Hollywood Blvd and Beverly Ave. Hollywood comprises
+			21 census tracts; East Hollywood 18. The grey lines above show census 
+			sub-tracts used by LAHSA but ignored in this \Count.}
+	\label{fig:map}	
+\end{figure*}
 
 All tracts were vetted by professionals from {\it The Center} prior to assignment. Tracts deemed 
-especially challenging---e.g., due to their proximity to freeway onramps and peripheries---were 
+especially challenging---due, e.g., to their proximity to freeway onramps and peripheries---were 
 reserved for professional counting teams. Vetting produced \nprof\ such tracts, which were surveyed 
-by outreach personnel from {\it The Center} and {\it Covenant Hous} during daylight hours on 25 
+by outreach personnel from The Center and Covenant House during daylight hours on 25 
 February (circa {\bfr XXX PM}). The remaining \nvol\ tracts were divided among the volunteer 
-car-based teams and surveyed beginning at 7.00 PM. Table \ref{tbl:tracts} records which kind of team 
-surveyed each tract.
+vehicle-based teams and surveyed beginning at 7.00 PM. Table \ref{tbl:tracts} records which tract
+was counted by which kind of team.
 
-We recruited XXX teams of at least two people YYY of which participated in the \Count\ itself. We 
-limited participation to existing``pods'' of two to three people---typically families---to ensure that the 
+We recruited XXX teams of at least two people, YYY of which participated in the \Count\ itself. We 
+limited participation to existing ``pods'' of two to three people---typically families---to ensure that the 
 COVID status of each participant was controlled and the possibility of transmission minimized. 
 Singlet volunteers were also admitted but remained on-site to assist with material distribution, 
-collection, and data quality control processes. All participants wore proper personal protective 
+collection, and data quality control processes. All participants wore personal protective 
 equipment and maintained social distancing when appropriate.
 
-Each car-based volunteer team comprised at least a Driver and a Counter and was assigned two tracts 
+Each vehicle-based volunteer team comprised at least a Driver and a Counter and was assigned two tracts 
 to count. Three-person teams also included a Navigator per 2020 LAHSA PIT protocols. In such teams, 
 the Navigator held the map and directed the Driver while the Counter tallied unhoused individuals/dwellings 
 and the Driver drove. In two-person teams, the Counter doubled as the Navigator. Training emphasized 
-driving techniques aimed at reducing the Counters' cognitive loads and so minimize counting errors. 
+techniques aimed at reducing the Counters' cognitive loads and so minimize counting errors. 
 These included driving slowly using hazard lights and covering interior streets in a serpentine pattern 
 before circling the tract border. Teams were instructed to count both sides of interior streets but only
 interior sides of border streets.
 
-Upon arriving at {\it The Center}, organizers gave each team a clipboard with:
-\begin{enumerate}
+Upon arriving at The Center, organizers gave each team a clipboard with:
+\begin{itemize}
 	\item tract maps;
 	\item tally sheets;
-	\item a 1-page primer summarizing their training with a contact number for issues when deployed.
-\end{enumerate}
+	\item a 1-page primer summarizing the training with a contact number for in-field issues.
+\end{itemize}
 Examples of each of the above documents are included in the Appendix.
 
-The tally sheets were the most important data acquisition tool. They contained separate columns for
+The tally sheets were the most important data acquisition tool. These contained separate columns for
 each of the nine categories of unhoused individuals or dwellings recognized in the 2020 LAHSA PIT
-count: adults (ages $\geq$25),  transition age youths (18--24), unaccompanied minors, families 
-(at least one adult with at least one minor), cars, vans, RVs, tents, and makeshift structures (CVRTM). 
+count: 
+\begin{enumerate}
+	\item adults (ages $\geq$25);
+	\item transition age youths (18--24);
+	\item unaccompanied minors;
+	\item families (at least one adult with at least one minor); 
+	\item cars;
+	\item vans;
+	\item RVs;
+	\item tents;
+	\item makeshift structures.
+\end{enumerate}
+The dwelling classes---Items 5--9---are treated differently than the individual classes in the analysis,
+and are hereafter referred to by their acronym ``CVRTM'' when appropriate. 
 
 All teams were deployed to their tracts by {\bfr XXX PM} and returned by {\bfr YYY PM}.
 
 Upon returning, organizers approached each team with a tablet or laptop computer. Counters 
-then verbally read-off their results for each category to the organizer, who entered the results into a 
-google form/spreadsheet. Volunteer emails were also retained in case follow-up was necessry. The 
-organizer read back the results for confirmation before recovering all materials---including hand-written 
-tallies---from the volunteers.
+verbally read-off their results for each category as organizers entered them into a google 
+form/spreadsheet. The organizer read back the results for confirmation before recovering all 
+materials---including hand-written tallies---from the volunteers. Volunteer email addresses 
+were also retained for follow-up. 
 
 Once all materials were collected, the organizers convened to cross-check the electronic records
 with the physical tally sheets and identify any uncounted areas. {\bfr Follow-up teams were then 
@@ -175,17 +211,16 @@ for the \Count. Each participant was also required to watch the official 2020 LA
 and sign participation waivers.
 
 The training covered the motivation for the \Count, an overview of the survey geography (the CoCs), 
-the duties of the various team roles, and descriptions of the classes of unhoused individuals/dwellings,
-including photographic examples of the latter. Volunteers were instructed to count dwellings and 
-individuals separately and not to try to estimate how many people might live in or be associated with a 
-specific dwelling. This ensured that final results could be analyzed as a function of CVRTM weights, 
-which may change with future information (see Section \ref{sec:analysis}).
+team roles, and descriptions of the classes of unhoused individuals/dwellings, including photographic 
+examples. Volunteers were instructed to count CVRTM and individuals separately and not to try to 
+estimate how many people might live in or be associated with a specific dwelling. This ensured that 
+final results could be analyzed as a function of the CVRTM weights, which may change with future 
+information (see Section \ref{sec:analysis}).
 
-The only ``priming'' volunteers received pertained to the min/max estimate of tract-level 
-individual+dwelling counts (``0--120'') and the likelihood of encountering unaccompanied minors or 
-families (``very unlikely''). Both statements were informed by the official 2020 LAHSA PIT results
-for the Greater Hollywood community. No other prior count-based information was established to 
-minimize counter biases.
+Volunteers were primed only with min/max estimates of tract-level individual+dwelling counts 
+(``0--120'') and the likelihood of encountering unaccompanied minors or families (``very unlikely''). 
+Both statements were informed by the 2020 LAHSA PIT results for the Greater Hollywood 
+community. No other prior count-based information was established to minimize biases.
 
 A recording of a volunteer training session is available at {\bfr WEBSITE}.
 
@@ -193,71 +228,68 @@ A recording of a volunteer training session is available at {\bfr WEBSITE}.
 \label{sec:analysis}
 
 The core component of the raw data was a 9 column by $N_{\rm team}$ row spreadsheet containing the
-tract-level tallies for each unhoused individual/dwelling class. The scheme of the analysis is simple:
+tract-level tallies for each unhoused individual/dwelling class. The scheme of the analysis is:
 \begin{enumerate}
 	\item parse and associate tracts with CoCs;
 	\item identify tracts counted by multiple teams;
 	\item assess tract-level counting errors;
-	\item upweight the CVRTM values by the 2020 LAHSA SPA4 CVRTM weights.
+	\item upweight the CVRTM values by estimates of the CVRTM weights.
 \end{enumerate}
+
+Our baseline result incorporates the 2020 SPA-4 estimates of the CVRTM weights provided
+by LAHSA. These are the best available data, but we recognize that COVID-related activities 
+may have significantly changed these quantities. For example, various organizations are know to
+have made a concerted effort to distribute tents between last year's PIT count and ours. We 
+incorporate all known uncertainties in the weights, but---since they represent potential systematic 
+errors---{\bfr analyze the impact of various CVRTM choices in Section \ref{sec:discussion}.}
+
 The resultant $9\times39$ array can then be split and summed to provide CoC-level total counts, 
-or breakdowns of the various classes of unhoused individuals dwellings. {\it These results will
-correspond to the most likely values for the respective quantities in any geography.} However,
-three uncertainties---one small and two large---complicate the interpretation of those sums. 
-We discuss these in Section \ref{sec:discussion}, but account for them as best we can using 
-Monte Carlo techniques to construct the full underlying probability distribution functions (PDFs) 
-for each class in each tract.
+or breakdowns of unsheltered individual/dwelling classes.
 
-All results discussed below derive from 10,000 Monte Carlo realizations of Item (5), above.
+While an estimate of the underlying population, uncertainties in each visual count and weight 
+must be accounted for to understand how confident one can be that that estimate corresponds to
+the truth. We accomplish this by using Monte Carlo integration to construct the full probability
+distribution functions (PDFs) for the number of unsheltered people of each class in each tract.
 
+% {\it These results will
+%correspond to the most likely values for the respective quantities in any geography.} However,
+%three uncertainties---one small and two large---complicate the interpretation of those sums. 
+%We discuss these in Section \ref{sec:discussion}, but account for them as best we can using 
+%Monte Carlo techniques to construct the full underlying probability distribution functions (PDFs) 
+%for each class in each tract.
+%
+%All results discussed below derive from 10,000 Monte Carlo realizations of Item (5), above.
+%
 
-\subsubsection{Monte Carlo Estimations of Unhoused Probability Densities}
+\subsubsection{Monte Carlo Estimations of Unsheltered Probability Densities}
 \label{sec:mc}
 
-The point-in-time (PIT) data obtained by the Counters represent a draw from the underlying probability
-distribution describing how many people are actually experiencing homelessness in a given tract. We have
-only the PIT counts, but seek the actual number. We can estimate that as long as we have a model for
-the intrinsic uncertainties in the PIT counts and demographic CVRTM weights. We have---or can 
-model---both of these uncertainties, and can therefore reconstruct the full probability distribution 
-functions (PDFs) using Monte Carlo sampling.
+Our analysis accounts for two known sources of uncertainty: Poisson counting errors in the visual
+tallies and estimated random variances in the CVRTM weights. The former represents how a given
+tally might change if performed at a different (but comparable) time or by a different Counter. The 
+latter represents how the mean occupancy of CVRTM structures in Hollywood might differ from
+the mean occupancy in SPA-4 writ large. 
 
-Here, Monte Carlo sampling is simply the process of randomly generating 10,000 alternate versions of
-the PIT estimates that reflect what might happen if the count was conducted on a different day or by
-a different counter. If you know how a quantity is expected to change from one measurement to another,
-independien 
+We model both uncertainties as Gaussian distributions with standard deviations of 
+$\sqrt{n}$ and $\sigma$, \resp, where $n$ is the raw tally and $\sigma$ is the standard error on the 
+mean quoted by LAHSA. As such, the $i$-th estimate of the true number, $N$, of people 
+in the $j$-th unsheltered class in any tract is:
+\begin{multline}\label{eq:monte}
+	N_{i,j} = \left[n_{j} + \mathcal{G}_{i}(0,\sqrt{n_{j}})\right]\times\max[\mathcal{G}_{i}(w_{j}, \sigma_{j}),1],
+\end{multline}
+where $\mathcal{G}(\mu,\Sigma)$ is a Gaussian random number with mean $\mu$ and standard deviation 
+$\Sigma$, $w$ is the 2020 LAHSA CVRTM weight for the appropriate unsheltered class. If more than
+one team counted a given tract, $n$ is replaced by the average of their tallies and the attendant counting
+error is divided by $\sqrt{n_{\rm teams}}$.
 
-In all cases, baseline Poisson counting uncertainties exist in the raw counts. That is, if $n$ adults were 
-Counted by one team in a given tract, the best guess is that the true number of unhoused adults 
-in that tract falls between $n\pm\sqrt{n}$ about $2/3$ of the time. We therefore translate each raw 
-count into 10,000 simulated counts where each entry refleby a Gaussian random number with standard deviation $\sqrt{n}$ 10,000
-to all raw counts to simulate what we could expect to 
+The final output PDFs are constructed from 10,000 random realizations of Equation \ref{eq:monte}. 
+For the individual classes---including families---all weights are 
+fixed to unity, such that $(w,\sigma)\equiv(1,0)$ for all trials and uncertainties reflect only 
+counting errors.
 
-In the case of the CVRTM elements, these samplings incorporated both Poisson counting 
-errors in the raw counts (random errors) and uncertainties in the CVRTM weights (systematic errors). 
-In the case of the individual categories, only the Poison counting errors were propagated.
-
-Explicitly, the $i$th estimate for the number of people in the $j$-th class of unsheltered person in any
-tract is:
-
-\begin{equation}\label{eq:monte}
-	N_{i,j} = \left[n_{j} + \mathcal{N}(0,\sqrt{n_{j}})\right]\times\mathcal{N}(w_{j}, \sigma_{j})
-\end{equation}
-where $i$ runs form 1 to 10,1000, $n$ is the raw visual inspection result, $N(\mu,\Sigma)$ is a 
-Gaussian random number with mean $\mu$ and standard deviation $\Sigma$, $w$ is the 2020 
-LAHSA CVRTM weight for the appropriate class, and $\sigma$ is related to the standard error on that 
-weight. For the individual classes---including families---$(w,\sigma)\equiv(1,0)$; i.e., weights were simply 
-set to unity for all 10,000 trials.
-
-Equation \ref{eq:monte} entails an assumption that the CVRTM weights, $w$, are normally distributed 
-about their quoted values. If we had access to their full probability distribution of the CVRTM weights, we 
-would not need to make this assumption. But, given that we did not have access to those distributions, $\sigma$
-was calculated by assuming the quoted CVRTM weight was the maximum likelihood value, with a 95\%
-
-The outcome is the equivalent of 10,000 $N_{\rm class}\times N_{\rm tract}$ arrays, each containing a different
-point estimate for the size of the $i$th classes' population in the $j$th tract. Summing across trials thus
-yields probability distributions that $N$ people of any class are dwelling in any tract.
-
-{\bfr BASELINE BACKGROUND UNCERTAINTIES}
+We place a floor on the CVRTM mean occupancies at 1 person per dwelling; i.e., we assume that the average
+person does not own more than one tent. This is not to say no one may own more than one tent, just that
+such a statement is never representative. {\bfr Relaxing this assumption does what?} 
 
 \subsection{Duplicate Measurements}
 \label{sec:dupes}
