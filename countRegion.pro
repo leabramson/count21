@@ -75,8 +75,9 @@ pro countRegion, datafile, niter, $
   ;; The error on N_tot, however, is like 2-4x sqrt(N_tot),
   ;; so one could assume the 95% limit is "1" standard error on the mean...
   ;; I dunno; I'll default 2 for now.
+  stderrs = [0.11, 0.22, 0.15, 0.06, 0.16] ;; LAHSA 2020 SPA4
   if NOT keyword_set(wtTargets) then $
-     wtTargets = peaks + 2*[0.11, 0.22, 0.15, 0.06, 0.16]
+     wtTargets = peaks + 2*stderrs
 
   ;; Read in count data and find unique tracts and Ncounters
   data = mrdfits(dataFile, 1)
@@ -90,29 +91,35 @@ pro countRegion, datafile, niter, $
   
   ;; Generate the PDFs on the weights
   pplPer = findgen(1001)/200.
-
-  carSig = findSig(pplPer, peaks[0], 0.05, 1.0, $
-                   nsteps = 200, $
-                   cutoff = 1, $
-                   target = wtTargets[0])
-  vanSig = findSig(pplPer, peaks[1], 0.05, 1.0, $
-                   nsteps = 200, $
-                   cutoff = 1, $
-                   target = wtTargets[1])
-  rvSig = findSig(pplPer, peaks[2], 0.05, 1.0, $
-                  nsteps = 200, $
-                  cutoff = 1, $
-                  target = wtTargets[2])
-  tentSig = findSig(pplPer, peaks[3], 0.01, 1.0, $
-                    nsteps = 2000, $
-                    cutoff = 1, $
-                    target = wtTargets[3])
-  makeSig = findSig(pplPer,  peaks[4], 0.05, 1.0, $
-                    nsteps = 200, $
-                    cutoff = 1, $
-                    target = wtTargets[4])
-
-  print, carSig, vanSig, rvSig, tentSig, makeSig
+  
+  carSig  = stderrs[0]
+  vanSig  = stderrs[1]
+  rvSig   = stderrs[2]
+  tentSig = stderrs[3]
+  makeSig = stderrs[4]
+  
+;  carSig = findSig(pplPer, peaks[0], 0.05, 1.0, $
+;                   nsteps = 200, $
+;                   cutoff = 1, $
+;                   target = wtTargets[0])
+;  vanSig = findSig(pplPer, peaks[1], 0.05, 1.0, $
+;                   nsteps = 200, $
+;                   cutoff = 1, $
+;                   target = wtTargets[1])
+;  rvSig = findSig(pplPer, peaks[2], 0.05, 1.0, $
+;                  nsteps = 200, $
+;                  cutoff = 1, $
+;                  target = wtTargets[2])
+;  tentSig = findSig(pplPer, peaks[3], 0.01, 1.0, $
+;                    nsteps = 2000, $
+;                    cutoff = 1, $
+;                    target = wtTargets[3])
+;  makeSig = findSig(pplPer,  peaks[4], 0.05, 1.0, $
+;                    nsteps = 200, $
+;                    cutoff = 1, $
+;                    target = wtTargets[4])
+;
+;  print, carSig, vanSig, rvSig, tentSig, makeSig
 
   ;; Draw niter realizations for the weights from the PDFs
   carPDF  = genFunc(pplPer, peaks[0], carSig, 1) ;; 2020 wts = maxLike
