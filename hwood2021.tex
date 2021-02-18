@@ -1,0 +1,253 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage[breaklinks=true, colorlinks=true, linkcolor=red, urlcolor=blue, citecolor=black]{hyperref}
+\urlstyle{rm}
+\usepackage{mathptmx}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage{sidecap}
+\usepackage{authblk}
+\usepackage{booktabs}
+\usepackage[font=small,labelfont=bf]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\def\bfr{\bf\color{red}}
+\def\geohub{{\tt geohub}}
+\def\Count{count}
+\def\ntracts{39}
+\def\nprof{7}
+\def\nvol{32}
+
+\title{\bf
+	Results of the 2021 All-Volunteer Greater Hollywood Homeless Count
+	}
+\author[*,$\dagger$,$\ddagger$]{Louis Abramson, PhD}%,$\ddagger$
+\affil[*]{\it Hollywood 4WRD Homelessness Coalition}
+\affil[$\dagger$]{\it Central Hollywood Neighborhood Council}
+\affil[$\ddagger$]{\it Observatories of the Carnegie Institution for Science}%, 813 Santa Barbara St, Pasadena, CA 91101}
+\affil[ ]{\href{mailto:labramson.chnc@gmail.com}{labramson.chnc@gmail.com}}
+%\affil[$\dagger$]{\it Princeton University, 4 Ivy Lane, Princeton, NJ 08544}
+%\affil[$\dagger$]{\it Central Hollywood Neighborhood Council, 6501 Fountain Ave, Los Angeles, CA 90028
+%\href{mailto:labramson.chnc@gmail.com}{labramson.chnc@gmail.com}}
+
+\date{\today}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+The Los Angeles Homelessness Services Authority (LAHSA) has conducted an annual Point In Time PIT) 
+census of the unhoused population of Los Angeles every year since XXX. These data are critical to essentially
+all other homelessness-related activities in both the County and City of LA. They inform funding levels, 
+educate residents, undergird local and state legislative efforts, and shape the day-to-day practices of professional
+and volunteer service providers alike. As the official assessment of the size of one of the most pressing 
+humanitarian issues of our time, the LAHSA Count is simply invaluable.
+
+Disruptions from COVID-19 have only further emphasized the need for good data. As incomes fluctuated,
+many of Los Angeles' already sizable population of housing-unstable residents may have been pushed off
+couches or out of apartments and onto the street. As such, while the epidemiological considerations of 
+an all-volunteer, county-wide count are real, the damage from failing to obtain an estimate of the change
+in homelessness from 2020---before such disruptions occurred---are not to be diminished.
+
+Given the size and non-uniformity in volunteerism and resources across LAHSA's area of operations, 
+the challenges of COVID were ultimately deemed sufficient to cancel the formal 2021 PIT census of 
+unsheltered Angelenos. However, not all communities agreed with this decision, and many had the resources
+to execute a robust---if unsponsored---survey on their own. Hollywood is one such community.
+
+Greater Hollywood is one of the epicenters of Los Angeles's homelessness crisis. According to the 2020 
+Count, the Hollywood and East Hollywood Continua of Care (CoC) were home to 2203 unhoused residents,
+1714 of whom (78\%) were living unsheltered on the street. This corresponds to roughly 5\% of LA's total 
+homeless population concentrated in an area with just 2.5\% ({\bfr CITE}) of its total
+population. In some regions within those CoCs, fully 1-in-30 residents are unhoused compared to 1-in-100
+citywide.
+
+While the above statistics are tragic, Hollywood is also marked by its substantial community of professional
+and volunteer service providers, solutions-minded businesses, and attuned political leaders. Increasingly
+formal coalitions of the above have spread across the district, dedicated to humanely reducing the numbers 
+just quoted. All of the above stakeholders rely on the annual PIT count for educational, financial, and 
+programmatic purposes. When communicating with the public, the starting point for many conversations
+is simply stating the size of the challenge. When communicating with funders, it is similarly critical to convey
+how many people require services. When designing legislation---especially given the shock of 
+COVID-19 and in the face of looming court proceedings---knowing how many unhoused Angelenos live
+where is foundational. For these reasons, various organizations and individuals in Hollywood decided to 
+with a 2021 Homeless \Count irrespective of other governmental decisions.
+
+This document describes the methodology and findings of that \Count, conducted on the night of 
+Thursday, February 25. Below, Section \ref{sec:procedure} describes the volunteer data acquisition, 
+analysis, and training protocols. Section \ref{sec:results} present estimates of the unsheltered 
+population in the Hollywood, East Hollywood, and Greater Hollywood CoCs. Section \ref{sec:discussion}
+contextualizes those findings in terms of previous LAHSA results and describes factors that would
+modulate them upwards or downwards. Section \ref{sec:summary} summarizes. Additional information
+can be found in the Appendix, including a table of tract-level results in each of the survey's 39 US 
+Census tracts.
+
+\section{Methodology}
+\label{sec:procedure}
+
+The 2021 Greater Hollywood All-Volunteer Homeless Enumeration adhered as closely as possible to the
+official LHASA 2020 Point In Time count in both data collection and analysis. Below, I discuss these 
+phases separately.
+
+\subsection{Data Acquisition}
+\label{sec:acquisition}
+
+The \Count\ covered the \ntracts\ US Census tracts in the LAHSA-defined {\it Hollywood} and 
+{\it East Hollywood} Continua of Care (CoC). Given their proximity to difficult to assess areas 
+primarily near freeways, \nprof\ of these tracts were reserved for professional teams who conducted
+visual inspections during the day. The remaining \nvol\ tracts were divvied up among the 
+volunteer car-based teams and surveyed at night. Table \ref{tbl:tracts} presents each tract's
+classification.
+
+Results were therefore integrable at the tract, CoC, and Greater Hollywood levels.
+
+Volunteers were recruited using the {\it Eventbrite} website. XXX teams of at least
+2 people signed-up, with YYY showing up for the \Count\ itself. 
+
+Each volunteer team of 2 people comprised a Driver and a Counter. Teams of 3 additionally included
+a Navigator. In the latter case, the Navigator was responsible for instructing the Driver where to turn
+to stay on-tract, the Counter visually inspected surroundings to tally unhoused individuals and dwellings,
+and the Driver drove. In 2-person teams, the Counter doubled as the Navigator. 
+
+The \Count\ was based at {\it The Center at Blessed Sacrament} (6636 Selma Ave, Hollywood,
+CA 90038), a major service provider in Hollywood, where volunteer teams launched from and returned
+to.
+
+Teams were assigned 2 tracts each. Upon arriving at {\it The Center}, organizers 
+gave each team a clipboard with:
+\begin{enumerate}
+	\item tract maps;
+	\item tally sheets;
+	\item a 1-page primer summarizing their training with a contact number for issues when deployed.
+\end{enumerate}
+Examples of each of the above documents are included in the Appendix.
+
+Teams were then deployed to their respective tracts. Departures ran from {\bfr XXX PM} 
+to {\bfr YYY PM}. Teams returned to {\it The Center} after their counts between {\bfr ZZZ PM} and 
+{\bfr AAA PM}.
+
+In the field, teams were instructed to drive the tract interiors in a serpentine fashion if possible before
+making a final pass of their border streets. All teams were instructed only to examine the interior sides
+of tract borders. Teams were instructed to drive slowly, using hazard lights if necessary to give counters
+adequate time to inspect both sides of the street.
+
+Upon returning, organizers greeted each team with a tablet or laptop computer. Counters verbally 
+read-off their tallies to the organizer, who entered the results into a google
+form so it could be stored electronically along with the email of the volunteer for any follow-up. The 
+organizer read back the results and resolved any interpretation errors before recovering all 
+materials---including hand-written tallies---from the volunteers.
+
+After all materials had been collected, the organizers convened to cross-check the electronic records
+with the physical tally sheets. At this point, comments were also examined and any uncounted streets
+noted. {\bfr Teams were then dispatched to count any uncounted areas, with tallies manually added
+to the appropriate tract. This occurred in only XXX instances.} 
+
+{\bfr Given that the number of volunteer teams exceeded the number of available tracts, a
+subset of randomly selected tracts were chosen to be counted twice. These duplicate measurments are 
+discussed in Sections \ref{sec:dupes} and \ref{sec:discussion}.}
+
+\subsubsection{Volunteer Training}
+
+Teams underwent mandatory Zoom-based training sessions lasting approximately 30 minutes
+before arriving at the count. All volunteers
+were also required to watch the official 2020 LAHSA count training video, and sign participation waivers.
+
+The training covered the motivation for performing a \Count\ of unsheltered people experiencing
+homelessness, an overview of the survey geography (the CoCs), the duties of the various roles,
+descriptions of the classes of unhoused individuals---``Adult,'' ``Transition Age Youth,'' 
+``Unaccompanied Minors,'' ``Families''---and dwellings---cars, vans, RVs, tents, and makeshift structures
+(CVRTM).
+Photos of examples of the latter were also included. Volunteers were instructed to
+count dwellings and individuals separately and not to try to guess how many people might live
+in or be associated with a specific dwelling. This ensured that final results could be analyzed as a 
+function of the CVRTM weights, which may change with future information (see Section 
+\ref{sec:analysis}).
+
+A recording of a volunteer training session is available at {\bfr WEBSITE}.
+
+\subsection{Data Analysis}
+\label{sec:analysis}
+
+The spreadsheet of raw count data was downloaded from the internet before passing it through a number
+of programs (written in IDL) to:
+\begin{enumerate}
+	\item parse and associate tracts with CoCs;
+	\item identify tracts counted by multiple teams;
+	\item assess tract-level counting errors;
+	\item upweight the CVRTM values by the 2020 LAHSA SPA4 CVRTM weights;
+	\item construct a Monte Carlo estimate of the underlying probability distributions
+		for the number of unhoused people of a given class/in a given dwelling type
+		in each census tract.
+\end{enumerate}
+All results quoted below derive from the 10,000 Monte Carlo samplings of Item (5).
+
+\subsubsection{Monte Carlo Estimations of Unhoused Probability Densities}
+\label{sec:mc}
+
+The point-in-time (PIT) data obtained by the Counters represent a draw from the underlying probability
+distribution describing how many people are actually experiencing homelessness in a given tract. We have
+only the PIT counts, but seek the actual number. We can estimate that as long as we have a model for
+the intrinsic uncertainties in the PIT counts and demographic CVRTM weights. We have---or can 
+model---both of these uncertainties, and can therefore reconstruct the full probability distribution 
+functions (PDFs) using Monte Carlo sampling.
+
+Here, Monte Carlo sampling is simply the process of randomly generating 10,000 alternate versions of
+the PIT estimates that reflect what might happen if the count was conducted on a different day or by
+a different counter. If you know how a quantity is expected to change from one measurement to another,
+independien 
+
+In all cases, baseline Poisson counting uncertainties exist in the raw counts. That is, if $n$ adults were 
+Counted by one team in a given tract, the best guess is that the true number of unhoused adults 
+in that tract falls between $n\pm\sqrt{n}$ about $2/3$ of the time. We therefore translate each raw 
+count into 10,000 simulated counts where each entry refleby a Gaussian random number with standard deviation $\sqrt{n}$ 10,000
+to all raw counts to simulate what we could expect to 
+
+In the case of the CVRTM elements, these samplings incorporated both Poisson counting 
+errors in the raw counts (random errors) and uncertainties in the CVRTM weights (systematic errors). 
+In the case of the individual categories, only the Poison counting errors were propagated.
+
+Explicitly, the $i$th estimate for the number of people in the $j$-th class of unsheltered person in any
+tract is:
+
+\begin{equation}\label{eq:monte}
+	N_{i,j} = \left[n_{j} + \mathcal{N}(0,\sqrt{n_{j}})\right]\times\mathcal{N}(w_{j}, \sigma_{j})
+\end{equation}
+where $i$ runs form 1 to 10,1000, $n$ is the raw visual inspection result, $N(\mu,\Sigma)$ is a 
+Gaussian random number with mean $\mu$ and standard deviation $\Sigma$, $w$ is the 2020 
+LAHSA CVRTM weight for the appropriate class, and $\sigma$ is related to the standard error on that 
+weight. For the individual classes---including families---$(w,\sigma)\equiv(1,0)$; i.e., weights were simply 
+set to unity for all 10,000 trials.
+
+Equation \ref{eq:monte} entails an assumption that the CVRTM weights, $w$, are normally distributed 
+about their quoted values. If we had access to their full probability distribution of the CVRTM weights, we 
+would not need to make this assumption. But, given that we did not have access to those distributions, $\sigma$
+was calculated by assuming the quoted CVRTM weight was the maximum likelihood value, with a 95\%
+
+The outcome is the equivalent of 10,000 $N_{\rm class}\times N_{\rm tract}$ arrays, each containing a different
+point estimate for the size of the $i$th classes' population in the $j$th tract. Summing across trials thus
+yields probability distributions that $N$ people of any class are dwelling in any tract.
+
+{\bfr BASELINE BACKGROUND UNCERTAINTIES}
+
+\subsection{Duplicate Measurements}
+\label{sec:dupes}
+
+\section{Results}
+\label{sec:results}
+
+\section{Discussion}
+\label{sec:discussion}
+
+
+
+\end{document}  
