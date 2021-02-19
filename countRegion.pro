@@ -174,7 +174,7 @@ pro countRegion, datafile, niter, $
   ;; Establish a base error rate by distributing all raw counts evenly
   ;; over the entire region, but ceil it to 1 since we're
   ;; pretty good at identifying structures as opposed to ppl.
-  bkgRates = (sqrt(total(input, 2) / n_elements(input[0,*]))) < 1
+  bkgRates = (sqrt(total(input, 2) / n_elements(input[0,*]))); < 1
   bkgRates[where(bkgRates eq 0)] = min(bkgRates[where(bkgRates gt 0)])
 
   ;; Count, looping over unique tracts and averaging where
