@@ -59,16 +59,18 @@ end
 
 pro countAll, datafile, niter, $
               output = output, $
-              wtTargets = wtTargets
+              wtTargets = wtTargets, $ ;; DEPRECATED
+              Peaks = Peaks
 
   ;; SPA 4 CVRTM weights & Stats
   ;; https://www.lahsa.org/documents?id=4693-2020-greater-los-angeles-homeless-count-cvrtm-conversion-factors
-  peaks = [1.38,1.68,1.32,1.45,1.64] ;; 2020 SPA 4
+  if NOT keyword_set(PEAKS) then $
+     peaks = [1.38,1.68,1.32,1.45,1.64] ;; 2020 SPA 4
 ;  peaks = [1.10,1.16,1.74,1.40,1.22] ;; 2020 CD13
   nobj  = [521., 694., 735., 2126., 1235.]
   nppl  = [674., 1117., 930., 3050., 1990.]
   se    = [50., 141., 102., 122., 190.]
-
+  
   ;; Standard errors on the means
   ;; They seem to find the weight by N_tot/N_obj, and then use the
   ;; "standard error" on N_tot to define the error on the weight.
@@ -78,7 +80,7 @@ pro countAll, datafile, niter, $
   stderrs = [0.11, 0.22, 0.15, 0.06, 0.16] ;; 2020 SPA4
   ;; [0.47,1.08,1.26,0.84,0.93] CD 13 2020
   if NOT keyword_set(wtTargets) then $
-     wtTargets = peaks + 2*stderrs
+     wtTargets = peaks + 2 * stderrs
                   
   ;; Read in count data and find unique tracts and Ncounters
   data = mrdfits(dataFile, 1)
@@ -175,9 +177,10 @@ pro countAll, datafile, niter, $
   ;; Establish a base error rate by distributing all raw counts evenly
   ;; over the entire region, but ceil it to 1 since we're
   ;; pretty good at identifying structures as opposed to ppl.
-  bkgRates = (sqrt(total(input, 2) / n_elements(input[0,*]))) < 1
+  bkgRates = (sqrt(total(input, 2) / n_elements(input[0,*]))) ;< 1
+  stop
   bkgRates[where(bkgRates eq 0)] = min(bkgRates[where(bkgRates gt 0)])
-  
+
   ;; Count, looping over unique tracts and averaging where
   ;; mutiple counters.
   baseCounts  = fltarr(nStruct, nutracts)
@@ -637,7 +640,8 @@ pro runitRetry, csv
   data = mrdfits('2020sandbox/retry2020_hwoodOnly.fits', 1)
   hoTractLookup, data.TRACT
   countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
-            output = 'retryHwood2020Results.fits'
+            output = 'retryHwood2020Results.fits';, $
+;            peaks = [1.38,1.68,1.32,1.15,1.64]
   summarize, 'retryHwood2020Results.fits'
   makeplots, 'retryHwood2020Results.fits'
   lastyear = 0.9 * 1067
