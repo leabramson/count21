@@ -19,12 +19,12 @@ pro findNullWeights, dataFile, target
   print, f = '(%" > %3i tents")', rawTot[6]
   print, f = '(%" > %3i makeshifts")', rawTot[7]
   print, f = '(%"Past estimate .... %i\n")', target
-  
-  avgRuns = findgen((5.-0.)/0.05+1)*0.05
-  nRuns = n_elements(avgRuns)
 
   ;; Find CVRTM weights needed to get this year to equal last year
   nullOuts = fltarr(5)
+  nullFracs = fltarr(5)
+  avgRuns = findgen((5.-0.)/0.05+1)*0.05
+  nRuns = n_elements(avgRuns)
   for ii = 0, 4 do begin
      newWeights = bestWeights
      tmpTot = fltarr(nRuns)
@@ -38,11 +38,22 @@ pro findNullWeights, dataFile, target
         nullOuts[ii] = avgRuns[ind] $
      else $
         nullOuts[ii] = -1
+
+     ;; Find empty fractions
+     nonTent = newTot - (rawTot * bestWeights)[3+ii] ;; the non-tent contribution
+     noTentReach = target - nonTent                  ;; last year's total accounted for w/o this year's tents
+     nTargTents  = noTentReach / bestweights[3+ii] ;; the number of tents needed at this year's weight to reach last year's total count
+     nEmpty = rawTot[3+ii] - nTargTents            ;; number of this year's tents that have to be empty
+     nullFracs[ii] = nEmpty / rawTot[3+ii]
   endfor
-  print, f = '(%"Zero delta requires CVRTM mean occupancies of:")'
   tags = ['car', 'van', 'RV', 'tent', 'mkshft']
+  print, f = '(%"Zero delta requires CVRTM mean occupancies of:")'
   for ii = 0, n_elements(peaks) - 1 do $
      print, f = '(%" > %4.2f ppl/%s (from %4.2f)")', $
             nullOuts[ii], tags[ii], peaks[ii]
+  print, f = '(%"\nZero delta requires CVRTM unoccupied fractions of:")'
+  for ii = 0, n_elements(peaks) - 1 do $
+     print, f = '(%" > %4.2f (at %4.2f ppl/inhabited %s)")', $
+            nullFracs[ii], peaks[ii], tags[ii]
   
 end
