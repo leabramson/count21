@@ -177,8 +177,15 @@ pro countAll, datafile, niter, $
   ;; Establish a base error rate by distributing all raw counts evenly
   ;; over the entire region, but ceil it to 1 since we're
   ;; pretty good at identifying structures as opposed to ppl.
-  bkgRates = (sqrt(total(input, 2) / n_elements(input[0,*]))) ;< 1
-  stop
+  foo = fltarr(nstruct, nutracts)
+  for ii = 0, nutracts - 1 do begin
+     hit = where(tracts eq utracts[ii], nhit)
+     if nhit gt 1 then $
+        foo[*,ii] = mean(input[*,hit], dim = 2) $
+     else $
+        foo[*,ii] = input[*,hit]
+  endfor
+  bkgRates = (sqrt(total(foo, 2) / n_elements(foo[0,*]))) ;< 1
   bkgRates[where(bkgRates eq 0)] = min(bkgRates[where(bkgRates gt 0)])
 
   ;; Count, looping over unique tracts and averaging where
@@ -192,14 +199,14 @@ pro countAll, datafile, niter, $
      else $
         baseCounts[*,ii] = input[*,hit]
 
-     base                = baseCounts[*,ii] # replicate(1,niter)
-     bkg                 = bkgRates # replicate(1, niter) 
-     
-     baseErr             = (sqrt(base/nhit)>bkg) $
-                           * randomn(seed, [nStruct,niter]) ;; poisson noise, accounting for multiple counters, with the bkg Rate
+     baseErr = sqrt(baseCounts[*,ii] / nhit) ;; poison err on mean
+     baseErr[where(baseErr eq 0)] = bkgRates[where(baseErr eq 0)] ;; fill nulls w/ bkg
+     base    = baseCounts[*,ii] # replicate(1,niter)     
+     bErr    = (baseErr # replicate(1,niter)) * randomn(seed, [nStruct,niter]) ;; poisson noise, accounting for multiple counters, with the bkg Rate
+;     stop
 ;     baseErr             = (sqrt(base/nhit)>1) $
 ;                           * randomn(seed, [nStruct,niter])
-     finalCounts[*,*,ii] = ((base + baseErr) * wts)>0 ;; a draw from the underlying real distribution boosted by a draw from the weight PDF
+     finalCounts[*,*,ii] = ((base + bErr) * wts)>0 ;; a draw from the underlying real distribution boosted by a draw from the weight PDF
   endfor
 
   ;; Produce a summary file
@@ -641,7 +648,7 @@ pro runitRetry, csv
   hoTractLookup, data.TRACT
   countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
             output = 'retryHwood2020Results.fits';, $
-;            peaks = [1.38,1.68,1.32,1.15,1.64]
+;            peaks = [1.38,1.68,1.32,1.12,1.64]
   summarize, 'retryHwood2020Results.fits'
   makeplots, 'retryHwood2020Results.fits'
   lastyear = 0.9 * 1067
