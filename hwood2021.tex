@@ -281,15 +281,14 @@ the mean occupancy in SPA-4 writ large.
 
 We model both uncertainties as Gaussian distributions with standard deviations of 
 $\sqrt{n}$ and $\sigma$, \resp, where $n$ is the raw tally and $\sigma$ is the standard error on the 
-mean quoted by LAHSA. As such, the $i$-th estimate of the true number, $N$, of people 
-in the $j$-th unsheltered class in any tract is:
+respective mean CVRTM weight, $w$, quoted by LAHSA. As such, the $i$-th estimate of the true 
+number, $N$, of people in the $j$-th unsheltered class in any tract is:
 \begin{multline}\label{eq:monte}
 	N_{i,j} = \left[n_{j} + \mathcal{G}_{i}(0,\sqrt{n_{j}})\right]\times\max[\mathcal{G}_{i}(w_{j}, \sigma_{j}),1],
 \end{multline}
 where $\mathcal{G}(\mu,\Sigma)$ is a Gaussian random number with mean $\mu$ and standard deviation 
-$\Sigma$, $w$ is the 2020 LAHSA CVRTM weight for the appropriate unsheltered class. If more than
-one team counted a given tract, $n$ is replaced by the average of their tallies and the attendant counting
-error is divided by $\sqrt{n_{\rm teams}}$.
+$\Sigma$. If more than one team counted a given tract, $n$ is replaced by the average of their tallies 
+and the attendant counting error is divided by the square root of the number of Counters.
 
 The final output PDFs are constructed from 10,000 random realizations of Equation \ref{eq:monte}. 
 For the individual classes---including families---all weights are 
@@ -300,7 +299,7 @@ We place a floor on the CVRTM mean occupancies at 1 person per dwelling; i.e., w
 person does not own more than one tent. This is not to say no one may own more than one tent, just that
 such a statement is never representative. {\bfr Relaxing this assumption does what?} 
 
-\subsection{Duplicate Measurements}
+\subsection{Duplicate Tract Counts}
 \label{sec:dupes}
 
 \section{Results}
@@ -400,11 +399,11 @@ may enable such an exercise, it is beyond the scope of this analysis. Instead, w
 on the number of counts of a given category expected if the total was evenly distributed across 
 all tracts. That is:
 \begin{equation}
-	\sigma_{j, \rm min} = \sqrt{\frac{\sum_{\rm all\, tracts}n_{j}}{n_{\rm tracts}}},
+	\sigma_{j,\,\rm min}^{2} = \frac{1}{39}\sum_{\rm tracts}n_{j},
 \end{equation}
-where $\sigma_{j}$ is defined in Equation \ref{eq:monte}.
+where $\sigma_{j}$ and $n_{j}$ are defined as in Equation \ref{eq:monte}.
 
-This method works for any category, $j$, for which there is at least 1 individual/dwelling observed in any 
+This method works for any category, $j$, for which there is at least one individual/dwelling observed in any 
 tract. However, for categories for which even this is not the case---unaccompanied minors and families, in the
 case of Hollywood---we set $\sigma_{j, \rm min}$ to the lowest non-zero value of the other categories
 (corresponding to TAY).
