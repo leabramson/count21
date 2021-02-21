@@ -1,8 +1,13 @@
 pro dumpPremade, results, output, $
                  REGION = region
 
-  raw = total(results.RAWCOUNTS, 2)
-  sum = total(results.COUNTS, 3)
+  if n_elements(results) gt 1 then begin
+     raw = total(results.RAWCOUNTS, 2)
+     sum = total(results.COUNTS, 3)
+  endif else begin
+     raw = results.RAWCOUNTS
+     sum = results.COUNTS
+  endelse
   ans = mean(sum, dim = 2)
 ;  errs = stddev(sum, dim = 2)
   ferrs = fltarr(n_elements(ans))
