@@ -60,7 +60,8 @@ end
 pro countAll, datafile, niter, $
               output = output, $
               wtTargets = wtTargets, $ ;; DEPRECATED
-              Peaks = Peaks
+              Peaks = Peaks, $
+              stdErrs = stderrs
 
   ;; SPA 4 CVRTM weights & Stats
   ;; https://www.lahsa.org/documents?id=4693-2020-greater-los-angeles-homeless-count-cvrtm-conversion-factors
@@ -77,7 +78,8 @@ pro countAll, datafile, niter, $
   ;; The error on N_tot, however, is like 2-4x sqrt(N_tot),
   ;; so one could assume the 95% limit is "1" standard error on the mean...
   ;; I dunno; I'll default 2 for now.
-  stderrs = [0.11, 0.22, 0.15, 0.06, 0.16] ;; 2020 SPA4
+  if NOT keyword_set(STDERRS) then $
+     stderrs = [0.11, 0.22, 0.15, 0.06, 0.16] ;; 2020 SPA4
   ;; [0.47,1.08,1.26,0.84,0.93] CD 13 2020
   if NOT keyword_set(wtTargets) then $
      wtTargets = peaks + 2 * stderrs
@@ -218,7 +220,7 @@ pro countAll, datafile, niter, $
               TAGS: ['Adults','TAY','Minors',$
                      'Cars', 'Vans', 'RVs', $
                      'Tents', 'Makeshifts', 'Families'], $
-              WTS: pks, $
+              WTS: peaks, $
               WTERRS: [0,0,0,$
                        carSig,vanSig,rvSig,$
                        tentSig,makeSig,0]}
@@ -660,15 +662,118 @@ end
 ;;
 ;;
 
-pro do10
+pro multiWts
+  
+  p2020 = [1.381, 1.682, 1.323, 1.453, 1.643]
+  p2021 = [1.381, 1.682, 1.323, 1.11, 1.643]
+  lahsaErrs = [0.11, 0.22, 0.15, 0.06, 0.16]
+  
+  cityWts = [1.58,1.90,1.64,1.45,1.47]
+  cityErrs = [0.21,0.29,0.27,0.09,0.21]/1.96
 
-  answers = fltarr(8,4)
-  answers[*,0] = monteCount('chncRecount.csv', 10000)
-  answers[*,1] = monteCount('chncRecount.csv', 10000, $
-                            wtTargets = [2,2,2.5,2,2.5])
-  answers[*,2] = monteCount('chncRecount.csv', 10000, $
-                            wtTargets = replicate(2, 5))
-  answers[*,3] = monteCount('chncRecount.csv', 10000, $
-                            wtTargets = replicate(2.5,5))
+  cd13wts = [1.10,1.16,1.74,1.40,1.22]
+  cd13errs = [0.47,1.08,1.26,0.84,0.93]/1.96
+
+  cd4Wts = [0.92,2.10,1.77,1.67,2.06]
+  cd4errs = [1.52,2.45,1.99,2.40,2.56]/1.96
+
+  hwoodWts = (cd13wts/cd13errs^2 + cd4wts/cd4errs^2) / (1/cd13errs^2 + 1/cd4errs^2)
+  hwoodErrs = sqrt((cd13Errs^2 + cd4Errs^2)/4)
+  
+  plotsym, 0, /fill
+  cgbarplot, p2020, barcoord = bx, $
+             ytitle = 'CVRTM weights', barname = ['C','V','R','T','M'], $
+             yran = [0,2.5], /ysty, col = 'ffffff'x
+  oploterror, bx, p2020, lahsaErrs, symsize = 2, psym = 8
+  oploterror, bx, p2021, lahsaErrs, symsize = 1.2, $
+              col = 'ffa500'x, errcol = 'ffa500'x, psym = 8
+  oploterror, bx + replicate(randomn(seed, 1) * (bx[1]-bx[0])/5.,5), $
+              cityWts, cityErrs, symsize = 1.2, $
+              col = '00a5ff'x, errcol = '00a5ff'x, psym = 8
+  oploterror, bx + replicate(randomn(seed, 1) * (bx[1]-bx[0])/5.,5), $
+              cd13Wts, cd13Errs, symsize = 1.2, $
+              col = long('0000ff'x), errcol = long('0000ff'x), psym = 8
+;  oploterror, bx + randomn(seed, 1) * (bx[1]-bx[0])/5., cd4Wts, cd4Errs, symsize = 1.2, $
+;              col = 'bbbbbb'x, errcol = 'bbbbbb'x, psym = 8
+;  oploterror, bx + randomn(seed, 1) * (bx[1]-bx[0])/5., hwoodWts, hwoodErrs, symsize = 1.2, $
+;              col = 'ff0000'x, errcol = 'ff0000'x, psym = 8
+  legend, /top, /left, box = 0, $
+          ['SPA4', 'SPA4 w/ T=1.1', 'City', 'CD13'], $;, 'CD4', 'Mean(CD4,13)'], $
+          psym = 8, col = [0,'ffa500'x,'00a5ff'x,long('0000ff'x)], $;,'bbbbbb'x,'ff0000'x], $
+          charsize = 1, textcol = 0
+  
+  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+            output = 'hwoodCVRTMtests/2020.fits'
+  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+            output = 'hwoodCVRTMtests/2019.fits', $
+            peaks = [1.393,1.657,1.905,1.264,1.804], $
+            stderrs = [0.16,0.16,0.20,0.11,0.18]
+  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+            output = 'hwoodCVRTMtests/2021.fits', $
+            peaks = p2021
+  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+            output = 'hwoodCVRTMtests/city.fits', $
+            peaks = cityWts, stderrs = cityErrs
+  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+            output = 'hwoodCVRTMtests/cd13.fits', $
+            peaks = cd13Wts, stderrs = cd13Errs
+  
+end
+
+;;
+;;
+;;
+
+pro plotMultiWts, lastyear
+
+  spawn, 'ls hwoodCVRTMtests/*.fits > test.list'
+  readcol, 'test.list', files, f = 'A'
+  nfiles = n_elements(files)
+
+  wtnames = strmid(strmid(files, 8, /rev), 0 ,4)
+
+  out = fltarr(5,nfiles)
+  pctles = [0.05,0.25,0.5,0.75,0.95]
+  for ii = 0, nfiles - 1 do begin
+     d = mrdfits(files[ii], 1)
+     d = d[where(d.EASTFLAG eq 0)]
+     cts = total(total(d.COUNTS,3),1)
+     cts = cts[sort(cts)]
+     out[*,ii] = cts[ceil(n_elements(cts) * pctles) - 1]
+     print, wtnames[ii], out[*,ii]
+  endfor
+
+  null = where(wtnames eq '2020')
+;  nullOut = out[*,null]
+;  nullName = 'SPA4 2020'
+  plot, [0,nfiles], minmax(out), /nodat, $
+        xtickname = replicate(' ', 60), yr = minmax(out), $
+        xtickint = 1, yminor = 5, ytitle = 'Unsheltered persons'
+  oplot, !X.CRANGE, replicate(lastYear,2), thick = 4, linesty = 5
+  xxx = !X.CRANGE[[0,0,1,1]]
+  yyy = out[*,null]
+  polyfill, xxx, yyy[[0,4,4,0]], col = 'ffa500'x
+  polyfill, xxx, yyy[[1,3,3,1]], col = 'ff5500'x
+  oplot, !X.CRANGE, yyy[2] * [1,1], col = 'ff0000'x
+  cgtext, 0.025, yyy[4]-20, /data, "SPA-4 2020 CVRTM", col = 'ff0000'x, $
+          charthick = 2
+  plotsym, 0, /fill
+  out = [[out[*,0:null-1]], [out[*,null+1:*]]]  
+  wtnames = [wtnames[0:null-1],wtnames[null+1:*]]
+  for ii = 0, nfiles - 2 do begin
+     case wtnames[ii] of
+        '2019': col = 'cccccc'x
+        '2021': col = 'ffff00'x
+        'cd13': col = long('0000ff'x)
+        'city': col = '00a5ff'x
+     endcase
+     x = ii+1
+     oploterror, x, out[2,ii], out[4,ii]-out[2,ii], /hibar, psym = 8, $
+                 col = col, errcol = col
+     oploterror, x, out[2,ii], out[2,ii]-out[0,ii], /lobar, $
+                 col = col, errcol = col
+     cgtext, x, !Y.CRANGE[0]-40, /data, wtnames[ii], align = 0.5
+  endfor
+  cgtext, nfiles*0.975,lastyear+20,/data, "last year's estimate", align = 1
   
 end
