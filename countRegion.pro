@@ -60,11 +60,13 @@ end
 pro countRegion, datafile, niter, $
                  output = output, $
                  wtTargets = wtTargets, $
-                 RegName = regName
+                 RegName = regName, $
+                 peaks = peaks
 
   ;; SPA 4 CVRTM weights & Stats
   ;; https://www.lahsa.org/documents?id=4693-2020-greater-los-angeles-homeless-count-cvrtm-conversion-factors
-  peaks = [1.38,1.68,1.32,1.45,1.64] ;; 2020
+  if not keyword_Set(PEAKS) then $
+     peaks = [1.38,1.68,1.32,1.45,1.64] ;; 2020
   nobj  = [521., 694., 735., 2126., 1235.]
   nppl  = [674., 1117., 930., 3050., 1990.]
   se    = [50., 141., 102., 122., 190.]
@@ -196,6 +198,8 @@ pro countRegion, datafile, niter, $
      finalCounts[*,*,ii] = ((base + baseErr) * wts)>0
   endfor
 
+  stop
+  
   ;; Produce a summary file
   savedata = {TRACT: '0', $
               NCOUNTERS: 0, $
@@ -205,7 +209,7 @@ pro countRegion, datafile, niter, $
               TAGS: ['Adults','TAY','Minors',$
                      'Cars', 'Vans', 'RVs', $
                      'Tents', 'Makeshifts', 'Families'], $
-              WTS: wts[*,0], $
+              WTS: peaks, $
               WTERRS: [0,0,0,$
                        carSig,vanSig,rvSig,$
                        tentSig,makeSig,0]}
@@ -241,9 +245,14 @@ pro summarize, resfile
   
   tot    = total(means)
   totErr = 2*sqrt(total(errs^2))
-  
-  totStruct     = total(means, 2)
-  totStructErrs = 2*sqrt(total(errs^2, 2))
+
+  if n_elements(struct) gt 1 then begin
+     totStruct     = total(means, 2)
+     totStructErrs = 2*sqrt(total(errs^2, 2))
+  endif else begin
+     totStruct     = means
+     totStructErrs = 2*errs
+  endelse     
   
   tstring = "*** SUMMARY FOR "+region+" (95% conf.) ***"
   print, ''
@@ -278,9 +287,13 @@ pro makePlots, resFile, $
   bs = 2
   
   ;; Do the big bar plot first
-  counts  = total(data.COUNTS, 3)
+  if n_elements(data) gt 1 then $
+     counts  = total(data.COUNTS, 3) $
+  else $
+     counts  = data.COUNTS
   tc      = total(counts, 1) ## replicate(1,nstruct)
   csums   = arrstats(counts/tc)
+
 
   ;; Make text summaries
   dumpPremade, data, outdir+'/breakdown_summary.dat', region = data[0].REGION
@@ -327,7 +340,10 @@ pro makePlots, resFile, $
   outdir = outDir
 
   ;; sum over tracts
-  counts = total(d.COUNTS, 3)
+  if n_elements(d) gt 1 then $
+     counts = total(d.COUNTS, 3) $
+  else $
+     counts = d.COUNTS
   csums = arrstats(counts)
   
   ;; sum over dwellings
@@ -367,7 +383,7 @@ pro makePlots, resFile, $
          col = '555555'x, linesty = 2, thick = 6
   oplot, replicate(tcSum.P95, 2), !Y.CRANGE, $
          col = '555555'x, linesty = 2, thick = 6
-  legend, /top, /left, /clear, box = 0, $
+  legend, /top, /right, /clear, box = 0, $
           ['mode ('+string(mode[0],f='(I0)')+')', $
            'median ('+string(tcSum.P50,f='(I0)')+')', $
            '25/75 pctle ('+$
@@ -378,7 +394,7 @@ pro makePlots, resFile, $
            string(tcSum.P95,f='(I0)')+')', 'cumulative'], $
           linesty = [0,0,5,2,4], $
           col = ['0000ff'x, replicate('555555'x, 3), '00a5ff'x], $
-          pspacing = 2, charsize = 1.2, charthick = 4, thick = 6, $
+          pspacing = 2, charsize = 1.1, charthick = 4, thick = 6, $
           spacing = 1.7
   polyfill, [hf.bins[qui[0]], hf.bins[qui], hf.bins[qui[-1]]], $
             [0,hf.hist[qui],0], col = 'ffa500'x, $
@@ -417,7 +433,7 @@ pro makePlots, resFile, $
            ysty = 8, $
            pos = [0.15,0.15,0.9,0.9], $
            title = 'Tract '+strcompress(tract,/rem), $
-           xr = [0,200], $
+;           xr = [0,200], $
 ;        xr = [400,600], $;allTotal[[0.05,0.95]*n-1] + [-20,20], $
            ymin = 2, /nodat, xthick = 4, ythick = 4, $
            charthick = 4, charsize = 1.25
@@ -473,14 +489,13 @@ end
 ;;
 
 pro runit, csv
-  fitsCount, csv, '2020sandbox/retry2020_hwoodOnly.fits'
-  data = mrdfits('2020sandbox/retry2020_hwoodOnly.fits', 1)
-  hoTractLookup, data.TRACT
-  countRegion, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
-               output = 'retryHwood2020Results.fits', regName = 'Hollywood 2020'
-  summarize, 'retryHwood2020Results.fits'
-  makeplots, 'retryHwood2020Results.fits', outdir = '2020sandbox'
+  fitsCount, csv, 'epSandbox/epSandbox.fits'
+  countRegion, 'epSandbox/epSandbox.fits', 1d4, $
+               output = 'epSandboxResultsT1.fits', regName = 'Echo Pk Lake Area Fall 2020 T=1.1', $
+               peaks = [1.38,1.68,1.32,1.1,1.64] ;;
+  summarize, 'epSandboxResultsT1.fits'
+  makeplots, 'epSandboxResultsT1.fits', outdir = 'EpSandbox'
 ;  findNullWeights, 'test.fits', lastYear
 end
 
-;runit, '2020sandbox/retry2020_hwoodOnly.csv'
+;runit, 'epSandbox/epSandbox.csv'

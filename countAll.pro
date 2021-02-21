@@ -218,7 +218,7 @@ pro countAll, datafile, niter, $
               TAGS: ['Adults','TAY','Minors',$
                      'Cars', 'Vans', 'RVs', $
                      'Tents', 'Makeshifts', 'Families'], $
-              WTS: wts[*,0], $
+              WTS: pks, $
               WTERRS: [0,0,0,$
                        carSig,vanSig,rvSig,$
                        tentSig,makeSig,0]}
