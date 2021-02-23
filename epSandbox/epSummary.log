@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  22 FEB 2021 16:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  22 FEB 2021 17:20
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -456,36 +456,36 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 38.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 43.
-LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 52
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 53
 .
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 52
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 53
 .
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 52
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 53
 .
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 52
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 53
 .
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 52.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 53.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 52.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 53.
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--60
+Underfull \hbox (badness 10000) in paragraph at lines 50--61
 
  []
 
@@ -497,14 +497,14 @@ Package epstopdf Info: Source file: <EPsummaryBars.eps>
 (epstopdf)                    size: 14620 bytes
 (epstopdf)             Command: <epstopdf --outfile=EPsummaryBars-eps-converted
 -to.pdf EPsummaryBars.eps>
-(epstopdf)             \includegraphics on input line 63.
+(epstopdf)             \includegraphics on input line 64.
 Package epstopdf Info: Output file is already uptodate.
 <EPsummaryBars-eps-converted-to.pdf, id=7, 505.89pt x 361.35pt>
 File: EPsummaryBars-eps-converted-to.pdf Graphic file (type pdf)
 
 <use EPsummaryBars-eps-converted-to.pdf>
 Package pdftex.def Info: EPsummaryBars-eps-converted-to.pdf used on input line 
-63.
+64.
 (pdftex.def)             Requested size: 220.78543pt x 153.94733pt.
 Package epstopdf Info: Source file: <EPwEmpties.eps>
 (epstopdf)                    date: 2021-02-22 14:23:03
@@ -514,20 +514,20 @@ Package epstopdf Info: Source file: <EPwEmpties.eps>
 (epstopdf)                    size: 27353 bytes
 (epstopdf)             Command: <epstopdf --outfile=EPwEmpties-eps-converted-to
 .pdf EPwEmpties.eps>
-(epstopdf)             \includegraphics on input line 64.
+(epstopdf)             \includegraphics on input line 65.
 Package epstopdf Info: Output file is already uptodate.
 
 <EPwEmpties-eps-converted-to.pdf, id=8, 505.89pt x 361.35pt>
 File: EPwEmpties-eps-converted-to.pdf Graphic file (type pdf)
 
 <use EPwEmpties-eps-converted-to.pdf>
-Package pdftex.def Info: EPwEmpties-eps-converted-to.pdf used on input line 64.
+Package pdftex.def Info: EPwEmpties-eps-converted-to.pdf used on input line 65.
 
 (pdftex.def)             Requested size: 220.78543pt x 153.94733pt.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 77.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 78.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 77.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 78.
  [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./EPsum
@@ -536,59 +536,59 @@ maryBars-eps-converted-to.pdf> <./EPwEmpties-eps-converted-to.pdf>] <t1975.png,
 File: t1975.png Graphic file (type png)
 
 <use t1975.png>
-Package pdftex.def Info: t1975.png used on input line 102.
+Package pdftex.def Info: t1975.png used on input line 103.
 (pdftex.def)             Requested size: 234.8775pt x 257.66469pt.
 
-Underfull \hbox (badness 1874) in paragraph at lines 106--112
+Underfull \hbox (badness 1874) in paragraph at lines 107--113
 \OT1/ptm/m/n/10.95 gust and 18 Oc-to-ber 2020 (Fig-ure [][]2[][]). This
  []
 
 
-Underfull \hbox (badness 1924) in paragraph at lines 106--112
+Underfull \hbox (badness 1924) in paragraph at lines 107--113
 \OT1/ptm/m/n/10.95 vans, which rose from $\OT1/ztmcm/m/n/10.95 14 \OMS/ztmcm/m/
 n/10.95 ^^F \OT1/ztmcm/m/n/10.95 3$ \OT1/ptm/m/n/10.95 to $\OT1/ztmcm/m/n/10.95
  25 \OMS/ztmcm/m/n/10.95 ^^F \OT1/ztmcm/m/n/10.95 5$ \OT1/ptm/m/n/10.95 be-
  []
 
 
-Underfull \hbox (badness 3930) in paragraph at lines 106--112
+Underfull \hbox (badness 3930) in paragraph at lines 107--113
 \OT1/ptm/m/n/10.95 tics (Ta-ble [][]1[][]) and to-tal pop-u-la-tion es-ti-mates
 
  []
 
 
-Underfull \hbox (badness 1337) in paragraph at lines 106--112
+Underfull \hbox (badness 1337) in paragraph at lines 107--113
 \OT1/ptm/m/n/10.95 (Fig-ure [][]1[][]) re-flect the av-er-age of those as-sess-
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--112
+Underfull \hbox (badness 10000) in paragraph at lines 107--113
 
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 135.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 136.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 135.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 136.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 135.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 154.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 136.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 155.
 [2
 
  <./t1975.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 154.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 155.
  (./epSummary.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 154.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 154.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 155.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 155.
 Package rerunfilecheck Info: File `epSummary.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 154.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 155.
  ) 
 Here is how much of TeX's memory you used:
  7695 strings out of 493117
  117585 string characters out of 6135433
- 208069 words of memory out of 5000000
+ 208075 words of memory out of 5000000
  11033 multiletter control sequences out of 15000+600000
  45772 words of font info for 104 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -601,7 +601,7 @@ ve/2014/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/t
 exlive/2014/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/201
 4/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-di
 st/fonts/type1/urw/times/utmri8a.pfb>
-Output written on epSummary.pdf (2 pages, 353732 bytes).
+Output written on epSummary.pdf (2 pages, 354032 bytes).
 PDF statistics:
  76 PDF objects out of 1000 (max. 8388607)
  59 compressed objects within 1 object stream
