@@ -198,7 +198,7 @@ pro countRegion, datafile, niter, $
      finalCounts[*,*,ii] = ((base + baseErr) * wts)>0
   endfor
 
-  stop
+;  stop
   
   ;; Produce a summary file
   savedata = {TRACT: '0', $
@@ -491,11 +491,100 @@ end
 pro runit, csv
   fitsCount, csv, 'epSandbox/epSandbox.fits'
   countRegion, 'epSandbox/epSandbox.fits', 1d4, $
-               output = 'epSandboxResultsT1.fits', regName = 'Echo Pk Lake Area Fall 2020 T=1.1', $
-               peaks = [1.38,1.68,1.32,1.1,1.64] ;;
-  summarize, 'epSandboxResultsT1.fits'
-  makeplots, 'epSandboxResultsT1.fits', outdir = 'EpSandbox'
+               output = 'epSandboxResults.fits', regName = 'Echo Pk Lake Area Fall 2020', $
+               peaks = [1.38,1.68,1.32,1.45,1.64] ;;
+  summarize, 'epSandboxResultsEmptyT.fits'
+  
+;  makeplots, 'epSandboxResultsT1.fits', outdir = 'EpSandbox'
 ;  findNullWeights, 'test.fits', lastYear
 end
 
 ;runit, 'epSandbox/epSandbox.csv'
+
+;;
+;;
+;;
+
+pro epTentExp
+
+  ntrials = 3.
+  emptyfrac = [0,0,0,11./30,0] ;; From EP census 21 feb
+  emptyTentErr = 1.96 * sqrt(11.*19./30.^2)/sqrt(30)/2 ;; 1-sigma
+  csv = 'epSandbox/epSandbox.csv'
+  ef = fltarr(ntrials+1)
+  sign = [-1,0,1]
+  spawn, 'rm epSandboxResults??.fits'
+  spawn, 'rm epSandbox/epSandbox??.fits'
+  for ii = 0, ntrials - 1 do begin
+     emptyf = emptyfrac
+;     emptyf[3] += randomn(Seed, 1) * emptyTentErr/2.
+     emptyf[3] += sign[ii] * emptyTentErr
+     ef[ii] = emptyf[3]
+     fitsCount, csv, 'epSandbox/epSandbox'+string(ii,f='(I02)')+'.fits', $
+                emptyFrac = emptyF
+     countRegion, 'epSandbox/epSandbox'+string(ii,f='(I02)')+'.fits', 1d4, $
+                  output = 'epSandboxResults'+string(ii,f='(I02)')+'.fits', $
+                  regName = 'Echo Pk Lake Area Fall 2020', $
+                  peaks = [1.38,1.68,1.32,1.45,1.64]
+
+;     stop
+     
+  endfor
+  countRegion, 'epSandbox/epSandbox.fits', 1d4, $
+               output = 'epSandboxResults99.fits', $
+               regName = 'Echo Pk Lake Area Fall 2020', $
+               peaks = [1.38,1.68,1.32,1.1,1.64] ;; HwoodWts
+  
+  spawn, 'ls epSandboxResults*.fits > test.list'
+  readcol, 'test.list', files, f = 'A'
+  nfiles = n_elements(files)
+
+  out = fltarr(5,nfiles)
+  pctles = [0.05,0.25,0.5,0.75,0.95]
+  lastYear = 174.
+  for ii = 0, nfiles - 1 do begin
+     d = mrdfits(files[ii], 1)
+     cts = total(d.COUNTS,1)
+     cts = cts[sort(cts)]
+     out[*,ii] = cts[ceil(n_elements(cts) * pctles) - 1]
+     print, files[ii], getcountprob(cts, lastyear)
+  endfor
+
+  plot, [0,nfiles], minmax(out), /nodat, $
+        xtickname = replicate(' ', 60), yr = [100,300], $
+        xtickint = 1, yminor = 5, ytitle = 'Unsheltered persons', $
+        xminor = 1
+  oplot, !X.CRANGE, replicate(lastYear,2), thick = 4, linesty = 5         
+  xxx = !X.CRANGE[[0,0,1,1]]
+  yyy = out[*,0]
+  polyfill, xxx, yyy[[0,4,4,0]], col = 'ffa500'x
+  polyfill, xxx, yyy[[1,3,3,1]], col = 'ff5500'x
+  oplot, !X.CRANGE, yyy[2] * [1,1], col = 'ff0000'x
+  cgtext, 0.025, yyy[4]-10, /data, "SPA-4 2020 CVRTM", col = 'ff0000'x, $
+          charthick = 2
+  plotsym, 0, /fill
+  out = out[*,1:*]
+  cgloadct, 33, ncol = nfiles, clip = [10,240], /rev
+  for ii = 0, nfiles - 2 do begin
+     x = ii+1
+     col = cgcolor(string(fix(ii)))
+     oploterror, x, out[2,ii], out[4,ii]-out[2,ii], /hibar, psym = 8, $
+                 col = col, errcol = col
+     oploterror, x, out[2,ii], out[2,ii]-out[0,ii], /lobar, $
+                 col = col, errcol = col
+     if ii le 2 then $
+        cgtext, x, !Y.CRANGE[0]-10, /data, string(ef[ii],f='(F4.2)'), align = 0.5 $
+     else $
+        cgtext, x, !Y.CRANGE[0]-10, /data, "T=1.1 (Hwood)", align = 0.5
+  endfor
+  cgtext, nfiles*0.975,lastyear-10,/data, "last year's estimate", align = 1
+
+  stop
+  
+
+end
+
+;;
+;;
+;;
+

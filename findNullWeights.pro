@@ -1,14 +1,18 @@
-pro findNullWeights, dataFile, target
+pro findNullWeights, resFile, target
 
-  data = mrdfits(dataFile, 1)
+  data = mrdfits(resFile, 1)
   peaks = [1.38,1.68,1.32,1.45,1.64] ;; 2020
   bestWeights = [1,1,1, peaks, 1]
-  input = transpose([[data.ADULT],[data.TAY],[data.MINOR],$
-                     [data.CAR],[data.VAN],[data.RV],$
-                     [data.TENT],[data.MAKESHIFT], [data.FAMILY]])
-
+;  input = transpose([[data.ADULT],[data.TAY],[data.MINOR],$
+;                     [data.CAR],[data.VAN],[data.RV],$
+;                     [data.TENT],[data.MAKESHIFT], [data.FAMILY]])
+  input = data.RAWCOUNTS
+  
   ;; Best simple guess at this year's count
-  rawTot = total(input, 2)
+  if n_elements(data) gt 1 then $
+     rawTot = total(input, 2) $
+  else $
+     rawtot = input
   newTot = total(rawTot * bestWeights)
 
   print, ''
@@ -23,7 +27,7 @@ pro findNullWeights, dataFile, target
   ;; Find CVRTM weights needed to get this year to equal last year
   nullOuts = fltarr(5)
   nullFracs = fltarr(5)
-  avgRuns = findgen((5.-0.)/0.05+1)*0.05
+  avgRuns = findgen((5.-0.)/0.025+1)*0.025
   nRuns = n_elements(avgRuns)
   for ii = 0, 4 do begin
      newWeights = bestWeights

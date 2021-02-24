@@ -1,5 +1,9 @@
-pro fitsCount, infile, outfile
+pro fitsCount, infile, outfile, $
+               emptyFrac = emptyFrac
 
+  if NOT keyword_set(emptyFrac) then $
+     emptyFrac = replicate(0,5)
+  
   readcol, infile, $
            counter, tract, $
            adult, tay, minor, $
@@ -50,11 +54,11 @@ pro fitsCount, infile, outfile
      savedata[ii].ADULT     = adult[ii]    
      savedata[ii].TAY       = tay[ii]    
      savedata[ii].MINOR     = minor[ii]         
-     savedata[ii].CAR       = car[ii]           
-     savedata[ii].VAN       = van[ii]           
-     savedata[ii].RV        = rv[ii]          
-     savedata[ii].TENT      = tent[ii]          
-     savedata[ii].MAKESHIFT = makeshift[ii]     
+     savedata[ii].CAR       = car[ii]        * (1-emptyFrac[0])         
+     savedata[ii].VAN       = van[ii]        * (1-emptyFrac[1])         
+     savedata[ii].RV        = rv[ii]         * (1-emptyFrac[2])                   
+     savedata[ii].TENT      = tent[ii]       * (1-emptyFrac[3])                   
+     savedata[ii].MAKESHIFT = makeshift[ii]  * (1-emptyFrac[4])            
      savedata[ii].FAMILY    = family[ii]        
      savedata[ii].COUNTER   = counter[ii]       
      savedata[ii].TALLYFILE = tallyfile[ii]     

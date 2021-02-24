@@ -631,13 +631,17 @@ end
 ;;
 
 pro runit, csv
-  fitsCount, csv, 'test.fits'
-  data = mrdfits('test.fits', 1)
+  fitsCount, csv, 'countHollywood2021.fits'
+  data = mrdfits('countHollywood2021.fits', 1)
   hoTractLookup, data.TRACT
-  countAll, 'test.fits', 1d4, output = 'testResults.fits'
-  summarize, 'testResults.fits'
-  makeplots, 'testResults.fits'
-  findNullWeights, 'test.fits', lastYear
+  countAll, 'countHollywood2021.fits', 1d4, output = 'countHollywood2021.fits'
+  summarize, 'countHollywoodResults.fits'
+  makeplots, 'countHollywoodResults.fits'
+  plotBarNewOld, data[where(~data.EASTFLAG)], /hwood, $
+                   output = 'Hwood2120Bars.eps'
+  plotBarNewOld, data[where(data.EASTFLAG)], /eho, $
+                   output = 'Eho2120Bars.eps'
+  findNullWeights, 'countHollywood.fits', 1058
 end
 
 ;;
