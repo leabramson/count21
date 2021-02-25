@@ -663,8 +663,8 @@ pro runitRetry, csv
 ;            peaks = [1.38,1.68,1.32,1.12,1.64]
   summarize, 'retryHwood2020Results.fits'
   makeplots, 'retryHwood2020Results.fits'
-  lastyear = 0.9 * 1067
-  findNullWeights, '2020sandbox/retry2020_hwoodOnly.fits', lastYear
+  lastyear = 917.
+  findNullWeights, 'retryHwood2020Results.fits', lastYear
 end
 ;runitRetry, '2020sandbox/retry2020_hwoodOnly.csv'
 
