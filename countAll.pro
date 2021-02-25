@@ -641,7 +641,13 @@ pro runit, csv
                    output = 'Hwood2120Bars.eps'
   plotBarNewOld, data[where(data.EASTFLAG)], /eho, $
                    output = 'Eho2120Bars.eps'
-  findNullWeights, 'countHollywood.fits', 1058
+  lastYear = 1058.
+  data = mrdfits('countHollywoodResults.fits', 1)
+  td = data[where(~data.EASTFLAG)]
+  mwrfits, td, 'hwood2021results.fits', /create
+  findNullWeights, 'hwood2021Results.fits', lastYear
+  cts = total(total(td.COUNTS, 3), 1)
+  print, getCountProb(cts, lastYear)
 end
 
 ;;
@@ -675,9 +681,12 @@ pro multiWts
   cityWts = [1.58,1.90,1.64,1.45,1.47]
   cityErrs = [0.21,0.29,0.27,0.09,0.21]/1.96
 
-  cd13wts = [1.10,1.16,1.74,1.40,1.22]
+  cd13wts = [1.10,1.16,1.74,1.40,1.22]         ;; LOCAL!
   cd13errs = [0.47,1.08,1.26,0.84,0.93]/1.96
 
+  cd13spa4 = [1.51,1.77,1.42,1.48,1.68]  ;; SPA4-derived!
+  cd13spa4errs = [0.25,0.42,0.28,0.11,0.31]
+  
   cd4Wts = [0.92,2.10,1.77,1.67,2.06]
   cd4errs = [1.52,2.45,1.99,2.40,2.56]/1.96
 
@@ -721,6 +730,9 @@ pro multiWts
   countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
             output = 'hwoodCVRTMtests/cd13.fits', $
             peaks = cd13Wts, stderrs = cd13Errs
+  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+            output = 'hwoodCVRTMtests/cd13spa4.fits', $
+            peaks = cd13spa4, stderrs = cd13spa4Errs
   
 end
 
@@ -737,6 +749,7 @@ pro plotMultiWts, lastyear
   wtnames = strmid(strmid(files, 8, /rev), 0 ,4)
 
   out = fltarr(5,nfiles)
+  means = fltarr(nfiles)
   pctles = [0.05,0.25,0.5,0.75,0.95]
   for ii = 0, nfiles - 1 do begin
      d = mrdfits(files[ii], 1)
@@ -745,33 +758,37 @@ pro plotMultiWts, lastyear
      cts = cts[sort(cts)]
      out[*,ii] = cts[ceil(n_elements(cts) * pctles) - 1]
      print, wtnames[ii], out[*,ii]
+     means[ii] = total(total(d.RAWCOUNTS, 2) * [1,1,1,d[0].WTS,1])
   endfor
-
   null = where(wtnames eq '2020')
 ;  nullOut = out[*,null]
 ;  nullName = 'SPA4 2020'
   plot, [0,nfiles], minmax(out), /nodat, $
         xtickname = replicate(' ', 60), yr = minmax(out), $
         xtickint = 1, yminor = 5, ytitle = 'Unsheltered persons'
-  oplot, !X.CRANGE, replicate(lastYear,2), thick = 4, linesty = 5
   xxx = !X.CRANGE[[0,0,1,1]]
   yyy = out[*,null]
   polyfill, xxx, yyy[[0,4,4,0]], col = 'ffa500'x
   polyfill, xxx, yyy[[1,3,3,1]], col = 'ff5500'x
+  oplot, !X.CRANGE, replicate(lastYear,2), thick = 4, linesty = 5
   oplot, !X.CRANGE, yyy[2] * [1,1], col = 'ff0000'x
+  oplot, !X.CRANGE, means[null[0]] * [1,1], col = 'ff0000'x, linesty = 2
   cgtext, 0.025, yyy[4]-20, /data, "SPA-4 2020 CVRTM", col = 'ff0000'x, $
           charthick = 2
   plotsym, 0, /fill
   out = [[out[*,0:null-1]], [out[*,null+1:*]]]  
   wtnames = [wtnames[0:null-1],wtnames[null+1:*]]
+  means = [means[0:null-1], means[null+1:*]]
   for ii = 0, nfiles - 2 do begin
      case wtnames[ii] of
         '2019': col = 'cccccc'x
         '2021': col = 'ffff00'x
         'cd13': col = long('0000ff'x)
         'city': col = '00a5ff'x
+        'spa4': col = long('0055ff'x)
      endcase
      x = ii+1
+     oplot, [x], [means[ii]], psym = 1, col = col
      oploterror, x, out[2,ii], out[4,ii]-out[2,ii], /hibar, psym = 8, $
                  col = col, errcol = col
      oploterror, x, out[2,ii], out[2,ii]-out[0,ii], /lobar, $
