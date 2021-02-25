@@ -102,30 +102,7 @@ pro countAll, datafile, niter, $
   rvSig   = stderrs[2]
   tentSig = stderrs[3]
   makeSig = stderrs[4]
-  
-;  carSig = findSig(pplPer, peaks[0], 0.05, 1.0, $
-;                   nsteps = 200, $
-;                   cutoff = 1, $
-;                   target = wtTargets[0])
-;  vanSig = findSig(pplPer, peaks[1], 0.05, 1.0, $
-;                   nsteps = 200, $
-;                   cutoff = 1, $
-;                   target = wtTargets[1])
-;  rvSig = findSig(pplPer, peaks[2], 0.05, 1.0, $
-;                  nsteps = 200, $
-;                  cutoff = 1, $
-;                  target = wtTargets[2])
-;  tentSig = findSig(pplPer, peaks[3], 0.01, 1.0, $
-;                    nsteps = 2000, $
-;                    cutoff = 1, $
-;                    target = wtTargets[3])
-;  makeSig = findSig(pplPer,  peaks[4], 0.05, 1.0, $
-;                    nsteps = 200, $
-;                    cutoff = 1, $
-;                    target = wtTargets[4])
-;
-;  print, carSig, vanSig, rvSig, tentSig, makeSig
-  
+
   ;; Draw niter realizations for the weights from the PDFs
   carPDF  = genFunc(pplPer, peaks[0], carSig, 1) ;; 2020 wts = maxLike
   vanPDF  = genFunc(pplPer, peaks[1], vanSig, 1)
@@ -208,7 +185,7 @@ pro countAll, datafile, niter, $
 ;     stop
 ;     baseErr             = (sqrt(base/nhit)>1) $
 ;                           * randomn(seed, [nStruct,niter])
-     finalCounts[*,*,ii] = ((base + bErr) * wts)>0 ;; a draw from the underlying real distribution boosted by a draw from the weight PDF
+     finalCounts[*,*,ii] = ((base + bErr) * wts);>0 ;; a draw from the underlying real distribution boosted by a draw from the weight PDF
   endfor
 
   ;; Produce a summary file
@@ -269,6 +246,9 @@ pro summarize, resfile
         end
      endcase
 
+;     ;; debias
+;     d = debias(d)
+     
      means = mean(d.COUNTS, dim = 2)
      errs  = stddev(d.COUNTS, dim = 2)
 
@@ -283,6 +263,10 @@ pro summarize, resfile
         totStruct     = means
         totStructErrs = 2*errs
      endelse
+     
+
+;     print, " THE FOLLOWING ESTIMATES HAVE NOT BEEN DE-BIASED! BEWARE OF MEDIANS! "
+;     print, ""
      
      tstring = "*** SUMMARY FOR "+region+" (95% conf.) ***"
      print, ''
@@ -328,6 +312,14 @@ pro makePlots, resFile
   hWoodDat = data[Hwood]
   nHwood   = n_elements(hWoodDat)
 
+;  ;; debias the categories from the tract flooring
+;  honorms  = scaleToMean(hWoodDat)
+;  ehonorms = scaleToMean(eHoDat)
+;  norms    = scaleToMean(data)
+;  data.COUNTS *= norms.GLOBAL
+;  ehodat.COUNTS *= ehoNorms.GLOBAL
+;  hWoodDat.C.OUNTS *= hoNorms.GLOBAL
+  
   structs = strcompress(data[0].TAGS,/rem)
   nstruct = n_elements(structs)
   outBoxes = fltarr(nstruct*4,5)
@@ -335,13 +327,14 @@ pro makePlots, resFile
   bs = 2
   
   ;; Do the big bar plot first
-  counts  = total(data.COUNTS, 3)
+  
+  counts  = total(data.COUNTS, 3); * norms.GLOBAL
   tc      = total(counts, 1) ## replicate(1,nstruct)
   csums   = arrstats(counts/tc)
-  hCounts = total(hWoodDat.COUNTS, 3)
+  hCounts = total(hWoodDat.COUNTS, 3); * honorms.GLOBAL
   htc     = total(hcounts, 1) ## replicate(1,nstruct)
   hCsums  = arrstats(hcounts/htc)
-  eCounts = total(eHoDat.COUNTS, 3)
+  eCounts = total(eHoDat.COUNTS, 3); * ehonorms.GLOBAL
   etc     = total(ecounts, 1) ## replicate(1,nstruct)
   eCsums  = arrstats(eCounts/etc)
 
@@ -426,9 +419,9 @@ pro makePlots, resFile
              barspace = 0.75, $
              baroffset = 1, $
              col = allFillcol, $
-             yr = [0, max(outboxes)], /ysty, $
+             yr = [0, max(outboxes)], ysty=1, $
              ymin = 5, barcoord = allx, $
-             title = 'Unsheltered by Dwelling'
+             title = 'Unsheltered by Dwelling', ytitle = 'People'
   oploterror, allx, csums.P50, csums.P95 - csums.P50, $
               /hibar, thick = 6, /nohat, errcol = allCol, psym = 3
   oploterror, allx, csums.P50, csums.P50 - csums.P05, $
@@ -469,16 +462,19 @@ pro makePlots, resFile
            d = data
            region = 'Greater Hollywood'
            outdir = 'allTracts'
+;           norms = norms.GLOBAL
         end
         1: begin
            d = eHoDat
            region = 'East Hollywood'
            outdir = 'eHo'
+;           norms = ehoNorms.GLOBAL
         end
         2: begin
            d = hWoodDat
            region = 'Hollywood'
            outdir = 'hWood'
+;           norms = hoNorms.GLOBAL
         end
      endcase
 
@@ -487,9 +483,12 @@ pro makePlots, resFile
      csums = arrstats(counts)
 
      ;; sum over dwellings
-     tCounts = total(counts, 1)
+     tCounts = total(counts, 1); * norms
      tCsum   = arrstats(tCounts)
      niter = n_elements(tCounts)
+
+     ;; deBias
+;     norms = scaleToMean(d)
      
      h = float(histogram(tCounts, bins = bs, loc = bins))
      mode = bins[where(h eq max(h))]
@@ -534,8 +533,8 @@ pro makePlots, resFile
               string(tcSum.P95,f='(I0)')+')', 'cumulative'], $
              linesty = [0,0,5,2,4], $
              col = ['0000ff'x, replicate('555555'x, 3), '00a5ff'x], $
-             pspacing = 2, charsize = 1.2, charthick = 4, thick = 6, $
-             spacing = 1.7
+             pspacing = 1, charsize = 1, charthick = 4, thick = 6, $
+             spacing = 1.
      polyfill, [hf.bins[qui[0]], hf.bins[qui], hf.bins[qui[-1]]], $
                [0,hf.hist[qui],0], col = 'ffa500'x, $
                /line_fill, spacing = 0.025, thick = 1, orien = 45
@@ -558,8 +557,16 @@ pro makePlots, resFile
         tCounts = total(d[jj].COUNTS, 1)
         tCsum   = arrstats(tCounts)
 
+;        norms = scaleToMean(d[jj])
+
         ;; Text summary
+        ;; THESE DO NOT GET DE-BIASED B/C WE DON'T WANT TO
+        ;; QUOTE NEGATIVE OCCUPANCIES! YOU JUST HAVE TO NOTE THAT THE
+        ;; TRACT- AND GLOBAL-GEOGRAPHY ESTIMATES ARE NOT CONSISTENT!
+
         dumpText, d[jj], outdir+'/'+strcompress(tract, /rem)+'_summary.dat'
+
+        ;; Histogram
         
         h = float(histogram(tCounts, bins = bs, loc = bins))
         mode = bins[where(h eq max(h))]
@@ -663,8 +670,9 @@ pro runitRetry, csv
 ;            peaks = [1.38,1.68,1.32,1.12,1.64]
   summarize, 'retryHwood2020Results.fits'
   makeplots, 'retryHwood2020Results.fits'
+  data = mrdfits('retryHwood2020Results.fits', 1)
   lastyear = 917.
-  findNullWeights, 'retryHwood2020Results.fits', lastYear
+  findNullWeights, data[where(~data.EASTFLAG)], lastYear
 end
 ;runitRetry, '2020sandbox/retry2020_hwoodOnly.csv'
 

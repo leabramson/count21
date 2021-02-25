@@ -15,7 +15,17 @@ pro dumpPremade, results, output, $
      ferrs[ii] = 1.96 * sqrt(ans[ii]*(total(ans)-ans[ii])/total(ans))/total(ans) ;; binomial
   errs = ferrs * total(ans)
   frac = ans / total(ans)
-
+  
+  ;; If summing over tracts, make sure you allow the inferred median
+  ;; occupancy of categories with null entries to conform to the raw
+  ;; counts multiplied by the mean weights. Otherwise,
+  ;; multi-tract-integrated results will be biased high.
+  
+;  if n_elements(results) gt 1 then $
+;     results = debias(results) $
+;  else $
+;     norms = 1
+  
   outs = []
   for ii = 0, n_elements(ans) - 1 do $
      outs = [outs, ans[ii], errs[ii]]
@@ -28,8 +38,8 @@ pro dumpPremade, results, output, $
   printf, 1, f = '(%"#COUNT RESULTS FOR %s ")', region
   printf, 1, f = '(%"#%s %s %s %s %s %s %s %s %s")', results[0].TAGS
   printf, 1, f = '(%"%i %i %i %i %i %i %i %i %i")', raw
-  printf, 1, f = '(%"%i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i)")', round(outs)
-  printf, 1, f = '(%"%4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f)")', fouts
+  printf, 1, f = '(%"%i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i)")', round(outs); * norms
+  printf, 1, f = '(%"%4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f)")', fouts; * norms
   close, 1
   
 

@@ -195,7 +195,7 @@ pro countRegion, datafile, niter, $
                            * randomn(seed, [nStruct,niter])
 ;     baseErr             = (sqrt(base/nhit)>1) $
 ;                           * randomn(seed, [nStruct,niter])
-     finalCounts[*,*,ii] = ((base + baseErr) * wts)>0
+     finalCounts[*,*,ii] = ((base + baseErr) * wts);>0
   endfor
 
 ;  stop

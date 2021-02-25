@@ -1,6 +1,6 @@
-pro findNullWeights, resFile, target
+pro findNullWeights, data, target
 
-  data = mrdfits(resFile, 1)
+;  data = mrdfits(resFile, 1)
   peaks = [1.38,1.68,1.32,1.45,1.64] ;; 2020
   bestWeights = [1,1,1, peaks, 1]
 ;  input = transpose([[data.ADULT],[data.TAY],[data.MINOR],$
@@ -15,6 +15,8 @@ pro findNullWeights, resFile, target
      rawtot = input
   newTot = total(rawTot * bestWeights)
 
+  print, ' ** The following are generated from raw counts + mean weights **'
+;  print, ' **                  No de-biasing necessary                   ** '
   print, ''
   print, f = '(%"Current estimate . %i")', newTot
   print, f = '(%" > %3i cars")', rawTot[3]

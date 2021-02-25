@@ -16,10 +16,10 @@ function scaleToMean, struct
   norm  = tot / raw ;; median_tot / mean_tot
   cnorm = catTot / catRaw
   
-  output = {GLOBAL: norm, $
-            CATEGORY: cnorm}
+  output = {GLOBAL: 1./norm, $
+            CATEGORY: 1./cnorm}
   
-  print, norm
+;  print, norm
   
   return, output
     
