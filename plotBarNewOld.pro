@@ -36,7 +36,7 @@ pro plotBarNewOld, struct, lastYearRaw, $
   !P.CHARTHICK = 5
 
   ;; Bar plot
-  ;; A C V R T M F  
+  ;; A+TAY+UM C V R T M F  
 
   tags = ['Persons', 'Cars', 'Vans', 'RVs', 'Tents', 'Makeshifts', 'Families']
   
@@ -44,7 +44,7 @@ pro plotBarNewOld, struct, lastYearRaw, $
           /col, /encap, /decomp, bits_per_pix = 8
   cgbarplot, lastYearRaw, barwidth = 0.4, barspace = 0.65, $
              baroffset=0.5, barcoord = bx, col = '777777'x, $
-             yr = [0,max(tyR)*1.1], ytitle = 'People or dwellings counted', $
+             yr = [0,max(tyR)*1.1], ytitle = 'People or dwellings counted (raw)', $
              xticklen = 1d-6, title = title
   oploterror, bx, lastYearRaw, sqrt(lastYearRaw) * 2, psym = 3, errthick = 6, /nohat
   cgbarplot, tyR, barwidth = 0.4, barspace = 0.65, $

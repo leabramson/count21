@@ -86,6 +86,18 @@ pro countAll, datafile, niter, $
                   
   ;; Read in count data and find unique tracts and Ncounters
   data = mrdfits(dataFile, 1)
+  
+  ;; cull bad data
+  if total(tag_names(data) eq "FLAG") gt 0 then begin
+     bad = where(data.FLAG, compl = good, nbad)
+     if nbad gt 0 then $
+        for ii = 0, nbad-1 do $
+           print, f = '(%"Bad data detected at tract %7.2f by counter %s")', $
+                  data[bad[ii]].TRACT, data[bad[ii]].COUNTER
+     data = data[good]
+  endif
+  
+  
   nlines = n_elements(data)
   tracts = data.TRACT
   utracts = tracts[UNIQ(tracts)]
@@ -637,25 +649,29 @@ end
 ;;
 ;;
 
+
 pro runit, csv
+
   fitsCount, csv, 'countHollywood2021.fits'
   data = mrdfits('countHollywood2021.fits', 1)
   hoTractLookup, data.TRACT
-  countAll, 'countHollywood2021.fits', 1d4, output = 'countHollywood2021.fits'
-  summarize, 'countHollywoodResults.fits'
-  makeplots, 'countHollywoodResults.fits'
+  countAll, 'countHollywood2021.fits', 1d4, output = 'countHollywoodResults2021.fits'
+  summarize, 'countHollywoodResults2021.fits'
+  makeplots, 'countHollywoodResults2021.fits'
+  data = mrdfits('countHollywoodResults2021.fits', 1)
   plotBarNewOld, data[where(~data.EASTFLAG)], /hwood, $
-                   output = 'Hwood2120Bars.eps'
+                   output = 'Hwood2021Bars.eps'
   plotBarNewOld, data[where(data.EASTFLAG)], /eho, $
-                   output = 'Eho2120Bars.eps'
+                   output = 'Eho2021Bars.eps'
   lastYear = 1058.
-  data = mrdfits('countHollywoodResults.fits', 1)
   td = data[where(~data.EASTFLAG)]
   mwrfits, td, 'hwood2021results.fits', /create
   findNullWeights, 'hwood2021Results.fits', lastYear
   cts = total(total(td.COUNTS, 3), 1)
   print, getCountProb(cts, lastYear)
+
 end
+
 
 ;;
 ;;
@@ -741,7 +757,14 @@ pro multiWts
   countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
             output = 'hwoodCVRTMtests/cd13spa4.fits', $
             peaks = cd13spa4, stderrs = cd13spa4Errs
-  
+  cd13spa4t = cd13spa4
+  cd13Spa4t[3] = 1.1
+  cd13spa4terrs = cd13spa4errs
+  cd13spa4terrs[3] = 0.07
+  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+            output = 'hwoodCVRTMtests/13s4t.fits', $
+            peaks = cd13spa4t, stderrs = cd13spa4tErrs
+
 end
 
 ;;
@@ -794,9 +817,10 @@ pro plotMultiWts, lastyear
         'cd13': col = long('0000ff'x)
         'city': col = '00a5ff'x
         'spa4': col = long('0055ff'x)
+        '3s4t': col = long('0033aa'x)
      endcase
      x = ii+1
-     oplot, [x], [means[ii]], psym = 1, col = col
+     oplot, [x], [means[ii]], psym = 1, col = col, symsize = 2
      oploterror, x, out[2,ii], out[4,ii]-out[2,ii], /hibar, psym = 8, $
                  col = col, errcol = col
      oploterror, x, out[2,ii], out[2,ii]-out[0,ii], /lobar, $

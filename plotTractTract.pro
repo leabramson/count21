@@ -18,7 +18,7 @@ pro plotTractTract, newData, oldData, $
      endif
   endfor
   oldD = oldD[keep]
-  newD = newD[hit]
+  newD = newD[newInds]
   
   oldRaw    = total(oldD.RAWCOUNTS, 1)
   oldRawErr = sqrt(oldRaw / oldD.NCOUNTERS)
@@ -29,10 +29,10 @@ pro plotTractTract, newData, oldData, $
   newTot    = mean(total(newD.COUNTS, 1), dim = 1)
   newRawErr = sqrt(newRaw / newD.NCOUNTERS)
   newTotErr = stddev(total(newD.COUNTS, 1), dim = 1)
-  if keyword_set(test) then begin
-     newRaw += randomn(seed, n_elements(oldRaw)) * oldRaw/2
-     newTot = 1.4 * newRaw
-  endif
+;  if keyword_set(test) then begin
+;     newRaw += randomn(seed, n_elements(oldRaw)) * oldRaw/2
+;     newTot = 1.4 * newRaw
+;  endif
   
   delRaw    = newRaw - oldRaw
   delRawErr = sqrt(newRawErr^2 + oldRawErr^2)
@@ -41,21 +41,29 @@ pro plotTractTract, newData, oldData, $
 
 ;  window, 0, xsize = 800, ysize = 800
   !p.multi = [0,2,0]
-  
   plot, oldRaw, newRaw, psym = 1, /iso, $
-        xran = minmax(oldRaw), yran = minmax(newRaw), $
+        xran = minmax(oldRaw)>0, yran = minmax(newRaw)>0, $
         xtitle = 'old counts [obj]', ytitle = 'new counts [obj]', /nodat
   one_one
   oploterror, oldRaw, newRaw, oldRawErr, newRawErr, $
               psym = 1, /nohat
+  oplot, oldRaw, newRaw, psym = 1, col = 'ffa500'x
 
   plot, oldTot, newTot, psym = 1, /iso, $
-        xran = minmax(oldTot), yran = minmax(newTot), $
+        xran = minmax(oldTot)>0, yran = minmax(newTot)>0, $
         xtitle = 'old pop [ppl]', ytitle = 'new pop [ppl]', /nodat
   one_one
   oploterror, oldTot, newTot, oldTotErr, newTotErr, $
-              psym = 1, /nohat
+              psym = 1, /nohat, col = 'ffa500'x
+  oplot, oldTot, newTot, psym = 1, col = 'ffa500'x
+  
+  print, f= '(%"Old total obj: %i")', total(oldRaw)
+  print, f= '(%"New total obj: %i")', total(newRaw)
+  print, f= '(%"Old total ppl: %i")', total(oldTot)
+  print, f= '(%"New total pp;: %i")', total(newTot)
 
+  stop
+  
   !p.multi = 0
   s = sort(delRaw)
 
