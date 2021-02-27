@@ -1,10 +1,12 @@
 ;; Tract by tract comparison between years
 
-pro plotTractTract, newData, oldData, test = test
+pro plotTractTractOfficial, newData;, $
+;                            region = region
 
-  oldd = mrdfits(oldData, 1)
+  foo  = mrdfits('official2020occupancies.fits', 1)
   newd = mrdfits(newData, 1)
-
+  oldD = trans2020official(foo, wts = newD.WTS[3:7]) ;; ensure same weights used year on year at least
+  
   ;; sort, align, cull
 
   keep    = []
@@ -19,15 +21,25 @@ pro plotTractTract, newData, oldData, test = test
   oldD = oldD[keep]
   newD = newD[newInds]
   
-  oldRaw    = total(oldD.RAWCOUNTS, 1)
-  oldRawErr = sqrt(oldRaw / oldD.NCOUNTERS)
-  oldTot    = mean(total(oldD.COUNTS, 1), dim = 1)
-  oldTotErr = stddev(total(oldD.COUNTS, 1), dim = 1)
+  oldRaw    = oldD.TOT_OBJ
+  oldRawErr = sqrt(oldRaw)
+  oldTot    = oldD.TOT_PPL
+  oldTotErr = oldRawErr * mean(newD[0].WTS[3:7])
 
-  oldTypes    = total(oldD.RAWCOUNTS, 2)
-  oldTypesErr = sqrt(oldTypes / oldD.NCOUNTERS)
+;  if strupcase(region) eq 'HWOOD' then $
+;     oldtypes = [410,0,0,55,48,32,222,64,0] $
+;  else if strupcase(REGION) eq 'EHO' then $
+;     oldtypes = [164,0,0,29,58,11,94,113,0]
+
+  oldtypes = [410,0,0,55,48,32,222,64,0] + [164,0,0,29,58,11,94,113,0]
+  
+  oldTypesErr = sqrt(oldTypes)
   newTypes    = total(newD.RAWCOUNTS, 2)
   newTypesErr = sqrt(newTypes / newD.NCOUNTERS)
+  newTypes[0] += total(newTypes[[1,2,8]])
+  newTypes[[1,2,8]] = 0
+  newTypesErr[0] += sqrt(total(newTypesErr[[1,2,8]]^2))
+  newTypesErr[[1,2,8]] = 0
   
   newRaw    = total(newD.RAWCOUNTS, 1)
   newTot    = mean(total(newD.COUNTS, 1), dim = 1)
@@ -42,7 +54,7 @@ pro plotTractTract, newData, oldData, test = test
 ;  window, 0, xsize = 800, ysize = 800
   !p.multi = [0,2,0]
   plot, oldRaw, newRaw, psym = 1, /iso, $
-        xran = minmax(oldRaw)>0, yran = minmax(newRaw)>0, $
+        xran = [0,max([oldRaw,newRaw])], yran = [0,max([oldRaw,newRaw])], $
         xtitle = 'old counts [obj]', ytitle = 'new counts [obj]', /nodat
   one_one
   oploterror, oldRaw, newRaw, oldRawErr, newRawErr, $
@@ -50,7 +62,7 @@ pro plotTractTract, newData, oldData, test = test
   oplot, oldRaw, newRaw, psym = 1, col = 'ffa500'x
 
   plot, oldTot, newTot, psym = 1, /iso, $
-        xran = minmax(oldTot)>0, yran = minmax(newTot)>0, $
+        xran = [0,max([oldToT,newTot])], yran = [0,max([oldTot,newTot])], $
         xtitle = 'old pop [ppl]', ytitle = 'new pop [ppl]', /nodat
   one_one
   oploterror, oldTot, newTot, oldTotErr, newTotErr, $
@@ -62,22 +74,27 @@ pro plotTractTract, newData, oldData, test = test
   print, f= '(%"Old total ppl: %i")', total(oldTot)
   print, f= '(%"New total pp;: %i")', total(newTot)
 
-  stop
+;  stop
 
+  tags = ['Persons', newD[0].TAGS[3:7]]
+
+  inds = [0,3,4,5,6,7]
+  
   !p.multi = 0
-  cgbarplot, oldTypes, barwidth = 0.25, baroffset = 1, $
+  cgbarplot, oldTypes[inds], barwidth = 0.25, baroffset = 1, $
              col = '777777'x, barspace = 0.75, barcoord = bx      
-  cgbarplot, newTypes, barwidth = 0.25, baroffset = 2, $
+  cgbarplot, newTypes[inds], barwidth = 0.25, baroffset = 2, $
              col = 'ffa500'x, barspace = 0.75, /over, barcoord = bx2
-  oploterror, bx, oldTypes, oldTypesErr, psym = 3, barcol = 0
-  oploterror, bx2, newTypes, newTypesErr, psym = 3, barcol = 'ff0000'x
+  oploterror, bx, oldTypes[inds], oldTypesErr[inds], psym = 3, barcol = 0
+  oploterror, bx2, newTypes[inds], newTypesErr[inds], psym = 3, barcol = 'ff0000'x
   for ii = 0, n_elements(bx) - 1 do $
-     cgtext, bx[ii], -20, oldD[0].TAGS[ii], align = 0.5, orien = 15           
+     cgtext, 0.5*(bx+bx2)[ii], -50, strcompress(tags[ii],/rem), align = 0.5;, orien = 15           
+  plotsym, 8, /fill
   legend, /top, /right, $
-          ['OLD counts', 'NEW counts'], $
+          ['2020 raw counts', '2021 raw counts'], $
           col = ['777777'x, 'ffa500'x], psym = 8, $
           pspacing = 0.5, textcol = 0
-  stop
+;  stop
 
   s = sort(delRaw)
 
@@ -90,20 +107,29 @@ pro plotTractTract, newData, oldData, test = test
   netRawErr = sqrt(total(newRawErr^2 + oldRawErr^2))
   netTot    = total(newTot - oldTot)
   netTotErr = sqrt(total(newTotErr^2 + oldTotErr^2))
+
+  eho = where(newD[s].EASTFLAG)
+
+  foo = idProTracts(newD[s].Tract)
+  pros = where(foo)
   
   window, 0, xsize = 1000, ysize = 800
   cgbarplot, delRaw[s], ytitle = greek('Delta')+' [counts or ppl]', $
-             barcoord = bx, baroffset = 1, barwidth = 0.25, barspace = 0.75, col = '777777'x, yr = minmax([delTot,delRaw])
+             barcoord = bx, baroffset = 1, barwidth = 0.3, barspace = 0.75, $
+             col = '777777'x, yr = [-50,50], /ys
   cgbarplot, delTot[s], /over, $
-             barcoord = bx2, baroffset = 2, barwidth = 0.25, barspace = 0.75, col = 'ffa500'x
+             barcoord = bx2, baroffset = 2, barwidth = 0.3, barspace = 0.75, col = 'ffa500'x
   oploterror, bx, delRaw[s], delRawErr[s], psym = 3, /nohat, errcol = 0
   oploterror, bx2, delTot[s], delTotErr[s], psym = 3, /nohat, errcol = 'ff0000'x
   oplot, !X.CRANGE, [0,0], thick = 4, col = 0
+  for ii = 0, total(foo) - 1 do $
+     cgtext, 0.5*(bx+bx2)[pros[ii]], 5, /data, "pro", charsize = 1, charthick = 2, col = 0, align = 0.5
   for ii = 0, n_elements(bx) - 1 do $
-     cgtext, 0.5 * (bx + bx2)[ii], !Y.CRANGE[0] - 0.1 * (!Y.CRANGE[1]-!Y.CRANGE[0]), $
-             string(oldD[s[ii]].TRACT, f = '(F7.2)'), align = 0.5, orien = 45, /data, col = 0
+     cgtext, 0.5 * (bx + bx2)[ii], !Y.CRANGE[0] - 0.05 * (!Y.CRANGE[1]-!Y.CRANGE[0]), $
+             string(oldD[s[ii]].TRACT, f = '(F7.2)'), align = 0.5, orien = 45, /data, col = 0, $
+             charsize = 1
   plotsym, 8, /fill
-  legend, /top, /left, $
+  legend, /bottom, /right, $
           ['counts', 'people', $
            '!18N!X!Draw, up!N: '+string(nupRaw, f = '(I0)')+' ('+string(nupRawSig, f = '(I0)')+')', $
            '!18N!X!Dttot, up!N: '+string(nupTot, f = '(I0)')+' ('+string(nupTotSig, f = '(I0)')+')', $
@@ -112,5 +138,6 @@ pro plotTractTract, newData, oldData, test = test
           col = ['777777'x, 'ffa500'x, replicate(0, 4)], psym = [8,8,replicate(0,4)], linesty = replicate(0, 6), $
           pspacing = 0.5, textcol = 0
   
+  stop
   
 end

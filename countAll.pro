@@ -749,30 +749,30 @@ pro multiWts
           ['SPA4', 'SPA4 w/ T=1.1', 'City', 'CD13'], $;, 'CD4', 'Mean(CD4,13)'], $
           psym = 8, col = [0,'ffa500'x,'00a5ff'x,long('0000ff'x)], $;,'bbbbbb'x,'ff0000'x], $
           charsize = 1, textcol = 0
-  
-  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+
+  countAll, 'countHollywood2021.fits', 1d4, $
             output = 'hwoodCVRTMtests/2020.fits'
-  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+  countAll, 'countHollywood2021.fits', 1d4, $
             output = 'hwoodCVRTMtests/2019.fits', $
             peaks = [1.393,1.657,1.905,1.264,1.804], $
             stderrs = [0.16,0.16,0.20,0.11,0.18]
-  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+  countAll, 'countHollywood2021.fits', 1d4, $
             output = 'hwoodCVRTMtests/2021.fits', $
             peaks = p2021
-  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+  countAll, 'countHollywood2021.fits', 1d4, $
             output = 'hwoodCVRTMtests/city.fits', $
             peaks = cityWts, stderrs = cityErrs
-  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+  countAll, 'countHollywood2021.fits', 1d4, $
             output = 'hwoodCVRTMtests/cd13.fits', $
             peaks = cd13Wts, stderrs = cd13Errs
-  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+  countAll, 'countHollywood2021.fits', 1d4, $
             output = 'hwoodCVRTMtests/cd13spa4.fits', $
             peaks = cd13spa4, stderrs = cd13spa4Errs
   cd13spa4t = cd13spa4
   cd13Spa4t[3] = 1.1
   cd13spa4terrs = cd13spa4errs
   cd13spa4terrs[3] = 0.07
-  countAll, '2020sandbox/retry2020_hwoodOnly.fits', 1d4, $
+  countAll, 'countHollywood2021.fits', 1d4, $
             output = 'hwoodCVRTMtests/13s4t.fits', $
             peaks = cd13spa4t, stderrs = cd13spa4tErrs
 
@@ -800,7 +800,7 @@ pro plotMultiWts, lastyear
      cts = cts[sort(cts)]
      out[*,ii] = cts[ceil(n_elements(cts) * pctles) - 1]
      print, wtnames[ii], out[*,ii]
-     means[ii] = total(total(d.RAWCOUNTS, 2) * d[0].WTS
+     means[ii] = total(total(d.RAWCOUNTS, 2) * d[0].WTS)
   endfor
   null = where(wtnames eq '2020')
 ;  nullOut = out[*,null]
