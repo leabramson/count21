@@ -4,7 +4,7 @@
 function scaleToMean, struct
 
   rawCts = struct.RAWCOUNTS
-  wts    = [1,1,1,struct[0].WTS,1]
+  wts    = struct[0].WTS
   catRaw = total(rawCts, 2)
   raw    = total(catRaw * wts)
 

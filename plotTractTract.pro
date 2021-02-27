@@ -25,14 +25,15 @@ pro plotTractTract, newData, oldData, $
   oldTot    = mean(total(oldD.COUNTS, 1), dim = 1)
   oldTotErr = stddev(total(oldD.COUNTS, 1), dim = 1)
 
+  oldTypes    = total(oldD.RAWCOUNTS, 2)
+  oldTypesErr = sqrt(oldTypes / oldD.NCOUNTERS)
+  newTypes    = total(newD.RAWCOUNTS, 2)
+  newTypesErr = sqrt(newTypes / newD.NCOUNTERS)
+  
   newRaw    = total(newD.RAWCOUNTS, 1)
   newTot    = mean(total(newD.COUNTS, 1), dim = 1)
   newRawErr = sqrt(newRaw / newD.NCOUNTERS)
   newTotErr = stddev(total(newD.COUNTS, 1), dim = 1)
-;  if keyword_set(test) then begin
-;     newRaw += randomn(seed, n_elements(oldRaw)) * oldRaw/2
-;     newTot = 1.4 * newRaw
-;  endif
   
   delRaw    = newRaw - oldRaw
   delRawErr = sqrt(newRawErr^2 + oldRawErr^2)
@@ -63,8 +64,22 @@ pro plotTractTract, newData, oldData, $
   print, f= '(%"New total pp;: %i")', total(newTot)
 
   stop
-  
+
   !p.multi = 0
+  cgbarplot, oldTypes, barwidth = 0.25, baroffset = 1, $
+             col = '777777'x, barspace = 0.75, barcoord = bx      
+  cgbarplot, newTypes, barwidth = 0.25, baroffset = 2, $
+             col = 'ffa500'x, barspace = 0.75, /over, barcoord = bx2
+  oploterror, bx, oldTypes, oldTypesErr, psym = 3, barcol = 0
+  oploterror, bx2, newTypes, newTypesErr, psym = 3, barcol = 'ff0000'x
+  for ii = 0, n_elements(bx) - 1 do $
+     cgtext, bx[ii], -20, oldD[0].TAGS[ii], align = 0.5, orien = 15           
+  legend, /top, /right, $
+          ['OLD counts', 'NEW counts'], $
+          col = ['777777'x, 'ffa500'x], psym = 8, $
+          pspacing = 0.5, textcol = 0
+  stop
+
   s = sort(delRaw)
 
   nUpRaw    = total(delRaw gt 0)

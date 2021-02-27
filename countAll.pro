@@ -89,6 +89,11 @@ pro countAll, datafile, niter, $
   
   ;; cull bad data
   if total(tag_names(data) eq "FLAG") gt 0 then begin
+
+     ;; KLUDGE -- NEEDS VISUAL RECHECK
+;     data[where(data.TRACT eq '1901.00' AND $
+;                strcompress(data.COUNTER,/rem) eq 'ramorri2@gmail.com')].FLAG = 1
+
      bad = where(data.FLAG, compl = good, nbad)
      if nbad gt 0 then $
         for ii = 0, nbad-1 do $
@@ -209,7 +214,7 @@ pro countAll, datafile, niter, $
               TAGS: ['Adults','TAY','Minors',$
                      'Cars', 'Vans', 'RVs', $
                      'Tents', 'Makeshifts', 'Families'], $
-              WTS: peaks, $
+              WTS: [1,1,1,peaks,1], $
               WTERRS: [0,0,0,$
                        carSig,vanSig,rvSig,$
                        tentSig,makeSig,0]}
@@ -666,10 +671,16 @@ pro runit, csv
   lastYear = 1058.
   td = data[where(~data.EASTFLAG)]
   mwrfits, td, 'hwood2021results.fits', /create
-  findNullWeights, 'hwood2021Results.fits', lastYear
+;  findNullWeights, 'hwood2021Results.fits', lastYear
   cts = total(total(td.COUNTS, 3), 1)
   print, getCountProb(cts, lastYear)
 
+  lastYear = 656.
+  td = data[where(data.EASTFLAG)]
+  mwrfits, td, 'eho2021results.fits', /create
+  cts = total(total(td.COUNTS, 3), 1)
+  print, getCountProb(cts, lastYear)
+  
 end
 
 
@@ -789,7 +800,7 @@ pro plotMultiWts, lastyear
      cts = cts[sort(cts)]
      out[*,ii] = cts[ceil(n_elements(cts) * pctles) - 1]
      print, wtnames[ii], out[*,ii]
-     means[ii] = total(total(d.RAWCOUNTS, 2) * [1,1,1,d[0].WTS,1])
+     means[ii] = total(total(d.RAWCOUNTS, 2) * d[0].WTS
   endfor
   null = where(wtnames eq '2020')
 ;  nullOut = out[*,null]

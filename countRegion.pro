@@ -209,7 +209,7 @@ pro countRegion, datafile, niter, $
               TAGS: ['Adults','TAY','Minors',$
                      'Cars', 'Vans', 'RVs', $
                      'Tents', 'Makeshifts', 'Families'], $
-              WTS: peaks, $
+              WTS: [1,1,1,peaks,1], $
               WTERRS: [0,0,0,$
                        carSig,vanSig,rvSig,$
                        tentSig,makeSig,0]}
