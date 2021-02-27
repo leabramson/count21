@@ -1,62 +1,3 @@
-function drawDist, x, pdf, n, $
-                   normalize = normalize
-
-  dx = x[1] - x[0]
-  cdf = total(pdf * dx, /cum)
-  
-  if keyword_set(normalize) then cdf /= max(cdf)
-
-  out = x[value_locate(CDF, randomu(seed, n))]
-
-  RETURN, out
-end
-
-;;
-;;
-;;
-
-function genFunc, x, peak, sigma, cutoff
-
-  func = 1./sqrt(sigma^2 * 2 * !pi) $
-         * exp(-0.5 * (x-peak)^2/sigma^2)
-
-  func[where(x lt cutoff)] = 0
-
-  func /= total(func * (x[1]-x[0]))
-  
-  RETURN, func
-end
-
-;;
-;;
-;;
-
-function findSig, x, peak, sigi, sigf, $
-                  nsteps = nsteps, $
-                  ntile = ntile, $
-                  cutoff = cutoff, $
-                  target = target
-
-  if NOT keyword_set(ntile) then ntile = 0.95
-  
-  dsig = (sigf - sigi)/(nsteps-1)
-  sigran = findgen(nsteps) * dsig + sigi
-  nout = fltarr(nsteps)
-  for ii = 0, nsteps - 1 do begin
-     foo = genFunc(x, peak, sigran[ii], 1)
-     cdf = total(foo, /cum)
-     nout[ii] = x[value_locate(cdf, ntile * cdf[-1])]
-  endfor
-
-  sigma = (sigran[value_locate(nout, target)] > min(sigran)) < max(sigran)
-  
-  RETURN, sigma
-end
-
-;;
-;;
-;;
-
 pro countAll, datafile, niter, $
               output = output, $
               wtTargets = wtTargets, $ ;; DEPRECATED
@@ -72,12 +13,6 @@ pro countAll, datafile, niter, $
   nppl  = [674., 1117., 930., 3050., 1990.]
   se    = [50., 141., 102., 122., 190.]
   
-  ;; Standard errors on the means
-  ;; They seem to find the weight by N_tot/N_obj, and then use the
-  ;; "standard error" on N_tot to define the error on the weight.
-  ;; The error on N_tot, however, is like 2-4x sqrt(N_tot),
-  ;; so one could assume the 95% limit is "1" standard error on the mean...
-  ;; I dunno; I'll default 2 for now.
   if NOT keyword_set(STDERRS) then $
      stderrs = [0.11, 0.22, 0.15, 0.06, 0.16] ;; 2020 SPA4
   ;; [0.47,1.08,1.26,0.84,0.93] CD 13 2020
@@ -89,11 +24,6 @@ pro countAll, datafile, niter, $
   
   ;; cull bad data
   if total(tag_names(data) eq "FLAG") gt 0 then begin
-
-     ;; KLUDGE -- NEEDS VISUAL RECHECK
-;     data[where(data.TRACT eq '1901.00' AND $
-;                strcompress(data.COUNTER,/rem) eq 'ramorri2@gmail.com')].FLAG = 1
-
      bad = where(data.FLAG, compl = good, nbad)
      if nbad gt 0 then $
         for ii = 0, nbad-1 do $
