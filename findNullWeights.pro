@@ -1,12 +1,13 @@
 pro findNullWeights, data, target
 
 ;  data = mrdfits(resFile, 1)
-  peaks = [1.38,1.68,1.32,1.45,1.64] ;; 2020
-  bestWeights = [1,1,1, peaks, 1]
+;  peaks = [1.38,1.68,1.32,1.45,1.64] ;; 2020
+;  bestWeights = [1,1,1, peaks, 1]
 ;  input = transpose([[data.ADULT],[data.TAY],[data.MINOR],$
 ;                     [data.CAR],[data.VAN],[data.RV],$
 ;                     [data.TENT],[data.MAKESHIFT], [data.FAMILY]])
   input = data.RAWCOUNTS
+  bestWeights = data.WTS
   
   ;; Best simple guess at this year's count
   if n_elements(data) gt 1 then $
@@ -52,6 +53,9 @@ pro findNullWeights, data, target
      nEmpty = rawTot[3+ii] - nTargTents            ;; number of this year's tents that have to be empty
      nullFracs[ii] = nEmpty / rawTot[3+ii]
   endfor
+
+  
+  
   tags = ['car', 'van', 'RV', 'tent', 'mkshft']
   print, f = '(%"Zero delta requires CVRTM mean occupancies of:")'
   for ii = 0, n_elements(peaks) - 1 do $

@@ -168,90 +168,6 @@ end
 ;;
 ;;
 
-pro summarize, resfile
-
-  data     = mrdfits(resfile, 1)
-  eHoDat   = data[where(data.EASTFLAG, compl = Hwood, nEho)]
-  hWoodDat = data[Hwood]
-  nHwood   = n_elements(hWoodDat)
-
-  ;; Print summary stats
-  
-  for ii = 0, 2 do begin
-     case ii of
-        0: begin $
-           d = data
-           region = 'GREATER HOLLYWOOD'
-        end
-        1: begin
-           d = eHoDat
-           region = 'EAST HOLLYWOOD'
-        end
-        2: begin
-           d = hWoodDat
-           region = 'HOLLYWOOD'
-        end
-     endcase
-
-;     ;; debias
-;     d = debias(d)
-     
-     means = mean(d.COUNTS, dim = 2)
-     errs  = stddev(d.COUNTS, dim = 2)
-
-     tot    = total(means)
-     totErr = 2*sqrt(total(errs^2))
-
-     s = size(means, /dim)
-     if n_elements(s) gt 1 then begin
-        totStruct     = total(means, 2)
-        totStructErrs = 2*sqrt(total(errs^2, 2))
-     endif else begin
-        totStruct     = means
-        totStructErrs = 2*errs
-     endelse
-     
-
-;     print, " THE FOLLOWING ESTIMATES HAVE NOT BEEN DE-BIASED! BEWARE OF MEDIANS! "
-;     print, ""
-     
-     tstring = "*** SUMMARY FOR "+region+" (95% conf.) ***"
-     print, ''
-     print, tstring
-     print, replicate('-', strlen(tstring)/2)
-     print, f = '(%"Total: %i+/-%i")', round(tot), round(totErr)
-     for jj = 0, n_elements(d[0].TAGS) - 1 do $
-        print, f = '(%" > %s: %i+/-%i (%4.1f\%)")', d[0].TAGS[jj], $
-               round(totStruct[jj]), round(totStructErrs[jj]), $
-               round(totStruct[jj]/tot*100)
-     
-  endfor
-
-  
-;  print, f = '(%"\nMedian: %i")', totals[n/2-1]
-;  print, f = '(%"Mode  : %i")', mode
-;  print, f = '(%"68\% CI: %i--%i")', totals[0.16*n-1], totals[0.84*n-1]
-;  print, f = '(%"90\% CI: %i--%i")', totals[0.05*n-1], totals[0.95*n-1]
-;  print, f = '(%"90\% CL: +/-%i (%i\%)")', $
-;         (totals[0.05*n-1] - totals[0.95*n-1])/(-2), $
-;         (totals[0.05*n-1] - totals[0.95*n-1])/(-2)/totals[n/2-1]*100
-;  print, f = '(%"\n >>> DATA BY CLASS <<<\n")'
-;  for ii = 0, n_elements(tags) - 1 do $
-;     print, f = '(%"%9s: %3i +/- %2i")', tags[ii], data.(ii), $
-;            sqrt(data.(ii)) > 1
-;  print, f = '(%"\n >>> CONTRIBUTION BY CLASS (95\% CL) <<<\n")'
-;  for ii = 0, n_elements(tags) - 1 do $
-;     print, f = '(%"%9s: %2i\% +/- %2i\%")', tags[ii], $
-;            mean(output[ii,*]/total(output, 1)) * 100, $
-;            2 * stddev(output[ii,*]/total(output, 1)) * 100
-  
-
-end
-
-;;
-;;
-;;
-
 pro makePlots, resFile
 
   data     = mrdfits(resfile, 1)
@@ -587,10 +503,15 @@ end
 
 pro runit, csv
 
+  cd13spa4 = [1.51,1.77,1.42,1.48,1.68]  ;; SPA4-derived! -- this should be the default
+  cd13spa4errs = [0.25,0.42,0.28,0.11,0.31]
+
   fitsCount, csv, 'countHollywood2021.fits'
   data = mrdfits('countHollywood2021.fits', 1)
   hoTractLookup, data.TRACT
-  countAll, 'countHollywood2021.fits', 1d4, output = 'countHollywoodResults2021.fits'
+  countAll, 'countHollywood2021.fits', 1d4, $
+            output = 'countHollywoodResults2021.fits', $
+            peaks = cd13Spa4, stderrs = cd13spa4errs
   summarize, 'countHollywoodResults2021.fits'
   makeplots, 'countHollywoodResults2021.fits'
   data = mrdfits('countHollywoodResults2021.fits', 1)
@@ -649,7 +570,7 @@ pro multiWts
   cd13wts = [1.10,1.16,1.74,1.40,1.22]         ;; LOCAL!
   cd13errs = [0.47,1.08,1.26,0.84,0.93]/1.96
 
-  cd13spa4 = [1.51,1.77,1.42,1.48,1.68]  ;; SPA4-derived!
+  cd13spa4 = [1.51,1.77,1.42,1.48,1.68]  ;; SPA4-derived! -- this should be the default
   cd13spa4errs = [0.25,0.42,0.28,0.11,0.31]
   
   cd4Wts = [0.92,2.10,1.77,1.67,2.06]
@@ -682,10 +603,10 @@ pro multiWts
 
   countAll, 'countHollywood2021.fits', 1d4, $
             output = 'hwoodCVRTMtests/2020.fits'
-  countAll, 'countHollywood2021.fits', 1d4, $
-            output = 'hwoodCVRTMtests/2019.fits', $
-            peaks = [1.393,1.657,1.905,1.264,1.804], $
-            stderrs = [0.16,0.16,0.20,0.11,0.18]
+;  countAll, 'countHollywood2021.fits', 1d4, $
+;            output = 'hwoodCVRTMtests/2019.fits', $
+;            peaks = [1.393,1.657,1.905,1.264,1.804], $
+;            stderrs = [0.16,0.16,0.20,0.11,0.18]
   countAll, 'countHollywood2021.fits', 1d4, $
             output = 'hwoodCVRTMtests/2021.fits', $
             peaks = p2021
@@ -712,7 +633,8 @@ end
 ;;
 ;;
 
-pro plotMultiWts, lastyear
+pro plotMultiWts, lastyear, $
+                  region = region
 
   spawn, 'ls hwoodCVRTMtests/*.fits > test.list'
   readcol, 'test.list', files, f = 'A'
@@ -723,21 +645,55 @@ pro plotMultiWts, lastyear
   out = fltarr(5,nfiles)
   means = fltarr(nfiles)
   pctles = [0.05,0.25,0.5,0.75,0.95]
+  dcv = fltarr(nfiles)
   for ii = 0, nfiles - 1 do begin
+
      d = mrdfits(files[ii], 1)
-     d = d[where(d.EASTFLAG eq 0)]
+
+     if strupcase(region) eq 'HWOOD' then begin        
+        d = d[where(d.EASTFLAG eq 0)]
+        lastYear = 1058.
+        if ii eq 0 then begin
+           ;; boost the C & V numbers to 2020
+           dc = 55 - total(d.RAWCOUNTS[3])
+           dv = 48 - total(d.RAWCOUNTS[4])
+        endif
+     endif else if strupcase(region) eq 'EHO' then begin
+        d = d[where(d.EASTFLAG)]
+        lastYear = 656.
+        if ii eq 0 then begin
+           ;; boost the C & V numbers to 2020
+           dc = 29 - total(d.RAWCOUNTS[3])
+           dv = 58 - total(d.RAWCOUNTS[4])
+        endif
+     endif
+
+     dcv[ii] = total([dc,dv] * d[0].WTS[[3,4]])
+     
      cts = total(total(d.COUNTS,3),1)
+     
+     p1 = getCountProb(cts, lastYear)
+     p2 = getCountProb(cts + dcv[ii], lastYear)
+     
      cts = cts[sort(cts)]
      out[*,ii] = cts[ceil(n_elements(cts) * pctles) - 1]
-     print, wtnames[ii], out[*,ii]
+     print, wtnames[ii], [out[[0,2,4],ii], p1]
+     print, wtnames[ii], [out[[0,2,4],ii] + dcv[ii], p2]
      means[ii] = total(total(d.RAWCOUNTS, 2) * d[0].WTS)
   endfor
   null = where(wtnames eq '2020')
 ;  nullOut = out[*,null]
 ;  nullName = 'SPA4 2020'
+  case strupcase(region) of
+     'HWOOD': title = 'Hollywood CoC'
+     'EHO': title = 'East Hollywood CoC'
+  endcase
   plot, [0,nfiles], minmax(out), /nodat, $
-        xtickname = replicate(' ', 60), yr = minmax(out), $
-        xtickint = 1, yminor = 5, ytitle = 'Unsheltered persons'
+        xtickname = replicate(' ', 60), yr = lastyear * [0.7,1.1], $
+        xtickint = 1, yminor = 5, ytitle = 'Unsheltered persons', $
+        ysty = 8+1, title = title, pos = [0.13,0.15,0.85,0.9]
+  axis, yaxis = 1, yr = (!y.CRANGE / lastYear - 1)*100, /ysty, $
+        ytitle = '% change from 2020'
   xxx = !X.CRANGE[[0,0,1,1]]
   yyy = out[*,null]
   polyfill, xxx, yyy[[0,4,4,0]], col = 'ffa500'x
@@ -745,23 +701,29 @@ pro plotMultiWts, lastyear
   oplot, !X.CRANGE, replicate(lastYear,2), thick = 4, linesty = 5
   oplot, !X.CRANGE, yyy[2] * [1,1], col = 'ff0000'x
   oplot, !X.CRANGE, means[null[0]] * [1,1], col = 'ff0000'x, linesty = 2
+  oplot, !X.CRANGE, (means[null[0]] + dcv[null[0]]) * [1,1], col = 'ff0000'x, linesty = 4
   cgtext, 0.025, yyy[4]-20, /data, "SPA-4 2020 CVRTM", col = 'ff0000'x, $
           charthick = 2
   plotsym, 0, /fill
   out = [[out[*,0:null-1]], [out[*,null+1:*]]]  
   wtnames = [wtnames[0:null-1],wtnames[null+1:*]]
   means = [means[0:null-1], means[null+1:*]]
+  dcv = [dcv[0:null-1], dcv[null+1:*]]
+;  plotsym, 0
+  cgloadct, 33, ncol = nfiles, clip = [10,240]
   for ii = 0, nfiles - 2 do begin
-     case wtnames[ii] of
-        '2019': col = 'cccccc'x
-        '2021': col = 'ffff00'x
-        'cd13': col = long('0000ff'x)
-        'city': col = '00a5ff'x
-        'spa4': col = long('0055ff'x)
-        '3s4t': col = long('0033aa'x)
-     endcase
+;     case wtnames[ii] of
+;        '2019': col = 'cccccc'x
+;        '2021': col = 'ffff00'x
+;        'cd13': col = long('0000ff'x)
+;        'city': col = '00a5ff'x
+;        'spa4': col = long('0055ff'x)
+;        '3s4t': col = long('0033aa'x)
+;     endcase
+     col = cgcolor(string(fix(ii)))
      x = ii+1
      oplot, [x], [means[ii]], psym = 1, col = col, symsize = 2
+     oplot, [x], [means[ii]+dcv[ii]], psym = 8, col = col, symsize = 2
      oploterror, x, out[2,ii], out[4,ii]-out[2,ii], /hibar, psym = 8, $
                  col = col, errcol = col
      oploterror, x, out[2,ii], out[2,ii]-out[0,ii], /lobar, $
@@ -769,5 +731,169 @@ pro plotMultiWts, lastyear
      cgtext, x, !Y.CRANGE[0]-40, /data, wtnames[ii], align = 0.5
   endfor
   cgtext, nfiles*0.975,lastyear+20,/data, "last year's estimate", align = 1
+  
+end
+
+;;
+;;
+;;
+
+pro plotRange, region
+
+  if strupcase(region) eq 'HWOOD' then $
+     output = 'hwoodFinal.eps' $
+  else if strupcase(region) eq 'EHO' then $
+     output = 'ehoFinal.eps'
+
+  d0 = mrdfits('hwoodCVRTMtests/cd13spa4.fits', 1)
+  d1  = mrdfits('hwoodCVRTMtests/13s4t.fits', 1)
+
+  case strupcase(region) of
+     'HWOOD': begin
+        lastYear = 1058.
+        use = where(~d0.EASTFLAG)
+        ;; C & V numbers from 2020
+        c20 = 55
+        v20 = 48
+        title = 'Hollywood CoC'
+        tscol = 'ffa500'x
+        scol  = 'ff5500'x
+        mcol  = 'ff0000'x
+        lcol = 'ff0000'x
+        ll = 0.7 & hl = 1.1
+     end
+     'EHO': begin
+        lastYear = 656.
+        use = where(d0.EASTFLAG)
+        ;; C & V numbers from 2020
+        c20 = 29
+        v20 = 58
+        title = 'East Hollywood CoC'
+        tscol = 'ffa500'x
+        scol  = long('0055ff'x)
+        mcol  = long('0000ff'x)
+        lcol = '0000ff'x
+        ll = 0.6 & hl = 1.2
+     end
+  endcase
+
+  d0 = d0[use]
+  d1 = d1[use]
+  
+  ;; boost the C & V numbers to 2020
+  dc = c20 - total(d0.RAWCOUNTS[3])
+  dv = v20 - total(d0.RAWCOUNTS[4]) ;; raw counts are the same in d1 and d0
+  
+  dcv = [total([dc,dv] * d0.WTS[[3,4]]), $
+         total([dc,dv] * d1.WTS[[3,4]])]
+
+  ;; total counts
+  cts0 = total(total(d0.COUNTS,3),1)
+  cts1 = total(total(d1.COUNTS,3),1)
+
+  p0   = getCountProb(cts0, lastYear)
+  p0cv = getCountProb(cts0 + dcv[0], lastYear)
+
+  p1   = getCountProb(cts1, lastYear)
+  p1cv = getCountProb(cts1 + dcv[1], lastYear)
+
+  pctles = [0.05,0.16,0.50,0.84,0.95]
+  
+  cts0 = cts0[sort(cts0)]
+  cts1 = cts1[sort(cts1)]
+
+  out = fltarr(n_elements(pctles),2)
+  out[*,0] = cts0[ceil(n_elements(cts0) * pctles) - 1]
+  out[*,1] = cts1[ceil(n_elements(cts1) * pctles) - 1]
+
+  print, 'CD13/SPA4 Baseline                        ', [out[[0,2,4],0], p0]
+  print, 'CD13/SPA4 Baseline with 2020 CV           ', [out[[0,2,4],0]+dcv[0], p0CV]
+  print, 'CD13/SPA4 Baseline with 2020 CV and 2021 T', [out[[0,2,4],1]+dcv[1], p1cv]
+  print, 'CD13/SPA4 Baseline with 2021 T            ', [out[[0,2,4],1], p1]
+
+  ps = [p0,p0cv,p1cv,p1]
+  
+  medians = [out[2,0], out[2,0]+dcv[0], out[2,1]+dcv[1], out[2,1]]
+  maxs    = [out[4,0], out[4,0]+dcv[0], out[4,1]+dcv[1], out[4,1]]
+  mins    = [out[0,0], out[0,0]+dcv[0], out[0,1]+dcv[1], out[0,1]]
+  ih      = [out[3,0], out[3,0]+dcv[0], out[3,1]+dcv[1], out[3,1]]
+  il      = [out[1,0], out[1,0]+dcv[0], out[1,1]+dcv[1], out[1,1]]
+
+  set_plot, 'PS'
+  device, filename = output, $
+          /col, /encap, /decomp, bits_per_pix = 8
+  !p.charthick = 4
+  !p.charsize = 1.25
+  !X.Thick = 4
+  !Y.Thick = 4
+
+  lye = sqrt(lastYear) * mean(d0.WTS)
+
+  ;; find chance of being the same as 2020
+;  run = findgen(1200)
+;  pe = fltarr(n_elements(medians))
+  err = 0.5 * (ih - il)
+  print, 1-gauss_pdf(abs((medians - lastYear) / sqrt(err^2 + lye^2))) ;; chance the things are the same
+
+  plotsym, 0, /fill
+  plot, findgen(6), medians, yr = lastyear * [ll,hl], xr = [0.3,4.5], /xs, $
+        xtickname = replicate(' ', 60), $
+        xminor = 1, xtickint = 1, /nodat, ytitle = 'Unsheltered people', $
+        yminor = 5, ysty = 8+1, title = title, pos = [0.13,0.15,0.85,0.9]
+  axis, yaxis = 1, yr = (!y.CRANGE / lastYear - 1)*100, /ysty, $
+        ytitle = '% change from 2020', yminor = 5
+;  polyfill, !X.CRANGE[[0,1,1,0]], lastYear + lye * 2 * [-1,-1,1,1], $
+;            col = 'aaaaaa'x, /line_fill, orien = 45, thick = 1, spacing = 0.025
+;  polyfill, !X.CRANGE[[0,1,1,0]], lastYear + lye * [-1,-1,1,1], $
+;            col = '777777'x, /line_fill, orien = -45, thick = 1, spacing = 0.025
+  oplot, !X.CRANGE, replicate(lastYear, 2), thick = 10, col = lcol
+  x = [1,2,3,4]
+;  polyfill, [x,reverse(x)], [mins, reverse(maxs)], col = tscol, $
+;            /line_fill, orien = -60, thick = 1, spacing = 0.025
+;  polyfill, [x,reverse(x)], [ih, reverse(il)], col = scol, $
+;            /line_fill, orien = 60, thick = 1, spacing = 0.025
+;  oplot, x, medians, linesty = 2, thick = 6, col = mcol
+  cols = [0,'0055ff'x,'0055ff'x,'ffa500'x]
+  ecols = [0,'777777'x,'777777'x,0]
+  ss   = [2,1.25,1.25,2]
+  key = ['2020!C!18CVRTM!X', 'match!Ccar/van', 'match!Ccar/van!Cmod !18T!X', '2020!C!18CVRTM!X!Cmod !18T!X']
+  for ii = 0, n_elements(medians) - 1 do begin
+     oploterror, x[ii], medians[ii], (ih-medians)[ii], $
+                 /hibar, psym = 3, errthick = 10, /nohat, errcol = ecols[ii]
+     oploterror, x[ii], medians[ii], (maxs-medians)[ii], $
+                 /hibar, psym = 3, errthick = 5, /nohat, errcol = ecols[ii]
+     oploterror, x[ii], medians[ii], (medians-il)[ii], $
+                 /lobar, psym = 3, errthick = 10, /nohat, errcol = ecols[ii]
+     oploterror, x[ii], medians[ii], (medians-mins)[ii], $
+                 /lobar, psym = 3, errthick = 5, /nohat, errcol = ecols[ii]
+
+     oplot, [x[ii]], [medians[ii]], psym = 8, symsize = ss[ii], col = cols[ii]
+     if ii eq 2 then $
+        oplot, [x[ii]], [medians[ii]], psym = 8, symsize = 0.75, col = cols[ii+1]
+     if ii ne 0 then $
+        cgtext, x[ii], mins[ii]-15, string((1-ps[ii])*100, f='(I0)')+'%', $
+                charsize = 1, col = '777777'x, align = 0.5 $
+     else $
+        cgtext, x[ii], mins[ii]-20, 'chance increase!Cover 2020: '+string((1-ps[ii])*100, f='(I0)')+'%', $
+                charsize = 1, col = '777777'x, align = 0.5
+     cgtext, x[ii], !y.CRANGE[0]-20, key[ii], align = 0.5, charsize = 1.25, charthick = 4
+  endfor  
+  legend, /top, /left, box = 0, /clear, $
+          ['2020 LAHSA weights', 'modified weights', 'modified data'], $
+          psym = 8, col = [0,'ffa500'x,'0055ff'x], $
+          pspacing = 0.5, charsize = 1.1
+  plotsym, 0, thick = 6
+  cgtext, !X.CRANGE[1]-0.05, lastyear+25, /data, 'LAHSA 2020', align = 1
+  oplot, x[[0,3]], medians[[0,3]], psym = 8, symsize = 3
+  cgtext, x[0]+0.35, medians[0]-0.6*(medians-il)[0], 'Baseline', align = 0.5
+  cgtext, x[3]-0.35, medians[3]-0.6*(medians-il)[3], 'Best!Cestimate', align = 0.5
+  
+;  oploterror, x, medians, maxs-medians, /hibar, psym = 8, errthick = 6, symsize = 2
+;  oploterror, x, medians, medians-mins, /lobar, psym = 8, errthick = 6, symsize = 2
+
+  device, /close
+  spawn, 'open '+output+' &'
+  set_plot, 'X'
+  
   
 end

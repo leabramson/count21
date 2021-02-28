@@ -17,10 +17,12 @@ pro charDupes, dataFits
 
   forComp = where(ncount gt 1, nutract)
   utract = utract[forComp]
+
+  ;; make it individuals
   
-  input = transpose([[data.ADULT],[data.TAY],[data.MINOR],$
+  input = transpose([[data.ADULT+data.TAY+data.MINOR],$
                      [data.CAR],[data.VAN],[data.RV],$
-                     [data.TENT],[data.MAKESHIFT], [data.FAMILY]])
+                     [data.TENT],[data.MAKESHIFT]]);, [data.FAMILY]])
   ncat = n_elements(input[*,0])
 
   comp = fltarr(ncat, nutract)
@@ -44,13 +46,19 @@ pro charDupes, dataFits
      endif
   endfor
 
-  plot, abs(mean(comp, dim = 2, /nan)), yr = [0,2], xr = [-1,9], $
-        xtickname = [' ', 'A', 'TAY', 'UM', 'C', 'V', 'R', 'T', 'M', 'F', ' '], $
-        xticks = 10, $
-        ytitle = '|n!D1!N-n!D0!N|/sqrt(n!D1!N+n!D0!N)', xminor = 1
-  oplot, stddev(comp, dim = 2, /nan), linesty = 2
-  oplot, stddev(comp, dim = 2, /nan)/sqrt(nutract), col = 255  
+  stop
 
+;  qui = where(data.TRACT ne 1901.00)
+  
+  plot, findgen(ncat), abs(mean(comp, dim = 2, /nan)), yr = [0,2], xr = [-1,6], $
+        xtickname = [' ', 'P', 'C', 'V', 'R', 'T', 'M', ' '], $
+        xticks = 7, xtickint = 1, $
+        ytitle = '|n!D1!N-n!D0!N|/sqrt(n!D1!N+n!D0!N)', xminor = 1
+  oplot, findgen(ncat), stddev(comp, dim = 2, /nan), linesty = 2
+  oplot, findgen(ncat), stddev(comp, dim = 2, /nan)/sqrt(nutract), col = 255  
+
+  stop
+  
   pctles = [0.05,0.16,0.50,0.84,0.95]
   stats = fltarr(ncat,n_elements(pctles))
   for ii = 0, ncat - 1 do begin
@@ -68,7 +76,25 @@ pro charDupes, dataFits
   oploterror, bb[trips,0], bbb, sqrt(bb[trips,0]), sqrt(bbb), psym = 1, /nohat, $
               errcol = 'ff5500'x
 
+  d = findgen(101)-50
+  del = bb[*,1] - bb[*,0] ;; duplicates
+  del = [del, bbb - bb[trips,0]];, bbb-bb[trips,1]] ;; with triplicates to 0th and 1st measurement
+  ebar = sqrt(bb[*,0] + bb[*,1])
+  ebar = [ebar, sqrt(bbb + bb[trips,0])];, sqrt(bbb + bb[trips,1])]
+
+  pdf = fltarr(n_elements(d))
+;  npdf = fltarr(n_elements(d))
+  for ii = 0, n_elements(ebar) - 1 do $
+     pdf += (1./sqrt(2*!pi*ebar[ii]^2) * exp(-0.5 * (d-del[ii])^2/ebar[ii]^2))>0
+;  for ii = 0, n_elements(ebar) - 1 do $
+;     npdf += (1./sqrt(2*!pi*del[ii]^2) * exp(-0.5 * (d-del[ii])^2/del[ii]^2))>0
   
-  stop
+;  plot, d/mean(ebar), pdf/max(pdf), $
+;        xtitle = greek('Delta')+'!18/<!X'+greek('sigma')+'!18>!X', $
+;        ytitle = 'prob', xr = [-3,3]
+;  null = exp(-0.5 * (d*0.1)^2)
+;  oplot, d*(0.1), null/max(null), col = 255
+  
+;  stop
   
 end

@@ -113,30 +113,58 @@ pro plotTractTractOfficial, newData;, $
   foo = idProTracts(newD[s].Tract)
   pros = where(foo)
   
-  window, 0, xsize = 1000, ysize = 800
-  cgbarplot, delRaw[s], ytitle = greek('Delta')+' [counts or ppl]', $
-             barcoord = bx, baroffset = 1, barwidth = 0.3, barspace = 0.75, $
-             col = '777777'x, yr = [-50,50], /ys
-  cgbarplot, delTot[s], /over, $
-             barcoord = bx2, baroffset = 2, barwidth = 0.3, barspace = 0.75, col = 'ffa500'x
-  oploterror, bx, delRaw[s], delRawErr[s], psym = 3, /nohat, errcol = 0
-  oploterror, bx2, delTot[s], delTotErr[s], psym = 3, /nohat, errcol = 'ff0000'x
+  set_plot, 'PS'
+  device, filename = 'tractsYrYr.eps', $
+          /col, /encap, /decomp, bits_per_pix = 8, $
+          xsize = 8, /in
+  !X.THICK = 4
+  !Y.THICK = 4
+  !P.CHARTHICK = 4
+  !P.CHARSIZE = 1.25
+
+  cgbarplot, delRaw[s]>(-50), $
+             ytitle = 'change from 2020 [counts or ppl]', $
+             barcoord = bx, baroffset = 1, $
+             barwidth = 0.3, barspace = 0.75, $
+             col = '777777'x, yr = [-50,50], /ys, $
+             title = 'Tract-by-tract Comparison'
+  cgbarplot, delTot[s]>(-50), /over, $
+             barcoord = bx2, baroffset = 2, $
+             barwidth = 0.3, barspace = 0.75, col = 'ff00ff'x
+
+;  bx = findgen(n_elements(s))
+;  bx2 = bx
+;  plot, bx, delRaw[s], thick = 6, $
+;        xr = [-1,n_elements(s)+1], $
+;        xtickname = replicate(' ', 60), $
+;        ytitle = 'change from 2020 [counts or ppl]', $
+;        yr = [-40,40], /xs
+;  oplot, bx, delTot[s], thick = 6, col = 'ff00ff'ax
+  oploterror, bx, delRaw[s], delRawErr[s], $
+              psym = 3, /nohat, errcol = 0, errthick = 4
+  oploterror, bx2, delTot[s], delTotErr[s], $
+              psym = 3, /nohat, errcol = 'aa00aa'x, errthick = 4
+  plotsym, 0, /fill
+  oplot, bx[pros], delRaw[s[pros]], psym = 8, symsize = 1
+  oplot, bx2[pros], delTot[s[pros]], psym = 8, symsize = 1, col = 'aa00aa'x
   oplot, !X.CRANGE, [0,0], thick = 4, col = 0
-  for ii = 0, total(foo) - 1 do $
-     cgtext, 0.5*(bx+bx2)[pros[ii]], 5, /data, "pro", charsize = 1, charthick = 2, col = 0, align = 0.5
+;  for ii = 0, total(foo) - 1 do $
+;     cgtext, 0.5*(bx+bx2)[pros[ii]], delRaw[s[pros[ii]]]+5, /data, "pro", charsize = 1, charthick = 2, col = 0, align = 0.5
   for ii = 0, n_elements(bx) - 1 do $
      cgtext, 0.5 * (bx + bx2)[ii], !Y.CRANGE[0] - 0.05 * (!Y.CRANGE[1]-!Y.CRANGE[0]), $
-             string(oldD[s[ii]].TRACT, f = '(F7.2)'), align = 0.5, orien = 45, /data, col = 0, $
-             charsize = 1
-  plotsym, 8, /fill
-  legend, /bottom, /right, $
-          ['counts', 'people', $
-           '!18N!X!Draw, up!N: '+string(nupRaw, f = '(I0)')+' ('+string(nupRawSig, f = '(I0)')+')', $
-           '!18N!X!Dttot, up!N: '+string(nupTot, f = '(I0)')+' ('+string(nupTotSig, f = '(I0)')+')', $
+             string(oldD[s[ii]].TRACT, f = '(F7.2)'), align = 0.75, orien = 45, /data, col = 0, $
+             charsize = 0.8
+  legend, /top, /left, box = 0, $
+          ['counts', 'people', 'pro counters'], $
+          col = [0, 'ff00ff'x, 0], psym = [0,0,8], linesty = [0,0,0], thick = 6, pspacing = 0.5
+  legend, /bottom, /right, box = 0, $
+          ['!18N!X!DCTS, up!N: '+string(nupRaw, f = '(I0)')+' ('+string(nupRawSig, f = '(I0)')+')', $
+           '!18N!X!DPPL, up!N: '+string(nupTot, f = '(I0)')+' ('+string(nupTotSig, f = '(I0)')+')', $
            'Net raw: '+string(netRaw, f = '(I0)')+texToIdl('\pm')+string(netRawErr, f = '(I0)'), $
            'Net tot: '+string(netTot, f = '(I0)')+texToIdl('\pm')+string(netTotErr, f = '(I0)')], $
-          col = ['777777'x, 'ffa500'x, replicate(0, 4)], psym = [8,8,replicate(0,4)], linesty = replicate(0, 6), $
-          pspacing = 0.5, textcol = 0
+          linesty = -1, pspacing = 0.5
+  device, /close
+  spawn, 'open tractsYrYr.eps &'
   
   stop
   
