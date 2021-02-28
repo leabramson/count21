@@ -103,6 +103,11 @@ pro plotTractTractOfficial, newData;, $
   nUpTot    = total(delTot gt 0)
   nUpTotSig = total(delTot gt delTotErr)
 
+  nDnRaw    = total(delRaw lt 0)
+  nDnRawSig = total(delRaw lt -delRawErr)
+  nDnTot    = total(delTot lt 0)
+  nDnTotSig = total(delTot lt -delTotErr)
+  
   netRaw    = total(newRaw - oldRaw)
   netRawErr = sqrt(total(newRawErr^2 + oldRawErr^2))
   netTot    = total(newTot - oldTot)
@@ -158,10 +163,12 @@ pro plotTractTractOfficial, newData;, $
           ['counts', 'people', 'pro counters'], $
           col = [0, 'ff00ff'x, 0], psym = [0,0,8], linesty = [0,0,0], thick = 6, pspacing = 0.5
   legend, /bottom, /right, box = 0, $
-          ['!18N!X!DCTS, up!N: '+string(nupRaw, f = '(I0)')+' ('+string(nupRawSig, f = '(I0)')+')', $
-           '!18N!X!DPPL, up!N: '+string(nupTot, f = '(I0)')+' ('+string(nupTotSig, f = '(I0)')+')', $
-           'Net raw: '+string(netRaw, f = '(I0)')+texToIdl('\pm')+string(netRawErr, f = '(I0)'), $
-           'Net tot: '+string(netTot, f = '(I0)')+texToIdl('\pm')+string(netTotErr, f = '(I0)')], $
+          ['!18N!X!Dcounts, up!N: '+string(nupRaw, f = '(I0)')+' ('+string(nupRawSig, f = '(I0)')+')', $
+           '!18N!X!Dcounts, dn!N: '+string(nupRaw, f = '(I0)')+' ('+string(ndnRawSig, f = '(I0)')+')', $
+           '!18N!X!Dpeople, up!N: '+string(nupTot, f = '(I0)')+' ('+string(nupTotSig, f = '(I0)')+')', $
+           '!18N!X!DPeople, dn!N: '+string(nupTot, f = '(I0)')+' ('+string(ndnTotSig, f = '(I0)')+')', $
+           'Net counts: '+string(netRaw, f = '(I0)')+texToIdl('\pm')+string(netRawErr, f = '(I0)'), $
+           'Net people: '+string(netTot, f = '(I0)')+texToIdl('\pm')+string(netTotErr, f = '(I0)')], $
           linesty = -1, pspacing = 0.5
   device, /close
   spawn, 'open tractsYrYr.eps &'

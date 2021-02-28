@@ -74,14 +74,25 @@ pro plotBarNewOld, struct, lastYearRaw, $
      cgtext, tl[ii], -0.1*!Y.CRANGE[1], orien = 15, align = 0.5, strcompress(tags[ii])
   endfor
   plotsym, 8, /fill
-  legend, /top, /right, box=0, $
-          ['LAHSA 2020 PIT', 'Feb 2021', '95% CI'], $
-          psym = [8,8,0], linesty = [0,0,0], col = ['777777'x, col,0], $
-          thick = [1,1,6], pspacing = 0.5
-  cgtext, !X.WINDOW[1]-0.025, 0.65, 'LAHSA PIT total . '+string(total(lastYearRaw), f='(I0)')+textoidl('\pm')+$
-          string(sqrt(total(lastYearRaw)) * 2, f = '(I0)'), /norm, align = 1
-  cgtext, !X.WiNDOW[1]-0.025, 0.6, 'Volunteers ......... '+string(total(tyR), f='(I0)')+textoidl('\pm')+$
-          string(sqrt(total(tyRe^2)) * 2, f = '(I0)'), /norm, align = 1
+  if keyword_set(HWOOD) then begin
+     legend, /top, /right, box=0, $
+             ['LAHSA 2020 PIT', 'Feb 2021', '95% CI'], $
+             psym = [8,8,0], linesty = [0,0,0], col = ['777777'x, col,0], $
+             thick = [1,1,6], pspacing = 0.5
+     cgtext, !X.WINDOW[1]-0.025, 0.65, 'LAHSA PIT total . '+string(total(lastYearRaw), f='(I0)')+textoidl('\pm')+$
+             string(sqrt(total(lastYearRaw)) * 2, f = '(I0)'), /norm, align = 1
+     cgtext, !X.WiNDOW[1]-0.025, 0.6, 'Volunteers ......... '+string(total(tyR), f='(I0)')+textoidl('\pm')+$
+             string(sqrt(total(tyRe^2)) * 2, f = '(I0)'), /norm, align = 1
+  endif else if keyword_set(EHO) then begin
+     legend, pos = [bx[1]-0.2*(bx[1]-bx[0]),170], /data, box=0, $
+             ['LAHSA 2020 PIT', 'Feb 2021', '95% CI'], $
+             psym = [8,8,0], linesty = [0,0,0], col = ['777777'x, col,0], $
+             thick = [1,1,6], pspacing = 0.5
+     cgtext, bx[1]*1.05, 125, 'LAHSA PIT total . '+string(total(lastYearRaw), f='(I0)')+textoidl('\pm')+$
+             string(sqrt(total(lastYearRaw)) * 2, f = '(I0)'), /data, align = 0
+     cgtext, bx[1]*1.05, 115, 'Volunteers ......... '+string(total(tyR), f='(I0)')+textoidl('\pm')+$
+             string(sqrt(total(tyRe^2)) * 2, f = '(I0)'), /data, align = 0
+  endif
   device, /close
   spawn, 'open '+output+' &'
   

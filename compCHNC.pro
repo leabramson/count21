@@ -21,7 +21,7 @@ pro compCHNC
                        [0,0,0,0,0,0,0]])
 
   plot, chncRaw, raw, psym = 1, $
-        xr = [0,90], yr = [0,80], /iso, $
+        xr = [0,80], yr = [0,80], /iso, $
         xtitle = 'July 2020 RAW', $
         ytitle = 'Feb 2021 RAW'
   one_one
