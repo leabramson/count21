@@ -17,74 +17,92 @@ pro charDupes, dataFits
 
   forComp = where(ncount gt 1, nutract)
   utract = utract[forComp]
+  ncount = ncount[forComp]
 
-  ;; make it individuals
+  ;; find total number of pairs
+  ;; one pair for all tracts (t1-t0), then 2 additional pairs for the
+  ;; triplets (t2-t0, t2-t1)
+  ntrips = total(ncount eq 3)
+  np = nutract + 2 * ntrips
   
+  ;; make it individuals
   input = transpose([[data.ADULT+data.TAY+data.MINOR],$
                      [data.CAR],[data.VAN],[data.RV],$
                      [data.TENT],[data.MAKESHIFT]]);, [data.FAMILY]])
   ncat = n_elements(input[*,0])
-  
+
+  ;; outputs
   team1  = fltarr(ncat, nutract)
   team2  = fltarr(ncat, nutract)
   team3  = fltarr(ncat, nutract)
-  rcomp  = fltarr(ncat, nutract,3)
-  rerr   = fltarr(ncat, nutract,3)
-  rtcomp = fltarr(nutract,3)
-  rterr  = fltarr(nutract,3)
+  rcomp  = fltarr(ncat, np)
+  rerr   = fltarr(ncat, np)
+  rtcomp = fltarr(np)
+  rterr  = fltarr(np)
 
-  ntrips = total(ncount eq 3)
-  
-  bb = fltarr(nutract,2)
-  bbb = fltarr(ntrips)
-  for ii = 0, nutract - 1 do begin     
+  meanCounts = fltarr(ncat, np)
+  meanTots = fltarr(np)
+  ptracts = fltarr(np)
 
-     hit = where(tract eq utract[counter], nhit)
+  jj = 0
+  ii = 0
+  while ii lt nutract do begin     
+
+     hit = where(tract eq utract[ii], nhit)
      
-     master = 0
-     slave = 1
+     if nhit eq 2 then ptracts[jj] = utract[ii]
+     if nhit eq 3 then ptracts[jj:jj+nhit-1] = utract[ii]
      
-     team1[*,ii] = input[*,hit[master]]
-     team2[*,ii] = input[*,hit[slave]]
-     rcomp[*,ii,0] = input[*,hit[slave]] - input[*,hit[master]]
-     rerr[*,ii,0]  = sqrt(input[*,hit[master]] + input[*,hit[slave]])
+     master = hit[0]
+     slave  = hit[1]
+     if nhit eq 3 then $
+        trip = hit[2]
      
-     tmp0 = total(input[*,hit[master]])
-     tmp1 = total(input[*,hit[slave]])
+     team1[*,ii] = input[*,master]
+     team2[*,ii] = input[*,slave]
+     rcomp[*,jj] = input[*,slave] - input[*,master]
+     rerr[*,jj]  = sqrt(input[*,master] + input[*,slave])
+     tmp0        = total(input[*,master])
+     tmp1        = total(input[*,slave])
+     rtcomp[jj]  = (tmp1-tmp0)
+     rterr[jj]   = sqrt(tmp1+tmp0)
 
-     rtcomp[ii] = (tmp1-tmp0)
-     rterr[ii]  = sqrt(tmp1+tmp0)
-
-     bb[ii,*] = [tmp0,tmp1]     
+     meanCounts[*,jj] = (input[*,master] + input[*,slave])/2.
+     meanTots[jj]   = (tmp0+tmp1)/2.
+     
      if n_elements(hit) eq 3 then begin
-        tmp2 = total(input[*,hit[2]])
+
+        tmp2 = total(input[*,trip])
+
+        team3[*,ii]   = input[*,trip]
+        rcomp[*,jj+1] = team3[*,jj] - team1[*,jj]
+        rcomp[*,jj+2] = team3[*,jj] - team2[*,jj]
+        rerr[*,jj+1]  = sqrt(team3[*,jj] + team1[*,jj])
+        rerr[*,jj+2]  = sqrt(team3[*,jj] + team2[*,jj])
+        rtcomp[jj+1]  = tmp2 - tmp0
+        rtcomp[jj+2]  = tmp2 - tmp1
+        rterr[jj+1]   = sqrt(tmp2+tmp0)
+        rterr[jj+2]   = sqrt(tmp2+tmp1)
         
-        team3[*,ii]   = input[*,hit[2]]
-        rcomp[*,ii,1] = input[*,hit[2]] - input[*,hit[master]]
-        rcomp[*,ii,2] = input[*,hit[2]] - input[*,hit[slave]]
-        rerr[*,ii,1]  = sqrt(input[*,hit[2]] + input[*,hit[master]])
-        rerr[*,ii,2]  = sqrt(input[*,hit[2]] + input[*,hit[slave]])
-        rtcomp[ii,1]  = tmp2 - tmp0
-        rtcomp[ii,2]  = tmp2 - tmp1
-        rterr[ii,1]   = sqrt(tmp2+tmp0)
-        rterr[ii,2]   = sqrt(tmp2+tmp1)
-        
-        bbb[jj] = tmp2
-        jj++
+        meanCounts[*,jj+1] = (input[*,master]+input[*,trip])/2.
+        meanCounts[*,jj+2] = (input[*,slave]+input[*,trip])/2.
+        meanTots[jj+1]   = (tmp0+tmp2)/2.
+        meanTots[jj+2]   = (tmp1+tmp2)/2.
      endif
      
-  endfor
-  meanCounts = 0.5 * (team1 + team2)
-  meanTots   = 0.5 * (total(team1,1) + total(team2,1))
+     ii++
+     if nhit eq 3 then jj+=nhit else jj++
+
+  endwhile
 
   ;; normalized spread in counter differences, total
   ;; this should be equivalent to root(meanTots)
   nsp = sqrt(rtcomp^2) / sqrt(2)
 
-  norm = where(utract ne 1901.00, compl = oddTract) ;; known shite tract
+  norm = where(ptracts ne 1901.00, compl = oddTract) ;; known shite tract
   
   ;; cut the sample into nths and do the exercise w/ and w/o hot tract
-  nsplit = 2
+  nsplit = 3
   xs = fltarr(nsplit,2)
   ys = fltarr(nsplit,2,2)
   for ii = 0, 1 do begin
@@ -99,10 +117,6 @@ pro charDupes, dataFits
         end
      endcase
 
-     ;; add the triplicates in, which thankfully do not cover the hot
-     ;; tract
-     
-     
      nt = n_elements(tmt)
      s = sort(tmt)
 
@@ -127,10 +141,10 @@ pro charDupes, dataFits
 ;  oplot, meanTots[norm], nsp[norm], psym = 8, symsize = 1, col = '777777'x
   oplot, meanTots, nsp, psym = 8, symsize = 0.7
   oplot, x, sqrt(x), col = 255
-  oploterror, xs[*,0], ys[*,0,0], ys[*,1,0], psym = 8, $
-              errcol = '00a5ff'x, col = '00a5ff'x, symsize = 2
   oploterror, xs[*,1], ys[*,0,1], ys[*,1,1], psym = 8, $
               errcol = 'ffa500'x, col = 'ffa500'x, symsize = 2
+  oploterror, xs[*,0], ys[*,0,0], ys[*,1,0], psym = 8, $
+              errcol = '00a5ff'x, col = '00a5ff'x, symsize = 2
   legend, /top, /left, box = 0, $
           ['tract-level', 'mean', 'mean excl 1901.00', 'Poisson'], $
           psym = [8,8,8,0], linesty = [0,0,0,0], $
@@ -138,26 +152,35 @@ pro charDupes, dataFits
           symsize = [0.7,1.5,1.5,1], pspacing = 0.5, $
           charsize = 1.25
 
-  stop
+  ;'P C V R T M'
+  ;; actual mean-square difference from the counters and its uncertainty
+  sqrd = mean(sqrt(rcomp^2/2),dim=2)
+  esqrd = stddev(sqrt(rcomp^2/2),dim=2)/sqrt(np)
   
-;  print, 'P C V R T M'
-;  print, sqrt(mean(rcomp^2, dim = 2))/sqrt(2)
-;  print, stddev(rcomp, dim = 2, /nan)
-
-  ;; square of the differences per category
-  sqd = sqrt(mean(rcomp^2, dim = 2, /nan))/sqrt(2)
-
   ;; expected poisson noise from avg. occupancy per tract
-  sigd = sqrt(mean(means, dim = 2, /nan))
-  
-  plot, findgen(ncat), sqd, xr = [-1,6], $
-        xtickname = [' ', 'P', 'C', 'V', 'R', 'T', 'M', ' '], $
-        xticks = 7, xtickint = 1, $
-        ytitle = 'sqrt[(n!D1!N-n!D0!N)!E2!N]/sqrt(2)', xminor = 1
-  oplot, findgen(ncat), sigd, linesty = 2
+  sigd = sqrt(mean(meanCounts, dim = 2, /nan))
 
-  stop
+  x = findgen(ncat)
   
+  plot, x, sigd, xr = [-1,6], $
+        xtickname = [' ', '!18P!X', '!18C!X', '!18V!X', $
+                     '!18R!X', '!18T!X', '!18M!X', ' '], $
+        xticks = 7, xtickint = 1, $
+        ytitle = 'sqrt[(n!D1!N-n!D0!N)!E2!N]/sqrt(2)', $
+        xminor = 1, /nodat, yr = [0,5]  
+  polyfill, [x,reverse(x)], [sqrd+esqrd, reverse(sqrd-esqrd)], $
+            col = 'ffa500'x
+  oplot, x, sqrd, col = 'ff0000'x
+  oplot, x, sigd, col = '00a5ff'x, thick = 4
+  plotsym, 8, /fill
+  legend, /top, /right, box = 0, $
+          ['mean, all pairs', 'std. err on mean', 'Poisson'], $
+          psym = [0,8,0], linesty = [0,0,0], $
+          col = ['ff0000'x,'ffa500'x,'00a5ff'x], $
+          symsize = [1,0,0], pspacing = 0.5, $
+          charsize = 1.25
+  
+  if 0 then begin
   pctles = [0.05,0.16,0.50,0.84,0.95]
   stats = fltarr(ncat,n_elements(pctles))
   for ii = 0, ncat - 1 do begin
@@ -187,8 +210,6 @@ pro charDupes, dataFits
   oploterror, bb[trips,0], bbb, sqrt(bb[trips,0]), sqrt(bbb), psym = 1, /nohat, $
               errcol = 'ff5500'x
 
-  stop
-  
   d = findgen(101)-50
   del = bb[*,1] - bb[*,0] ;; duplicates
   del = [del, bbb - bb[trips,0]];, bbb-bb[trips,1]] ;; with triplicates to 0th and 1st measurement
@@ -199,15 +220,6 @@ pro charDupes, dataFits
 ;  npdf = fltarr(n_elements(d))
   for ii = 0, n_elements(ebar) - 1 do $
      pdf += (1./sqrt(2*!pi*ebar[ii]^2) * exp(-0.5 * (d-del[ii])^2/ebar[ii]^2))>0
-;  for ii = 0, n_elements(ebar) - 1 do $
-;     npdf += (1./sqrt(2*!pi*del[ii]^2) * exp(-0.5 * (d-del[ii])^2/del[ii]^2))>0
-  
-;  plot, d/mean(ebar), pdf/max(pdf), $
-;        xtitle = greek('Delta')+'!18/<!X'+greek('sigma')+'!18>!X', $
-;        ytitle = 'prob', xr = [-3,3]
-;  null = exp(-0.5 * (d*0.1)^2)
-;  oplot, d*(0.1), null/max(null), col = 255
-  
-;  stop
+  endif
   
 end
