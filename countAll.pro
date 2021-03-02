@@ -559,73 +559,88 @@ end
 ;;
 
 pro multiWts
-  
-  p2020 = [1.381, 1.682, 1.323, 1.453, 1.643]
-  p2021 = [1.381, 1.682, 1.323, 1.11, 1.643]
-  lahsaErrs = [0.11, 0.22, 0.15, 0.06, 0.16]
-  
-  cityWts = [1.58,1.90,1.64,1.45,1.47]
-  cityErrs = [0.21,0.29,0.27,0.09,0.21]/1.96
 
-  cd13wts = [1.10,1.16,1.74,1.40,1.22]         ;; LOCAL!
-  cd13errs = [0.47,1.08,1.26,0.84,0.93]/1.96
-
+  tw = gen2021t() ;; from 2/28 data by brian and me; 38 tents, 47 total w/ unkns
+  
+  p2020 = [1.381, 1.682, 1.323, 1.453, 1.643] ;; SPA4 in toto
+  p2020errs = [0.11, 0.22, 0.15, 0.06, 0.16]
+  
   cd13spa4 = [1.51,1.77,1.42,1.48,1.68]  ;; SPA4-derived! -- this should be the default
   cd13spa4errs = [0.25,0.42,0.28,0.11,0.31]
-  
-  cd4Wts = [0.92,2.10,1.77,1.67,2.06]
-  cd4errs = [1.52,2.45,1.99,2.40,2.56]/1.96
 
-  hwoodWts = (cd13wts/cd13errs^2 + cd4wts/cd4errs^2) / (1/cd13errs^2 + 1/cd4errs^2)
-  hwoodErrs = sqrt((cd13Errs^2 + cd4Errs^2)/4)
+  p2021 = cd13spa4
+  p2021errs = cd13spa4errs
+  p2021[3] = tw[0]
+  p2021errs[3] = tw[1]
+  
+  p2021m = cd13spa4
+  p2021m[3] = tw[2]
+  p2021merrs = cd13spa4errs
+  p2021merrs[3] = tw[3]
+
+  
+  countAll, 'countHollywood2021.fits', 1d4, $
+            output = 'hwoodCVRTMtests/base2020.fits', $
+            peaks = cd13spa4, stderrs = cd13spa4errs
+  countAll, 'countHollywood2021.fits', 1d4, $
+            output = 'hwoodCVRTMtests/spa42020.fits', $
+            peaks = p2020, stderrs = p2020Errs
+  countAll, 'countHollywood2021.fits', 1d4, $
+            output = 'hwoodCVRTMtests/tent2021.fits', $
+            peaks = p2021, stderrs = p2021errs
+  countAll, 'countHollywood2021.fits', 1d4, $
+            output = 'hwoodCVRTMtests/tmod2021.fits', $
+            peaks = p2021m, stderrs = p2021merrs
+
+  
+;  cd4Wts = [0.92,2.10,1.77,1.67,2.06]
+;  cd4errs = [1.52,2.45,1.99,2.40,2.56]/1.96
+;  hwoodWts = (cd13wts/cd13errs^2 + cd4wts/cd4errs^2) / (1/cd13errs^2 + 1/cd4errs^2)
+;  hwoodErrs = sqrt((cd13Errs^2 + cd4Errs^2)/4)
+;  cityWts = [1.58,1.90,1.64,1.45,1.47]
+;  cityErrs = [0.21,0.29,0.27,0.09,0.21]/1.96
+;  cd13wts = [1.10,1.16,1.74,1.40,1.22]         ;; LOCAL!
+;  cd13errs = [0.47,1.08,1.26,0.84,0.93]/1.96
+
+  spawn, 'rm hwoodCVRTMtets/*.fits'
   
   plotsym, 0, /fill
-  cgbarplot, p2020, barcoord = bx, $
+  cgbarplot, cd13spa4, barcoord = bx, $
              ytitle = 'CVRTM weights', barname = ['C','V','R','T','M'], $
              yran = [0,2.5], /ysty, col = 'ffffff'x
-  oploterror, bx, p2020, lahsaErrs, symsize = 2, psym = 8
-  oploterror, bx, p2021, lahsaErrs, symsize = 1.2, $
+  oploterror, bx, cd13Spa4, cd13Spa4errs, symsize = 2, psym = 8
+  oploterror, bx, p2021, p2021Errs, symsize = 1.2, $
               col = 'ffa500'x, errcol = 'ffa500'x, psym = 8
-  oploterror, bx + replicate(randomn(seed, 1) * (bx[1]-bx[0])/5.,5), $
-              cityWts, cityErrs, symsize = 1.2, $
+  oploterror, bx, p2021m, p2021merrs, symsize = 1.2, $
               col = '00a5ff'x, errcol = '00a5ff'x, psym = 8
-  oploterror, bx + replicate(randomn(seed, 1) * (bx[1]-bx[0])/5.,5), $
-              cd13Wts, cd13Errs, symsize = 1.2, $
-              col = long('0000ff'x), errcol = long('0000ff'x), psym = 8
+;  oploterror, bx + replicate(randomn(seed, 1) * (bx[1]-bx[0])/5.,5), $
+;              cityWts, cityErrs, symsize = 1.2, $
+;              col = '00a5ff'x, errcol = '00a5ff'x, psym = 8
+;  oploterror, bx + replicate(randomn(seed, 1) * (bx[1]-bx[0])/5.,5), $
+;              cd13Wts, cd13Errs, symsize = 1.2, $
+;              col = long('0000ff'x), errcol = long('0000ff'x), psym = 8
 ;  oploterror, bx + randomn(seed, 1) * (bx[1]-bx[0])/5., cd4Wts, cd4Errs, symsize = 1.2, $
 ;              col = 'bbbbbb'x, errcol = 'bbbbbb'x, psym = 8
 ;  oploterror, bx + randomn(seed, 1) * (bx[1]-bx[0])/5., hwoodWts, hwoodErrs, symsize = 1.2, $
 ;              col = 'ff0000'x, errcol = 'ff0000'x, psym = 8
   legend, /top, /left, box = 0, $
-          ['SPA4', 'SPA4 w/ T=1.1', 'City', 'CD13'], $;, 'CD4', 'Mean(CD4,13)'], $
-          psym = 8, col = [0,'ffa500'x,'00a5ff'x,long('0000ff'x)], $;,'bbbbbb'x,'ff0000'x], $
+          ['CD13/SPA4', 'w/ New T', 'w/ Modeled T'], $;, 'CD4', 'Mean(CD4,13)'], $
+          psym = 8, col = [0,'ffa500'x,'00a5ff'x], $;,'bbbbbb'x,'ff0000'x], $
           charsize = 1, textcol = 0
 
-  countAll, 'countHollywood2021.fits', 1d4, $
-            output = 'hwoodCVRTMtests/2020.fits'
 ;  countAll, 'countHollywood2021.fits', 1d4, $
-;            output = 'hwoodCVRTMtests/2019.fits', $
-;            peaks = [1.393,1.657,1.905,1.264,1.804], $
-;            stderrs = [0.16,0.16,0.20,0.11,0.18]
-  countAll, 'countHollywood2021.fits', 1d4, $
-            output = 'hwoodCVRTMtests/2021.fits', $
-            peaks = p2021
-  countAll, 'countHollywood2021.fits', 1d4, $
-            output = 'hwoodCVRTMtests/city.fits', $
-            peaks = cityWts, stderrs = cityErrs
-  countAll, 'countHollywood2021.fits', 1d4, $
-            output = 'hwoodCVRTMtests/cd13.fits', $
-            peaks = cd13Wts, stderrs = cd13Errs
-  countAll, 'countHollywood2021.fits', 1d4, $
-            output = 'hwoodCVRTMtests/cd13spa4.fits', $
-            peaks = cd13spa4, stderrs = cd13spa4Errs
-  cd13spa4t = cd13spa4
-  cd13Spa4t[3] = 1.1
-  cd13spa4terrs = cd13spa4errs
-  cd13spa4terrs[3] = 0.07
-  countAll, 'countHollywood2021.fits', 1d4, $
-            output = 'hwoodCVRTMtests/13s4t.fits', $
-            peaks = cd13spa4t, stderrs = cd13spa4tErrs
+;            output = 'hwoodCVRTMtests/cd13.fits', $
+;            peaks = cd13Wts, stderrs = cd13Errs
+;  countAll, 'countHollywood2021.fits', 1d4, $
+;            output = 'hwoodCVRTMtests/cd13spa4.fits', $
+;            peaks = cd13spa4, stderrs = cd13spa4Errs
+;  cd13spa4t = cd13spa4
+;  cd13Spa4t[3] = 1.1
+;  cd13spa4terrs = cd13spa4errs
+;  cd13spa4terrs[3] = 0.07
+;  countAll, 'countHollywood2021.fits', 1d4, $
+;            output = 'hwoodCVRTMtests/13s4t.fits', $
+;            peaks = cd13spa4t, stderrs = cd13spa4tErrs
 
 end
 
@@ -640,7 +655,11 @@ pro plotMultiWts, lastyear, $
   readcol, 'test.list', files, f = 'A'
   nfiles = n_elements(files)
 
-  wtnames = strmid(strmid(files, 8, /rev), 0 ,4)
+  fn = []
+  for ii = 0, nfiles - 1 do $
+     fn = [fn, (strsplit(files[ii], '/',/extr))[1]]
+  
+  wtnames = strmid(fn, 0 ,4)
 
   out = fltarr(5,nfiles)
   means = fltarr(nfiles)
@@ -649,7 +668,8 @@ pro plotMultiWts, lastyear, $
   for ii = 0, nfiles - 1 do begin
 
      d = mrdfits(files[ii], 1)
-
+;     print, d[0].WTS
+     
      if strupcase(region) eq 'HWOOD' then begin        
         d = d[where(d.EASTFLAG eq 0)]
         lastYear = 1058.
@@ -688,46 +708,28 @@ pro plotMultiWts, lastyear, $
      'HWOOD': title = 'Hollywood CoC'
      'EHO': title = 'East Hollywood CoC'
   endcase
-  plot, [0,nfiles], minmax(out), /nodat, $
-        xtickname = replicate(' ', 60), yr = lastyear * [0.7,1.1], $
+
+  print, [4,6] - [8,5.5]
+  print, [0,4] - [0.5,3.5]
+  
+  plotsym, 0, /fill
+  plot, [-1,nfiles], minmax(out), /nodat, $
+        xtickname = replicate(' ', 60), yr = lastyear * [0.8,1.1], $
         xtickint = 1, yminor = 5, ytitle = 'Unsheltered persons', $
         ysty = 8+1, title = title, pos = [0.13,0.15,0.85,0.9]
+  oplot, !X.CRANGE, lastYear * [1,1], thick = 4
   axis, yaxis = 1, yr = (!y.CRANGE / lastYear - 1)*100, /ysty, $
         ytitle = '% change from 2020'
-  xxx = !X.CRANGE[[0,0,1,1]]
-  yyy = out[*,null]
-  polyfill, xxx, yyy[[0,4,4,0]], col = 'ffa500'x
-  polyfill, xxx, yyy[[1,3,3,1]], col = 'ff5500'x
-  oplot, !X.CRANGE, replicate(lastYear,2), thick = 4, linesty = 5
-  oplot, !X.CRANGE, yyy[2] * [1,1], col = 'ff0000'x
-  oplot, !X.CRANGE, means[null[0]] * [1,1], col = 'ff0000'x, linesty = 2
-  oplot, !X.CRANGE, (means[null[0]] + dcv[null[0]]) * [1,1], col = 'ff0000'x, linesty = 4
-  cgtext, 0.025, yyy[4]-20, /data, "SPA-4 2020 CVRTM", col = 'ff0000'x, $
-          charthick = 2
-  plotsym, 0, /fill
-  out = [[out[*,0:null-1]], [out[*,null+1:*]]]  
-  wtnames = [wtnames[0:null-1],wtnames[null+1:*]]
-  means = [means[0:null-1], means[null+1:*]]
-  dcv = [dcv[0:null-1], dcv[null+1:*]]
-;  plotsym, 0
-  cgloadct, 33, ncol = nfiles, clip = [10,240]
-  for ii = 0, nfiles - 2 do begin
-;     case wtnames[ii] of
-;        '2019': col = 'cccccc'x
-;        '2021': col = 'ffff00'x
-;        'cd13': col = long('0000ff'x)
-;        'city': col = '00a5ff'x
-;        'spa4': col = long('0055ff'x)
-;        '3s4t': col = long('0033aa'x)
-;     endcase
+  cgloadct, 33, ncol = nfiles, clip = [55,200]
+  for ii = 0, nfiles - 1 do begin
      col = cgcolor(string(fix(ii)))
-     x = ii+1
-     oplot, [x], [means[ii]], psym = 1, col = col, symsize = 2
-     oplot, [x], [means[ii]+dcv[ii]], psym = 8, col = col, symsize = 2
+     x = ii
+     oplot, [x], [means[ii]], psym = 1, symsize = 2.5
+     oplot, [x], [means[ii]+dcv[ii]], psym = 2, col = col, symsize = 2
      oploterror, x, out[2,ii], out[4,ii]-out[2,ii], /hibar, psym = 8, $
-                 col = col, errcol = col
+                 col = col, errcol = col, symsize = 2
      oploterror, x, out[2,ii], out[2,ii]-out[0,ii], /lobar, $
-                 col = col, errcol = col
+                 col = col, errcol = col, symsize = 2
      cgtext, x, !Y.CRANGE[0]-40, /data, wtnames[ii], align = 0.5
   endfor
   cgtext, nfiles*0.975,lastyear+20,/data, "last year's estimate", align = 1
@@ -745,8 +747,10 @@ pro plotRange, region
   else if strupcase(region) eq 'EHO' then $
      output = 'ehoFinal.eps'
 
-  d0 = mrdfits('hwoodCVRTMtests/cd13spa4.fits', 1)
-  d1  = mrdfits('hwoodCVRTMtests/13s4t.fits', 1)
+  d0 = mrdfits('hwoodCVRTMtests/base2020.fits', 1)
+  d1 = mrdfits('hwoodCVRTMtests/spa42020.fits', 1)
+  d2 = mrdfits('hwoodCVRTMtests/tent2021.fits', 1)
+  d3 = mrdfits('hwoodCVRTMtests/tmod2021.fits', 1)
 
   case strupcase(region) of
      'HWOOD': begin
@@ -779,29 +783,43 @@ pro plotRange, region
 
   d0 = d0[use]
   d1 = d1[use]
+  d2 = d2[use]
+  d3 = d3[use]
   
   ;; boost the C & V numbers to 2020
   dc = c20 - total(d0.RAWCOUNTS[3])
   dv = v20 - total(d0.RAWCOUNTS[4]) ;; raw counts are the same in d1 and d0
+
+   ;; FOR LOOP GOES HERE
   
   dcv = [total([dc,dv] * d0.WTS[[3,4]]), $
-         total([dc,dv] * d1.WTS[[3,4]])]
+         total([dc,dv] * d1.WTS[[3,4]]), $
+         total([dc,dv] * d2.WTS[[3,4]]), $
+         total([dc,dv] * d3.WTS[[3,4]]) $
+        ]
 
   ;; total counts
   cts0 = total(total(d0.COUNTS,3),1)
   cts1 = total(total(d1.COUNTS,3),1)
-
+  cts2 = total(total(d2.COUNTS,3),1)
+  cts3 = total(total(d3.COUNTS,3),1)
+  
   p0   = getCountProb(cts0, lastYear)
   p0cv = getCountProb(cts0 + dcv[0], lastYear)
-
   p1   = getCountProb(cts1, lastYear)
   p1cv = getCountProb(cts1 + dcv[1], lastYear)
+  p2   = getCountProb(cts2, lastYear)
+  p2cv = getCountProb(cts2 + dcv[0], lastYear)
+  p3   = getCountProb(cts3, lastYear)
+  p3cv = getCountProb(cts3 + dcv[1], lastYear)
 
   pctles = [0.05,0.16,0.50,0.84,0.95]
   
   cts0 = cts0[sort(cts0)]
   cts1 = cts1[sort(cts1)]
-
+  cts2 = cts2[sort(cts2)]
+  cts3 = cts3[sort(cts3)]
+  
   out = fltarr(n_elements(pctles),2)
   out[*,0] = cts0[ceil(n_elements(cts0) * pctles) - 1]
   out[*,1] = cts1[ceil(n_elements(cts1) * pctles) - 1]
