@@ -29,15 +29,15 @@
 \def\resp{respectively}
 
 \title{\bf
-	Results of the 2021 Volunteer Greater Hollywood Homeless Count
+	Results of the 2021 Volunteer Homeless Count in Hollywood
 	}
-\author[*,$\dagger$,$\ddagger$]{Louis Abramson, PhD}%,$\ddagger$
-\affil[*]{\it Hollywood 4WRD Homelessness Coalition, 6255 Sunset Blvd, Ste 150, LA, CA 90028}
-\affil[$\dagger$]{\it Central Hollywood Neighborhood Council, PO Box 93907, LA, CA 90093}
-\affil[$\ddagger$]{\it Carnegie Observatories, 813 Santa Barbara St, Pasadena, CA 91101}
-\affil[ ]{\href{mailto:labramson.chnc@gmail.com}{labramson.chnc@gmail.com}}
-%\affil[$\dagger$]{\it Princeton University, 4 Ivy Lane, Princeton, NJ 08544}
-%\href{mailto:labramson.chnc@gmail.com}{labramson.chnc@gmail.com}}
+\author[1,$\ast$,$\dagger$]{Louis Abramson, PhD}%,$\ddagger$
+%\author[1]{Kerry Morrison}%,$\ddagger$
+%\author[2]{Jackie Vorhauer}%,$\ddagger$
+\affil[1]{\it \small Hollywood 4WRD Homelessness Coalition, 6255 Sunset Blvd, Ste 150, LA, CA 90028}
+\affil[$\ast$]{\it Central Hollywood Neighborhood Council, PO Box 93907, LA, CA 90093}
+\affil[$\dagger$]{\it Carnegie Observatories, 813 Santa Barbara St, Pasadena, CA 91101}
+\affil[ ]{\href{mailto:labramson@carnegiescience.edu}{labramson@carnegiescience.edu}}
 
 \date{\today}                                           % Activate to display a given date or no date
 
@@ -96,9 +96,9 @@ an unsponsored 2021 PIT \Count.
 This document describes the methodology and findings of that \Count, which took place on the night of 
 Thursday, February 25, 2021. Section \ref{sec:procedure} describes data acquisition, analysis, and volunteer
 training protocols. Section \ref{sec:results} present estimates of the unsheltered 
-populations in the Hollywood and East Hollywood CoCs. Section \ref{sec:discussion}
-contextualizes those findings in terms of previous LAHSA results and describes factors that would
-modulate them upwards or downwards. Section \ref{sec:summary} summarizes. Additional information
+populations in the Hollywood and East Hollywood CoCs and contextualizes those findings in terms of 
+previous LAHSA results. Section \ref{sec:systematics} describes factors that would
+modulate them up or down. Section \ref{sec:summary} summarizes. Additional information
 can be found in the Appendix, including a table of tract-level results in each of the survey's 39 US 
 Census tracts.
 
@@ -302,6 +302,32 @@ such a statement is never representative. {\bfr Relaxing this assumption does wh
 \subsection{Duplicate Tract Counts}
 \label{sec:dupes}
 
+Prioritized by raw 2020 counts (Hollywood) or total polulation estimates (EHo). 
+Paired by total counts + geography. 
+Third pass was first pass with tract pairings presented in reverse order.
+\begin{itemize}
+	\item All vol tracts counted at least twice;
+	\item 4 tracts counted 3x;
+	\item One recount DQed for quality flag (1925.20);
+	\item Dupe statistics look pretty good. Mean abs discrepancy is consistent
+		with zero given standard error on mean except for TAY (2.7 sigma) and RVs (3.8).
+		Normalized differences ($|n_{1}-n_{2}|/\sqrt{n_{1}+n_{2}}$) are a little higher
+		than $1\sigma$ ($CVRTM=[1.7, 1.1, -, 1.6, 1.4, 0.6, 1.2, 1.6, -]\sigma$), suggesting 
+		a little more than poisson counting uncertainty, but LEA cross-checked the one
+		highly discrepant ($\sim$8$\sigma$) tract, 1901.00, and found raw counts consistent
+		with the average of the two nighttime datasets ($\sim$9:00 AM 26 Feb). 
+	\item Above holds true for 1912.01, which is in Hwood and also a SELAH recount tract. LEA
+		counted 51 totoal ppl/dwellings 12:30 P on 27 Feb vs 51 by vols night of count.
+\end{itemize}
+
+{\bfr PRO TRACT RAW COUNT SHARE 2020: 44\% (23 tracts)
+
+PRO TRACT RAW COUNT SHARE 2021: 43\% (all tracts)}
+
+{\bfr Barely consistent if all of last year's vans and cars are still here. 95\% confidence limit $996\pm69$ can reach 1065 (v 1058) 
+in Hollywood, $598\pm 59= 657$ vs.\ 656 last yr in E.~Hollywood. BOTH AT 2020 SPA4 WEIGHTS!}
+
+
 \section{Results}
 \label{sec:results}
 
@@ -375,8 +401,8 @@ describes how varying elements of Section \ref{sec:mc}'s analysis modulates thes
 \subsection{Comparison to 2020}
 \label{sec:comp}
 
-\section{Discussion}
-\label{sec:discussion}
+\section{Systematics}
+\label{sec:systematics}
 
 We discuss these potential sources of systematic errors below.
 
@@ -419,6 +445,10 @@ relying on the TAY estimates for anything beyond lower-limits.
 \subsection{CVRTM Biases}
 \label{sec:CVRTM}
 
+Henry Perez: 7/10 tents occupied on Selma
+EPL count: 19/10 tents occupied on S side of EPL
+BID: trend pointing towards 1.1 ppl/tent in Hwood
+
 Less easily handled are potential biases in the CVRTM demographic weights our \Count\ adopts.
 Typically, specialized teams perform detailed interviews of people experiencing homelessness to update 
 these weights in various geographic contexts. However, the cancellation of the official PIT count means
@@ -459,6 +489,11 @@ at least), so we can just find the decline and peg it to 1.45.}
 {\bfr Plot the trend; discuss it in terms of the 2020 value; see what it does; talk about why we don't
 think most of the folks on foot in the SECZ are interlopers.}
 
+\section{Discussion}
+\label{sec:discussion}
+
+PRK effects.
+
 \section{Summary}
 \label{sec:summary}
 
@@ -485,5 +520,22 @@ think most of the folks on foot in the SECZ are interlopers.}
 \end{figure*}
 
 \section{Full Tract-level Results}
+
+
+\begin{table*}[]
+\caption{Tract 1898.00 Unsheltered Data}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcccccccccc}
+\toprule
+ & Adult & TAY & Unacc Minor & Car & Van & RV & Tent & Makeshift & Family & {\bf Total} \\ \cmidrule{1-11}
+Counts & 3 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & {\bf 5} \\
+Inhabitants & 3 (3) & 0 (1) & 0 (1) & 1 (2) & 1 (2) & 1 (2) & 2 (2) & 2 (2) & 0 (1) & {\bf 9 (6)} \\
+Category share & 0.31 (0.29) & 0.03 (0.10) & 0.03 (0.10) & 0.09 (0.18) & 0.10 (0.19) & 0.07 (0.16) & 0.16 (0.23) & 0.18 (0.24) & 0.03 (0.10) & - 
+\\ \bottomrule
+\end{tabular}
+}
+\caption*{Quantities in parentheses denote 95\% uncertainties (binomial in the case of the categories). Uncertainties larger than estimates imply that only upper limits can be stated confidently.}
+\label{tbl:}
+\end{table*}
 
 \end{document}  
