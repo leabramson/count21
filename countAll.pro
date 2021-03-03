@@ -655,6 +655,16 @@ pro plotMultiWts, lastyear, $
   readcol, 'test.list', files, f = 'A'
   nfiles = n_elements(files)
 
+  if strupcase(region) eq 'HWOOD' then begin
+     output = 'hwoodFinal.eps'
+     lycol = 'ff5500'x
+     stt = 0.75
+  endif else if strupcase(region) eq 'EHO' then begin
+     output = 'ehoFinal.eps'
+     lycol = long('0055ff'x)
+     stt = 0.65
+  endif
+  
   fn = []
   for ii = 0, nfiles - 1 do $
      fn = [fn, (strsplit(files[ii], '/',/extr))[1]]
@@ -663,8 +673,9 @@ pro plotMultiWts, lastyear, $
 
   out = fltarr(5,nfiles)
   means = fltarr(nfiles)
-  pctles = [0.05,0.25,0.5,0.75,0.95]
+  pctles = [0.05,0.16,0.5,0.84,0.95]
   dcv = fltarr(nfiles)
+  ps = fltarr(nfiles,2)
   for ii = 0, nfiles - 1 do begin
 
      d = mrdfits(files[ii], 1)
@@ -693,12 +704,14 @@ pro plotMultiWts, lastyear, $
      cts = total(total(d.COUNTS,3),1)
      
      p1 = getCountProb(cts, lastYear)
-     p2 = getCountProb(cts + dcv[ii], lastYear)
+     p2 = getCountProb(cts + dcv[ii],lastYear)
+
+     ps[ii,*] = [p1,p2]
      
      cts = cts[sort(cts)]
      out[*,ii] = cts[ceil(n_elements(cts) * pctles) - 1]
-     print, wtnames[ii], [out[[0,2,4],ii], p1]
-     print, wtnames[ii], [out[[0,2,4],ii] + dcv[ii], p2]
+     print, wtnames[ii], [out[*,ii], p1]
+     print, wtnames[ii], [out[*,ii] + dcv[ii], p2]
      means[ii] = total(total(d.RAWCOUNTS, 2) * d[0].WTS)
   endfor
   null = where(wtnames eq '2020')
@@ -708,31 +721,84 @@ pro plotMultiWts, lastyear, $
      'HWOOD': title = 'Hollywood CoC'
      'EHO': title = 'East Hollywood CoC'
   endcase
-
+  
   print, [4,6] - [8,5.5]
   print, [0,4] - [0.5,3.5]
+
+  lye = 0.7*lastYear/2
+  tye = 0.5 * (out[3,*]-out[1,*])
+  sig = sqrt(lye^2 + tye^2)
+
+  cchange = gauss_pdf((lastYear - out[2,*])/sig)
+  
+  print, out[2,0] / lastYear, 0.5 * (out[4,0]-out[0,0]) / lastYear
+  print, cchange
+  
+  key = ['2020!CSPA4-CD13', '2020!CSPA4', $
+         '2021 !18T!X', '2021 !18T!X!Cnon-resp model']
+
+  set_plot, 'PS'
+  device, filename = output, $
+          /col, /encap, /decomp, bits_per_pix = 8
+  !X.THICK = 4
+  !Y.THICK = 4
+  !P.CHARSIZE = 1.25
+  !P.CHARTHICK = 4
+  !X.TICKLEN = 1d-6
   
   plotsym, 0, /fill
   plot, [-1,nfiles], minmax(out), /nodat, $
-        xtickname = replicate(' ', 60), yr = lastyear * [0.8,1.1], $
-        xtickint = 1, yminor = 5, ytitle = 'Unsheltered persons', $
-        ysty = 8+1, title = title, pos = [0.13,0.15,0.85,0.9]
-  oplot, !X.CRANGE, lastYear * [1,1], thick = 4
+        xtickname = replicate(' ', 60), yr = lastyear * [stt,1.1], $
+        xtickint = 1, yminor = 5, ytitle = 'Unsheltered people', $
+        ysty = 8+1, title = title, pos = [0.13,0.2,0.85,0.9], $
+        xr = [-0.5,nfiles-0.5], /xs, xminor = 1
+  oplot, !X.CRANGE, lastYear * [1,1], thick = 10, col = lycol
+  oplot, !X.CRANGE, out[2,0] * [1,1], linesty = 2, thick = 6, col = '777777'x
   axis, yaxis = 1, yr = (!y.CRANGE / lastYear - 1)*100, /ysty, $
-        ytitle = '% change from 2020'
-  cgloadct, 33, ncol = nfiles, clip = [55,200]
+        ytitle = '% change from 2020', yminor = 5
+  cgloadct, 19, ncol = nfiles, clip = [47,200], /brewer, /rev 
   for ii = 0, nfiles - 1 do begin
      col = cgcolor(string(fix(ii)))
      x = ii
-     oplot, [x], [means[ii]], psym = 1, symsize = 2.5
-     oplot, [x], [means[ii]+dcv[ii]], psym = 2, col = col, symsize = 2
      oploterror, x, out[2,ii], out[4,ii]-out[2,ii], /hibar, psym = 8, $
-                 col = col, errcol = col, symsize = 2
+                 symsize = 2.5, /nohat, thick = 5;, col = '555555'x, errcol = '555555'x
      oploterror, x, out[2,ii], out[2,ii]-out[0,ii], /lobar, $
-                 col = col, errcol = col, symsize = 2
-     cgtext, x, !Y.CRANGE[0]-40, /data, wtnames[ii], align = 0.5
+                 symsize = 2, /nohat, thick = 5;, col = '555555'x, errcol = '555555'x
+     oploterror, x, out[2,ii], out[3,ii]-out[2,ii], /hibar, psym = 8, $
+                 symsize = 2.5, /nohat, thick = 10;, col = '555555'x, errcol = '555555'x
+     oploterror, x, out[2,ii], out[1,ii]-out[0,ii], /lobar, $
+                 symsize = 2, /nohat, thick = 10;, col = '555555'x, errcol = '555555'x
+     oplot, [x], [out[2,ii]], psym = 8, symsize = 2, col = col
+     cgtext, x, !Y.CRANGE[0]-22, /data, key[ii], align = 0.5
+     if ii ne 0 then $
+        cgtext, x, out[0,ii]-15, string(ps[ii,0]*100, f='(I0)')+'%', $
+                charsize = 1, col = '777777'x, align = 0.5 $
+     else $
+        cgtext, x, out[0,ii]-20, string(ps[ii,0]*100, f='(I0)')+'%!Cchance of!Cdecrease', $
+                charsize = 1, col = '777777'x, align = 0.5
   endfor
-  cgtext, nfiles*0.975,lastyear+20,/data, "last year's estimate", align = 1
+  plotsym, 0, thick = 6
+  oplot, [0], [out[2,0]], psym = 8, symsize = 3.5, thick = 6
+  cgtext, !X.CRANGE[0]+0.1,lastyear+15,/data, "LAHSA 2020 estimate", align = 0, col = lycol
+  cgtext, 0+0.15, out[2,0]-22,/data, "Volunteer!C2021!Cbaseline", align = 0
+  cgtext, mean(!X.WINDOW), 0.05, /norm, '!18CVRTM!X weight choice', align = 0.5
+  device, /close
+  spawn, 'open '+output+' &'
+  set_plot, 'X'
+  
+;  c = c[sort(c)]
+;  h = histogram(c, min = 850, max = 1100, bins = 5, loc = bins)
+;  plot, bins, h, psym = 10, xtitle = 'unsheltered people', ytitle = 'probability', xsty = 8+1
+;  axis, xaxis = 1, xr = !Y.CRANGE/1058., /xsty
+;  plot, bins, h, psym = 10, xtitle = 'unsheltered people', ytitle = 'probability', xsty = 8+1
+;  axis, xaxis = 1, xr = !X.CRANGE/1058., /xsty                                               
+;  oplot, 1058.*[1,1], !Y.CRANGE, col = 255
+;  oplot, median(c) * [1,1], !Y.CRANGE, col = 'ff0000'x
+;  foo = getCountProb(c, [0.05,0.25,0.75,0.95], /inv)
+;  oplot, foo[-1] * [1,1], !Y.CRANGE, col = 'ffa500'x, linesty = 2
+;  oplot, foo[-2] * [1,1], !Y.CRANGE, col = 'ffa500'x, linesty = 5
+;  oplot, foo[1] * [1,1], !Y.CRANGE, col = 'ffa500'x, linesty = 5 
+;  oplot, foo[0] * [1,1], !Y.CRANGE, col = 'ffa500'x, linesty = 2
   
 end
 
