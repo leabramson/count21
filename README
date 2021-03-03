@@ -1,0 +1,28 @@
+For analyzing count results:
+
+1. Master program is "countAll.pro". This will turn the count CSV into a fits file,
+   then take the count fits file, average over duplicates, and monte carlo. The countAll
+   subroutine will produce a results fits file, which will have raw counts and population
+   inferences (all monte carlo trials included) for each tract (1 line per tract).
+
+   countAll can take various CVRTM input weights and weight errors, allowing the effects
+   of changing those to be characterized.
+
+   a. The generalized version of countAll is "countRegion.pro", which lacks some hardcoded
+      items specific to Hollywood (e.g., the flag for ID-ing tracts in East Hollywood).
+
+2. The count file can be sent to "charDupes.pro" to characterize inter-conter variance
+   at the tract-integrated and category levels. This will produce a couple of plots to
+   illustrate how multiply counted tract results compare to Poisson expectations.
+
+3. "makePlots.pro", "dumpPremade.pro", and "dumpText.pro" all generate ancillary files for
+   each tract or region. The first generates the output population PDFs, the latter
+   generate text files for the categories in raw counts, population, and population share
+   which can relatively easily be turned into latex tables.
+
+   b. "makeBreakoutTable.pro", "makeRegionTable.pro", and "makeTable.pro" explicitly add
+      latex headers and footers to those outputs, which can then be copy/pasted into
+      a tex file. NB: you have to add the linebreak slashes manually.
+
+4. If a count increased, "findNullWeights.pro" can tell you the CVRTM weights required
+   to null that out. It doesn't work for decreases though.
