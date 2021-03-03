@@ -102,7 +102,7 @@ pro charDupes, dataFits
   norm = where(ptracts ne 1901.00, compl = oddTract) ;; known shite tract
   
   ;; cut the sample into nths and do the exercise w/ and w/o hot tract
-  nsplit = 3
+  nsplit = 4
   xs = fltarr(nsplit,2)
   ys = fltarr(nsplit,2,2)
   for ii = 0, 1 do begin
@@ -110,10 +110,12 @@ pro charDupes, dataFits
         0: begin
            tmt = meanTots
            trt = rtcomp
+           f0 = fn_stats(tmt, sqrt(trt^2/2), n=10)
         end
         1: begin
            tmt = meanTots[norm]
            trt = rtcomp[norm]
+           f1 = fn_stats(tmt, sqrt(trt^2/2), n=10)
         end
      endcase
 
@@ -132,26 +134,48 @@ pro charDupes, dataFits
      endfor
   endfor
 
+  set_plot, 'PS'
+  device, filename = 'intDupeChar.eps', $
+          /col, /encap, /decomp, bits_per_pix = 8
+  !P.CHARTHICK = 4
+  !P.CHARSIZE = 1.25
+  !X.THICK = 4
+  !Y.THICK = 4
+
+  cgloadct, 18, /brewer, ncol = 2, clip = [47,220], /rev
+  c1 = cgcolor(string(0));'69b498'x;'8de0b9'x;
+  c2 = cgcolor(string(1));'da8428'x;          
+  
   plotsym, 0, /fill
   plot, meanTots, nsp, psym = 8, $
         xtitle = '(!18n!X!D1!N+!18n!X!D2!N)!18/!X2 [avg. total people + dwellings]', $
-        ytitle = 'sqrt(!18n!X!D1!N-!18n!X!D2!N)!E2!N!18/!Xsqrt(2)', $
+        ytitle = 'sqrt[(!18n!X!D1!N-!18n!X!D2!N)!E2!N!18/!X2]', $
         /nodat, yr = [0,2*sqrt(max(meanTots))], xr = [0,60]
-  x = findgen(!X.CRANGE[1]-!X.CRANGE[0]) + !X.CRANGE[0]
-;  oplot, meanTots[norm], nsp[norm], psym = 8, symsize = 1, col = '777777'x
-  oplot, meanTots, nsp, psym = 8, symsize = 0.7
-  oplot, x, sqrt(x), col = 255
-  oploterror, xs[*,1], ys[*,0,1], ys[*,1,1], psym = 8, $
-              errcol = 'ffa500'x, col = 'ffa500'x, symsize = 2
-  oploterror, xs[*,0], ys[*,0,0], ys[*,1,0], psym = 8, $
-              errcol = '00a5ff'x, col = '00a5ff'x, symsize = 2
+  x = findgen((!X.CRANGE[1]-!X.CRANGE[0])/0.25+1)*0.25 + !X.CRANGE[0]
+;  oplot, xs[*,1], ys[*,0,1], psym = 8, symsize = 2.5, col = 'aaaaaa'x
+;  oplot, xs[*,0], ys[*,0,0], psym = 8, symsize = 2.5, col = 'aaaaaa'x
+;  oploterror, xs[*,1], ys[*,0,1], ys[*,1,1], psym = 8, $
+;              errcol = c1, col = c1, symsize = 1.5, errthick = 6
+;  oploterror, xs[*,0], ys[*,0,0], ys[*,1,0], psym = 8, $
+;              errcol = c2, col = c2, symsize = 2, errthick = 8
+;  oplot, xs[*,1], ys[*,0,1], psym = 8, symsize = 1.5, col = 'aa00aa'x
+  oplot, meanTots, nsp, psym = 8, symsize = 1.25, col = 'cccccc'x
+  oplot, meanTots, nsp, psym = 8, symsize = 0.75
+  oploterror, f0.LOC, f0.MEAN, f0.SIGMA/sqrt(f0.COUNT), $
+              psym = 8, errcol = c1, col = c1, symsize = 2, errthick = 6
+  oploterror, f1[-1].LOC, f1[-1].MEAN, f1[-1].SIGMA/sqrt(f1[-1].COUNT), $
+              psym = 8, errcol = c2, col = c2, symsize = 2, errthick = 6
+  oplot, x, sqrt(x), col = 255, thick = 6, linesty = 4
   legend, /top, /left, box = 0, $
           ['tract-level', 'mean', 'mean excl 1901.00', 'Poisson'], $
-          psym = [8,8,8,0], linesty = [0,0,0,0], $
-          col = ['ffffff'x,'00a5ff'x,'ffa500'x,'0000ff'x], $
-          symsize = [0.7,1.5,1.5,1], pspacing = 0.5, $
-          charsize = 1.25
+          psym = [8,8,8,0], linesty = [0,0,0,4], $
+          col = [0,c1,c2,'0000ff'x], $
+          symsize = [0.7,1.5,1.5,1], pspacing = 1, $
+          charsize = 1.25, thick = [1,1,1,6]
 
+  device, /close
+;  spawn, 'open intDupeChar.eps &'
+  
   ;'P C V R T M'
   ;; actual mean-square difference from the counters and its uncertainty
   sqrd = mean(sqrt(rcomp^2/2),dim=2)
@@ -161,24 +185,29 @@ pro charDupes, dataFits
   sigd = sqrt(mean(meanCounts, dim = 2, /nan))
 
   x = findgen(ncat)
-  
-  plot, x, sigd, xr = [-1,6], $
+  device, filename = 'catDupeChar.eps', $
+          /col, /encap, /decomp, bits_per_pix = 8
+
+  plot, x, sigd, xr = [-1,6], /xsty, $
         xtickname = [' ', '!18P!X', '!18C!X', '!18V!X', $
                      '!18R!X', '!18T!X', '!18M!X', ' '], $
         xticks = 7, xtickint = 1, $
-        ytitle = 'sqrt[(n!D1!N-n!D0!N)!E2!N]/sqrt(2)', $
-        xminor = 1, /nodat, yr = [0,5]  
-  polyfill, [x,reverse(x)], [sqrd+esqrd, reverse(sqrd-esqrd)], $
-            col = 'ffa500'x
-  oplot, x, sqrd, col = 'ff0000'x
-  oplot, x, sigd, col = '00a5ff'x, thick = 4
-  plotsym, 8, /fill
+        ytitle = 'sqrt[(!18n!X!D1!N-!18n!X!D0!N)!E2!N!18/!X2] (persons or dwellings)', $
+        xminor = 1, /nodat, yr = [0,5], yminor = 2 
+;  polyfill, [x,reverse(x)], [sqrd+esqrd, reverse(sqrd-esqrd)], $
+;            col = 'ffa500'x
+;  oplot, x, sqrd, col = 'ff0000'x
+  oplot, x, sigd, col = '0000ff'x, thick = 10, psym = 10, linesty = 4
+  oploterror, x, sqrd, esqrd, psym = 8, $
+              symsize = 2, errthick = 6, errcol = c1, col = c1
   legend, /top, /right, box = 0, $
-          ['mean, all pairs', 'std. err on mean', 'Poisson'], $
-          psym = [0,8,0], linesty = [0,0,0], $
-          col = ['ff0000'x,'ffa500'x,'00a5ff'x], $
-          symsize = [1,0,0], pspacing = 0.5, $
-          charsize = 1.25
+          ['mean, all pairs, w/ std. err', 'Poisson'], $
+          psym = [8,0], linesty = [0,4], $
+          col = [c1,'0000ff'x], $
+          symsize = [1.4,0], pspacing = 1, thick = [1,6], $
+          charsize = 1.25, spacing = 1.5
+  device, /close
+  spawn, 'open catDupeChar.eps &'
   
   if 0 then begin
   pctles = [0.05,0.16,0.50,0.84,0.95]
@@ -223,3 +252,4 @@ pro charDupes, dataFits
   endif
   
 end
+;chardupes, 'countHollywood2021.fits'

@@ -4,7 +4,7 @@ pro plotBarNewOld, struct, lastYearRaw, $
                    hwood = hwood
 
   if keyword_set(EHO) then begin
-     lastYearRaw = [164.,29.,58.,11.,94.,113.,0]
+     lastYearRaw = [164.,29.,58.,11.,94.,113.,0] ;; from the LAHSA community sheets
      title = 'East Hollywood CoC'
      col = '00a5ff'x
      errcol = long('0055ff'x)
