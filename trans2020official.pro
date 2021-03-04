@@ -2,7 +2,7 @@ function trans2020official, struct, $
                             wts = wts
 
   if not keyword_set(wts) then $
-     wts = [1.51,1.77,1.42,1.48,1.68]                   ;; 2020 Spa4 interp into CD13
+     wts = [1.51,1.77,1.42,1.48,1.68]               ;; 2020 Spa4 interp into CD13
   oth = (struct.TOTAL - struct.PERSONS) / mean(wts) ;; approximation here
   tot = struct.PERSONS + oth
 

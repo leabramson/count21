@@ -18,10 +18,7 @@ pro plotBarNewOld, struct, lastYearRaw, $
   endif
   
   ;; A C V R T M F
-  
-  d = struct  
-  ntracts = n_elements(d)
-  
+    
   thisYearRaw = total(d.RAWCOUNTS, 2)
   thisYearRawErr = d.RAWCOUNTS $
                    / (d.NCOUNTERS ## replicate(1,n_elements(thisYearRaw))) ;; variance per tract
