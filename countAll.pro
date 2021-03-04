@@ -781,6 +781,8 @@ pro plotMultiWts, lastyear, $
   oplot, [0], [out[2,0]], psym = 8, symsize = 3.5, thick = 6
   cgtext, !X.CRANGE[0]+0.1,lastyear+15,/data, "LAHSA 2020 estimate", align = 0, col = lycol
   cgtext, 0+0.15, out[2,0]-22,/data, "Volunteer!C2021!Cbaseline", align = 0
+  cgtext, 0+0.1, out[2,0]+20, /data, string((out[2,0]/lastYear-1)*100, f = '(I0)')+'%'+texToIdl('\pm')+$
+          string(0.5*(out[4,0]-out[0,0])/lastYear*100, f='(I0)')+'%'
   cgtext, mean(!X.WINDOW), 0.05, /norm, '!18CVRTM!X weight choice', align = 0.5
   device, /close
   spawn, 'open '+output+' &'
