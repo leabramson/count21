@@ -41,12 +41,12 @@
 \noindent {\bf Summary:} A complete census of Hollywood and East Hollywood conducted on February 25, 2021 
 suggests that unsheltered homelessness has fallen in these communities by $11\%$ and $15\%$, \resp, since the 
 last LAHSA Point-In-Time (PIT) count. A 30\% drop in individuals seen on the street drives this 
-change (Figure \ref{fig:rawCounts})---enough to reduce the number of identified persons and dwellings in 
-about a third of census tracts (Figure \ref{fig:tcomp}). As this trend holds in tracts assessed by professionals or 
-volunteers and is larger than counting errors can account for, a quantitative decline in unsheltered 
-living should persist even if the average number of people living in tents or makeshift structures is updated. Data 
-from the Coordinated Entry System will reveal whether homelessness has declined in toto, or if COVID-related initiatives 
-reduced only the portion of people living unsheltered in Greater Hollywood.
+change (Figure \ref{fig:rawCounts}), which is enough to reduce the number of identified persons and dwellings in 
+about a third of census tracts. This trend holds in tracts assessed by professionals or volunteers and is larger 
+than counting errors can account for. As such, a quantitative decline in unsheltered living should persist 
+even if the average number of people living in tents or makeshift structures is updated. Data from the Coordinated 
+Entry System will reveal whether homelessness has declined in toto, or if COVID-related initiatives reduced only 
+the portion of people living unsheltered in Greater Hollywood.
 % less than a 93\% chance that 
 %with at least one preliminary survey suggesting such updates may be modest
 %the number of unsheltered people has fallen by at least some amount. %\pm9\% %\pm12\%
@@ -59,11 +59,13 @@ reduced only the portion of people living unsheltered in Greater Hollywood.
 	\centering
 	\includegraphics[width = 0.47\textwidth, trim = 1cm 0cm 0cm 0cm]{Hwood2021Bars}
 	\includegraphics[width = 0.47\textwidth, trim = 1cm 0cm 0cm 0cm]{Eho2021Bars}
-	\caption{Raw tallies of unsheltered persons and dwellings in Hollywood (left) and E.~Hollywood
-			(right) from the 2020 (grey) and 2021 (colors) Point-In-Time counts. Persons, cars, 
-			and vans declined in both communities, RVs and tents remained statistically flat, with 
-			makeshift structures the lone category to show a potential common increase. 
-			These areas were surveyed almost entirely by independent teams.}
+	\caption{Raw tallies of unsheltered persons and dwellings in Hollywood and East Hollywood
+			(left/right) from the 2020 and 2021 PIT counts (grey/colors). Persons, cars, 
+			and vans fell in both communities while RVs and tents stayed statistically flat. 
+			Makeshift structures are the only category to show a potential common increase. 
+			Overall, we identified 208 fewer people and dwellings compared to 2020,
+			with similar 16\% decreases assessed by almost entirely independent teams
+			in both communities.}
 	\label{fig:rawCounts}
 \end{figure*}
 
@@ -84,93 +86,97 @@ Category share & 20\% (3\%) & 1\% (1\%) & 3\% (1\%) & 13\% (3\%) & 4\% (2\%) & 2
 \\ \bottomrule
 \end{tabular}
 }
-\caption*{Parentheses denote 95\% uncertainties (binomial in the case of the categories). Uncertainties larger than estimates 
-imply that only upper limits are available. No unaccompanied minors or families were observed; ``Persons'' are TAY+Adults.}
-\label{tbl:summary}
+\caption*{Parentheses denote 90\% uncertainties. Uncertainties larger than estimates 
+imply that only upper limits are available. ``Persons'' are TAY+Adults; no unaccompanied minors or families were observed.}
+\label{tbl:summary}% (binomial in the case of the categories)
 \end{table*}
 
 \begin{figure*}[t]
 	\centering
 %	\includegraphics[width = 0.8\textwidth, trim = 0cm 0cm 0cm 0cm]{tractsYrYr}
-	\includegraphics[width = 0.8\textwidth, trim = 0cm 0cm 0cm 0cm]{countMapCrop}
+	\includegraphics[width = 0.8\textwidth, trim = 0cm 0.25cm 0cm 0.25cm]{countMap}
 	\caption{The Greater Hollywood PIT survey area with census tracts colored by inferred 
 			changes in total unsheltered population from 2020 (red$+$, blue$-$).
 			Hollywood (21 tracts) spans Crescent Heights/Franklin to 
-			Western/Melrose; E.~Hollywood (18 tracts) spans Hollywood/Western 
-			to Hoover/Beverly. E.~Hollywood saw to the largest tract-level changes,
+			Western/Melrose; East Hollywood (18 tracts) spans Hollywood/Western 
+			to Hoover/Beverly. East Hollywood saw to the largest tract-level changes,
 			with 1912.01 (NE box, volunteer-tallied) rising by 40 people and 1927.00 
-			(SE box, pro-tallied) falling by over 120 people. Subsequent cross-checks of both
-			tracts support the accuracy of their PIT counts.}
+			(SE box, pro-tallied) falling by over 120 people. Subsequent cross-checks 
+			support both tracts' PIT counts.}
 	\label{fig:tcomp}
 \end{figure*}
 
-\begin{figure*}[h!]
-	\centering
-	\includegraphics[width = 0.48\textwidth, trim = 0cm 0.5cm 0cm 0cm]{hwoodFinal}
-	\includegraphics[width = 0.48\textwidth, trim = 0cm 0.5cm 0cm 0cm]{ehoFinal}	
-	\caption{Unsheltered populations in Hollywood (left) and E.~Hollywood (right) 
-			as functions of CVRTM weights. The baseline estimate uses the same weights as the 
-			2020 LAHSA Community Summaries. Using SPA4 weights or replacing the tent 
-			weight, $T$, with results from a survey conducted in Hollywood yields consistent
-			results. All imply at least a 93\% chance that unsheltered homelessness has fallen
-			by some amount, with likely declines of $12\%\pm9\%$ and $15\%\pm12\%$
-			in Hollywood and E.~Hollywood, \resp.}
-	\label{fig:wtComp}
-\end{figure*}
+%\begin{figure*}[h!]
+%	\centering
+%	\includegraphics[width = 0.48\textwidth, trim = 0cm 0.5cm 0cm 0cm]{hwoodFinal}
+%	\includegraphics[width = 0.48\textwidth, trim = 0cm 0.5cm 0cm 0cm]{ehoFinal}	
+%	\caption{Unsheltered populations in Hollywood (left) and East Hollywood (right) 
+%			as functions of CVRTM weights. The baseline estimate uses the same weights as the 
+%			2020 LAHSA Community Summaries. Using SPA4 weights or replacing the tent 
+%			weight, $T$, with results from a survey conducted in Hollywood yields consistent
+%			results. All imply at least a 93\% chance that unsheltered homelessness has fallen
+%			by some amount, with likely declines of $12\%\pm9\%$ and $15\%\pm12\%$
+%			in Hollywood and East Hollywood, \resp.}
+%	\label{fig:wtComp}
+%\end{figure*}
 
-\noindent {\bf Context:} Government, nonprofit, and volunteer organizations in Hollywood---{\it \href{https://chnc.org}
-{The Central Hollywood Neighborhood Council}, \href{https://thecenterinhollywood.org}{The Center
-at Blessed Sacrament}, \href{https://www.myfriendsplace.org/}{My Friend's Place}, Hang Out Do Good, \href{https://hollywood4wrd.live}
-{Hollywood4WRD}, \href{https://www.covenanthouse.org/spring-meal-match?sourceid=2483460&origin=DHQEI2109EZI0N&utm_source=2103marchmealmatchweb&utm_medium=cpc&utm_campaign=FY21MarchMealMatch&utm_content=bsd2103marchmealmatchweb&gclid=CjwKCAiAp4KCBhB6EiwAxRxbpJA2yM7lM2tyAqjVALZgBGvjnhobCJJ0XmuELFDXzM5xxZ0BqyX1ChoCLi0QAvD_BwE}{Covenant House}}, and various resident organizers---conducted 
+\noindent {\bf Context:} Government, nonprofit, and volunteer organizations in Hollywood---{\it \href{https://thecenterinhollywood.org}
+{The Center at Blessed Sacrament}, \href{https://chnc.org}{The Central Hollywood Neighborhood Council}, 
+\href{https://www.covenanthouse.org/spring-meal-match?sourceid=2483460&origin=DHQEI2109EZI0N&utm_source=2103marchmealmatchweb&utm_medium=cpc&utm_campaign=FY21MarchMealMatch&utm_content=bsd2103marchmealmatchweb&gclid=CjwKCAiAp4KCBhB6EiwAxRxbpJA2yM7lM2tyAqjVALZgBGvjnhobCJJ0XmuELFDXzM5xxZ0BqyX1ChoCLi0QAvD_BwE}{Covenant House}, 
+Hang Out Do Good, \href{https://hollywood4wrd.live}{Hollywood4WRD}, 
+ \href{https://www.myfriendsplace.org/}{My Friend's Place}}, and various resident organizers---conducted 
 a PIT enumeration of people experiencing unsheltered homelessness to compensate for 
 the \href{https://laist.com/latest/post/20201209/LAHSA-cancels-2021-homeless-count-los-angeles-covid-19}
-{cancellation} of the official 2021 LAHSA Count. All 39 US Census tracts in the LAHSA-recognized Hollywood 
-and East Hollywood communities were surveyed on 25 February (Figure \ref{fig:tcomp}). Nine tracts---comprising 
-$\sim$43\% of identified individuals and dwellings---were counted by professional outreach teams during the 
+{cancellation} of the official 2021 Count. All 39 US Census tracts in the LAHSA-recognized Hollywood 
+and East Hollywood communities were surveyed on 25 February (Figure \ref{fig:tcomp}). Nine tracts 
+were counted by professional outreach teams during the %---comprising $\sim$43\% of identified individuals and dwellings---
 day. The remainder were surveyed by car-based volunteer teams beginning at 7:00 PM.
 
 Each volunteer team was assigned two tracts in one of the communities. Given high turnout, each tract was 
-surveyed by at least two teams, increasing the accuracy of the count and enabling better error estimates. Tracts 
+surveyed by at least two teams, increasing the accuracy of the count. Tracts 
 surveyed by professionals were counted only once. No volunteer teams and only one professional team counted 
 tracts in both communities, making the two datasets almost entirely independent.
+%and enabling better error estimates
 
 Annual trends are consistent across communities and between volunteer- and professional-counted tracts.
-Six tracts saw significant population increases; 14 saw declines. E.~Hollywood harbors the tracts with both the
-largest increase (1912.01) and decrease (1927.00) since 2020.\\
+Six tracts saw significant population increases; 14 saw declines. The tracts with the largest increase (1912.01) and 
+decrease (1927.00) since 2020 are both in East Hollywood.\\
 %; volunteer-counted; professional-counted
 
-\noindent {\bf Results and uncertainties:} The population inferences in Table \ref{tbl:summary} and 
-Figure \ref{fig:wtComp} reflect 10,000 Monte Carlo resamplings of the survey data with 
+\noindent {\bf Results and uncertainties:} The population inferences in Table \ref{tbl:summary} %and Figure \ref{fig:wtComp} 
+reflect 10,000 Monte Carlo resamplings of the survey data with 
 counts perturbed randomly by their uncertainties. Counts for cars, vans, RVs, tents, and 
 makeshift dwellings (CVRTM) were additionally boosted by the relevant mean occupancy weights 
-perturbed by their own uncertainties. The baseline case---quoted in Table \ref{tbl:summary} and 
-shown in teal in Figure \ref{fig:wtComp}---adopts the 2020 
+perturbed by their own uncertainties. The baseline case adopts the 2020 
+%quoted in Table \ref{tbl:summary} and shown in teal in Figure \ref{fig:wtComp}
 \href{https://www.lahsa.org/documents?id=4635-usc-2018-2020-multipliers-and-estimates-overview}
-{SPA4/CD13 CVRTM weights} underpinning the latest official Hollywood and E.~Hollywood 
+{SPA4/CD13 CVRTM weights} underpinning the latest official Hollywood and East Hollywood 
 \href{https://www.lahsa.org/documents?id=4686-2020-greater-los-angeles-city-community-homelessness-report-service-planning-area-4.pdf}
 {Community Summaries}, from which we also draw 2020 person and CVRTM raw tallies. Those inferences yield 
 $936\pm92$ and $556\pm83$ people experiencing unsheltered homelessness, \resp\ (90\% CI). Modifying the weights
 to their 2020 \href{https://www.lahsa.org/documents?id=4693-2020-greater-los-angeles-homeless-count-cvrtm-conversion-factors}
 {SPA4-wide} values or using data from in-person surveys of tent-dwellers in Hollywood has no
-significant effect (Figure \ref{fig:wtComp}), and all estimates suggest at least a 93\% chance of a decline compared
-to the 2020 Count.
+significant effect.\footnote{Respectively, those inferences suggest $912\pm68$ and $944\pm118$ people
+in Hollywood, and $539\pm59$ and $559\pm87$ in East Hollywood, consistent with baseline results.} 
+All estimates suggest at least a 93\% chance of a decline compared to the 2020 PIT count.
+ % (Figure \ref{fig:wtComp})
 
 Nevertheless, the CVRTM weights represent systematic uncertainties: underestimating them would bias
-our population estimates low and perhaps erode the declines we infer in both communities. While we encourage
-efforts to ascertain current CVRTM occupancies, the declines in unweighted counts are large enough that 
-changes from 2020 must be substantial to bring our estimate in-line with last year's. All else being equal, 
-the average tent would need to shelter (2.8) 2 people in (East) Hollywood vs.\ 1.5 people in 2020. The average 
-makeshift structure would need to shelter (2.5) 2.7 people vs.\ 1.7 people in 2020. Notwithstanding
-a 28 February survey in Hollywood that yielded a tent weight consistent with the 2020 value, 
+our population estimates low and perhaps erode the declines we infer in both communities. We encourage
+efforts to ascertain current CVRTM occupancies, but the declines in unweighted counts are large enough that 
+changes from 2020 must be substantial to bring our population estimate in-line with last year's. All else being equal, 
+the {\it average} tent would need to shelter 2 people in Hollywood and 2.8 people in East Hollywood vs.\ 1.5 people in 2020. 
+The average makeshift structure would need to shelter 2.7 and 2.5 people, \resp, vs.\ 1.7 people a year ago. Notwithstanding
+a 28 Feb.\ survey in Hollywood that yielded a tent weight consistent with the 2020 value, 
 such 30\%--90\% increases in {\it mean} occupancies seem unlikely---especially since known COVID-related
-tent distributions by local providers should push in the opposite direction.\footnote{Given the high proportion of people dwelling in tents
-and makeshift structures, the $T$ and $M$ weights are the largest potential error sources in this analysis. While 
-surveys of the full 2021 PIT area have not been conducted, \href{https://selahnch.org}{\selah} outreach teams 
-surveyed of 47 tents (38 responses) in Hollywood on 28 February, yielding a mean occupancy of 
-$T=1.39\pm0.14$ people per tent, or $T=1.50\pm0.22$ when non-responses are modeled. While $M$ was
-not estimated, both $T$ values are consistent with the official 2020 weight of $T=1.48\pm0.11$.}
+tent distributions by local providers push in the opposite direction.\footnote{The $T$ and $M$ weights are the largest 
+potential error sources in this analysis due to the high proportion of people living in tents and makeshift structures. 
+Full 2021 PIT area have not been conducted, but \href{https://selahnch.org}{\selah} outreach teams surveyed of 47 
+tents (38 responses) in Hollywood on 28 Feb., yielding a mean occupancy of $T=1.39\pm0.14$ people per tent 
+($T=1.50\pm0.22$ when non-responses are modeled). While $M$ was not estimated, that value is consistent 
+with the official 2020 weight of $T=1.48\pm0.11$.}
 
-Multiple cross-checks suggest that the raw counts from our 2021 PIT count are accurate:
+Multiple cross-checks suggest that the raw counts from our 2021 PIT enumeration are accurate:
 \begin{enumerate}
 %	\setlength{\itemsep}{-1ex}
 	\item Comparisons of the count's 37 duplicate tract measurements suggest per-tract and per-category
@@ -188,14 +194,16 @@ Multiple cross-checks suggest that the raw counts from our 2021 PIT count are ac
 %				would induce an artificial year-on-dear decline.				
 %		\end{itemize}
 	\item External data from \href{https://hollywoodpartnership.com/}{\it The Hollywood Partnership} 
-		from 19 Feb.\ are consistent with both the PIT count in a common tract (1902.02) and an independent 
+		from 19 Feb.\ are consistent with both our PIT count in a common tract (1902.02) and an independent 
 		recount of that entire geography performed 28 Feb.% also show a decline from past values and 
 	\item Tracts counted by volunteer and professional teams show consistent trends.
-	\item Counts in Hollywood and E.~Hollywood show consistent trends.% (reduced individuals, flat
+	\item Counts in Hollywood and East Hollywood show consistent trends.% (reduced individuals, flat
 %		or marginally higher dwelling counts).
-	\item Tracts monitored by \selah\ since May 2020 show similar declines to that implied by our data. 
-		One of these tracts is 1912.01 in E.~Hollywood, whose 27 Feb.\ \selah\ estimate  agrees with our 
-		PIT value.% in unsheltered homelessness.
+%	\item Tracts monitored by \selah\ since May 2020 show similar declines to that implied by our data. 
+%		One of these tracts is 1912.01 in East Hollywood, whose 27 Feb.\ \selah\ estimate  agrees with our 
+%		PIT value.% in unsheltered homelessness.
+	\item Tract 1912.01 in East Hollywood is one of four tracts monitored by \selah\ since May 2020. That 
+		group's 27 Feb.\ estimate agrees with our PIT value.% in unsheltered homelessness.
 \end{enumerate}
 
 %		   P	C     V	    R	 T     M
@@ -214,7 +222,7 @@ Multiple cross-checks suggest that the raw counts from our 2021 PIT count are ac
 
 %The pro/vol trends are consistent everywhere except tract 1927.00, 
 %			where pro counts dropped significantly more for both individuals and dwellings (esp.\ 
-%			tents). 1927.00 comprises 22\% of total counts in E.~Hollywood. Unsheltered 
+%			tents). 1927.00 comprises 22\% of total counts in East Hollywood. Unsheltered 
 %			homelessness in that CoC was flat or rose slightly outside of that tract.}
 %{\bfr 1927.00 is the tract with the PATH Madison PSH. Phase II opened in Jan 2020---leasing began May 
 %2020---and is 120 units, some of which were filled from nearby folks but I dunno how many. LEA recounted 
@@ -224,26 +232,26 @@ Multiple cross-checks suggest that the raw counts from our 2021 PIT count are ac
 All of the above suggests that our results are both quantitatively and qualitatively reliable.\\
 
 \noindent {\bf Comments:} The decline we find is largely driven by a $\sim$30\% drop in observed 
-unsheltered individuals in both Hollywood and E.~Hollywood. This reduction may be partially attributable to 
+unsheltered individuals in both Hollywood and East Hollywood. This reduction may be partially attributable to 
 government initiatives aimed at moving people indoors (Project Roomkey) and staunching inflow into homelessness 
 (eviction moratoria). Examining Project Roomkey, \href{https://www.lahsa.org/documents?id=4672-2020-homeless-count-council-district-13}
 {CD13's} share of \href{https://www.lahsa.org/documents?id=4585-2020-greater-los-angeles-homeless-count-los-angeles-continuum-of-care-coc-}{LA County's total unsheltered senior population} (6.5\%) implies that perhaps 100 of its 
 \href{https://projectroomkeytracker.com/}{1608 occupied rooms} were filled with Greater Hollywood 
-residents on the night of the PIT count---enough to account for about half the inferred decline. 
-The opening of at least one {\it A Bridge Home} in Los Feliz---whose catchment area includes Hollywood---may 
-also have contributed, as may the opening of 120 permanent supportive housing units by PATH in May 2020 
-in tract 1927.00. While all of those rooms did not go to local unhoused residents, some may have, thus 
+residents on the night of the PIT count---enough to account for about half the inferred change. 
+The opening of at least one {\it A Bridge Home} site in Los Feliz---whose catchment area includes Hollywood---may 
+also have contributed, as might the opening of 120 permanent supportive housing units by PATH in May 2020 
+in tract 1927.00. While all of the latter rooms did not go to local unhoused residents, some may have, thus 
 helping drive that tract's large observed decrease. 
 
 Data from the Coordinated Entry System should constrain the above possibilities, revealing whether homelessness 
 writ large has fallen since 2020, or just the unsheltered share in Hollywood.
 
-If the numbers have fallen, however, COVID-related closures of restaurants and other facilities that
-provided life support to unhoused people (food, hygiene) have substantially degraded conditions 
-for those left on the street. Reduced sanitation activities and access to mental health and drug treatment centers 
-{\bfr (VERIFY)} have only exacerbated those challenges. Hence, while these data may support the efficacy of 
-programs designed to reduce street homelessness, they do not suggest that the state of homelessness 
-in Hollywood has improved. In the fight to rebuild lives---as well as build homes---such a fact cannot be forgotten.
+If the numbers have fallen, however, conditions for those left on the street have also degraded due to COVID-related 
+closures of restaurants and other facilities proving basic support to unhoused people (food, hygiene). Reduced sanitation 
+activity and access to mental health and drug treatment centers {\bfr (VERIFY)} have only exacerbated those challenges. 
+Hence, while these data may support the efficacy of programs designed to reduce street homelessness, they do not suggest 
+that the state of homelessness in Hollywood has improved. In the fight to rebuild lives---as well as build homes---that fact 
+cannot be forgotten.
 
 %HOLLYWOOD -- Zero delta requires CVRTM mean occupancies of:\\
 % - 5.00 ppl/car (from 1.51)\\
@@ -329,7 +337,7 @@ in Hollywood has improved. In the fight to rebuild lives---as well as build home
 
 % Pro teams counted areas comprising $\sim$43\% of the total raw counts. Three out of these 4 tracts 
 % were counted by Covenant House teams, but 1927.00 has the largest drop of any tract and is Elyse 
-% from The Center. That tract is basically responsible for the entire decline in E.~Hollywood, and most 
+% from The Center. That tract is basically responsible for the entire decline in East Hollywood, and most 
 % of that is in reduced tents, so we should 	talk to these teams.
 
 
