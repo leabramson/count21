@@ -3,8 +3,9 @@ pro dumpText, structure, output
   tract = structure.TRACT
 
   nitem = n_elements(structure.TAGS)  
+  rawcounts = structure.RAWCOUNTS
   cts = structure.COUNTS
-
+     
   ans   = mean(cts, dim = 2)
 ;  errs = stddev(cts, dim = 2)
   fracs = ans / total(ans)
@@ -23,10 +24,12 @@ pro dumpText, structure, output
   close, 1
   openw, 1, output, width = 1024
   printf, 1, f = '(%"#COUNT RESULTS FOR TRACT %7.2f ")', tract
-  printf, 1, f = '(%"#%s %s %s %s %s %s %s %s %s")', structure.TAGS
-  printf, 1, f = '(%"%i %i %i %i %i %i %i %i %i")', structure.RAWCOUNTS
-  printf, 1, f = '(%"%i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i)")', round(outs)
-  printf, 1, f = '(%"%4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f)")', fouts
+  printf, 1, f = '(%"#%s %s %s %s %s %s %s %s %s")', structure[0].TAGS
+  printf, 1, f = '(%"%i %i %i %i %i %i %i %i %i")', rawcounts
+  printf, 1, f = '(%"%i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i) %i(%i)")', $
+          round(outs)
+  printf, 1, f = '(%"%4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f) %4.2f(%4.2f)")', $
+          fouts
   close, 1
   
 
