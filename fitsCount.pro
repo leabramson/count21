@@ -48,7 +48,7 @@ pro fitsCount, infile, outfile, $
               MAKESHIFT: 0., $
               FAMILY   : 0., $
               COUNTER  : '0', $
-;              TALLYFILE: '0', $
+              TIMESTAMP: '0', $
               FLAG     : 0, $
               EAST     : 0}
   savedata = replicate(savedata, nLines)
@@ -64,13 +64,14 @@ pro fitsCount, infile, outfile, $
      savedata[ii].TENT      = tent[ii]      * (1-emptyFrac[3])                   
      savedata[ii].MAKESHIFT = makeshift[ii] * (1-emptyFrac[4])            
      savedata[ii].FAMILY    = family[ii]        
-     savedata[ii].COUNTER   = counter[ii]       
+     savedata[ii].COUNTER   = counter[ii]
+     savedata[ii].TIMESTAMP = timestamp[ii]       
      savedata[ii].FLAG      = flag[ii]
      savedata[ii].EAST      = eHoLookup(tract[ii])
   endfor
   ;; cull quality flagged entries
   savedata = savedata[s] ;; sort by tract
-  bad = where(flag, nbad)
+  bad = where(savedata.FLAG, nbad)
 
   if nbad gt 0 then begin
      for ii = 0, nbad-1 do $
