@@ -228,36 +228,37 @@ CVRTM weights, which may change with future information (see Section \ref{sec:an
 Volunteers were primed only with min/max estimates of tract-level individual+dwelling counts 
 (``0--120'') and the likelihood of encountering unaccompanied minors or families (``very unlikely'')
 or TAY (``in some tracts in Hollywood''). These statements were informed by the 2020 LAHSA PIT 
-results. No other prior count-based information was established to minimize biases.
+results. No other prior count-based information was established to minimize biases. The training 
+presentation is available at: \url{https://drive.google.com/file/d/1xFrtU26yjPuiUv9KHZ3Uj2_sAoT1ClGo/view?usp=sharing}.
 
-The training presentation is available at: \url{https://drive.google.com/file/d/1xFrtU26yjPuiUv9KHZ3Uj2_sAoT1ClGo/view?usp=sharing}.
+In sum, about 20\% of tracts in both communities were counted by professionals. The latter comprised
+roughly 43\% of the total individuals and dwellings counted. Year-on-year trends are consistent between
+volunteer- and professionally counted tracts. The largest increase was observed by volunteers, the largest
+decrease by professionals; both tracts are located in E.~Hollywood.
 
 \subsection{Data Analysis}
 \label{sec:analysis}
 
 The core component of the raw data was a $9\times73$ spreadsheet containing the
-tract-level tallies for each unhoused individual/dwelling class. The scheme of the analysis is:
-\begin{enumerate}
-	\item parse and associate tracts with CoCs;
-	\item identify tracts counted by multiple teams;
-	\item assess tract-level counting errors;
-	\item upweight the CVRTM values by estimates of the CVRTM weights.
-\end{enumerate}
+tract-level tallies for each unhoused individual/dwelling class. Repeat counts of the same
+tract associated with the Hollywood or East Hollywood community, were averaged, and
+unweighted where appropriate by the CVRTM mean occupancies. This process was repeated 
+10,000 times randomly perturbing the counts and weights according to their respective 
+uncertainties (see below). The result is a $9\times10000\times39$ array can then 
+be split and summed to provide aggregate-, tract-, or category-level unsheltered
+population estimates and uncertainties.
 
 Our baseline result incorporates the 2020 SPA-4/CD13 estimates of the CVRTM weights provided
-by LAHSA. These are the best available estimates, but we recognize that COVID-related activities 
-may have significantly changed these quantities. For example, various organizations are know to
-have made a concerted effort to distribute tents between last year's PIT count and ours. We 
-incorporate all known uncertainties in the weights, but---since they represent potential systematic 
-errors---{\bfr analyze the impact of various CVRTM choices in Section \ref{sec:discussion}.}
+by LAHSA. These estimates underpin the latest LAHSA Community Summaries. We recognize 
+that COVID-related activities may have changed these weights---e.g., via concerted tent distribution
+efforts---since the last PIT count and analyze the impact of various CVRTM choices in 
+Section \ref{sec:CVRTM}. However, reasonable modifications---including those based on updated
+occupancy surveys---do not significantly affect our findings.
 
-The resultant $9\times39$ array can then be split and summed to provide CoC-level total counts, 
-or breakdowns of unsheltered individual/dwelling classes.
-
-While an estimate of the underlying population, uncertainties in each visual count and weight 
-must be accounted for to understand how confident one can be that that estimate corresponds to
-the truth. We accomplish this by using Monte Carlo integration to construct the full probability
-distribution functions (PDFs) for the number of unsheltered people of each class in each tract.
+%While an estimate of the underlying population, uncertainties in each visual count and weight 
+%must be accounted for to understand how confident one can be that that estimate corresponds to
+%the truth. We accomplish this by using Monte Carlo integration to construct the full probability
+%distribution functions (PDFs) for the number of unsheltered people of each class in each tract.
 
 % {\it These results will
 %correspond to the most likely values for the respective quantities in any geography.} However,
@@ -269,38 +270,6 @@ distribution functions (PDFs) for the number of unsheltered people of each class
 %All results discussed below derive from 10,000 Monte Carlo realizations of Item (5), above.
 %
 
-\subsubsection{Monte Carlo Estimations of Unsheltered Probability Densities}
-\label{sec:mc}
-
-Our analysis accounts for two known sources of uncertainty: Poisson counting errors in the visual
-tallies and estimated random variances in the CVRTM weights. The former represents how a given
-tally might change if performed at a different (but comparable) time or by a different Counter. The 
-latter represents how the mean occupancy of CVRTM structures in Hollywood might differ from
-the mean occupancy in SPA-4 writ large. 
-
-We model both uncertainties as Gaussian distributions with standard deviations of 
-$\sqrt{n}$ and $\sigma$, \resp, where $n$ is the raw tally and $\sigma$ is the standard error on the 
-respective mean CVRTM weight, $w$, quoted by LAHSA. As such, the $i$-th estimate of the true 
-number, $N$, of people in the $j$-th unsheltered class in any tract is:
-\begin{multline}\label{eq:monte}
-	N_{i,j} = \left[n_{j} + \mathcal{G}_{i}(0,\sqrt{n_{j}})\right]\times\max[\mathcal{G}_{i}(w_{j}, \sigma_{j}),1],
-\end{multline}
-where $\mathcal{G}(\mu,\Sigma)$ is a Gaussian random number with mean $\mu$ and standard deviation 
-$\Sigma$. If more than one team counted a given tract, $n$ is replaced by the average of their tallies 
-and the attendant counting error is divided by the square root of the number of Counters.
-
-The final output PDFs are constructed from 10,000 random realizations of Equation \ref{eq:monte}. 
-For the individual classes---including families---all weights are 
-fixed to unity, such that $(w,\sigma)\equiv(1,0)$ for all trials and uncertainties reflect only 
-counting errors.
-
-We place a floor on the CVRTM mean occupancies at 1 person per dwelling; i.e., we assume that the average
-person does not own more than one tent. This is not to say no one may own more than one tent, just that
-such a statement is never representative. {\bfr Relaxing this assumption does what?} 
-
-\subsection{Duplicate Tract Counts}
-\label{sec:dupes}
-
 \begin{figure}[]
 \centering
 	\includegraphics[width=\linewidth]{intDupeChar}\\
@@ -309,64 +278,104 @@ such a statement is never representative. {\bfr Relaxing this assumption does wh
 \label{fig:dupeChar}
 \end{figure}
 
+\subsubsection{Monte Carlo Estimations of Unsheltered Probability Densities}
+\label{sec:mc}
+
+Our analysis accounts for two known sources of uncertainty: Poisson errors in the visual tallies and 
+random deviations of the CVRTM weights from their quoted means. The former represents how a given 
+tally might change if performed at a different (but comparable) time or by a different team. The latter 
+represents how the mean occupancy of CVRTM structures in Hollywood might differ from the mean 
+occupancy in the geography in which the weights were defined.
+
+We model both uncertainties as Gaussian distributions with standard deviations of 
+$\sqrt{n}$ and $\sigma$, \resp, where $n$ is the raw tally and $\sigma$ is the standard 
+error on the respective mean CVRTM weight, $w$, quoted by LAHSA. As such, the $i$-th estimate 
+of the true number, $N$, of people in the $j$-th unsheltered class in any tract is:
+\begin{multline}\label{eq:monte}
+	N_{i,j} = \left[n_{j} + \mathcal{G}_{i}(0,\sqrt{n_{j}})\right]\times\max[\mathcal{G}_{i}(w_{j}, \sigma_{j}),1],
+\end{multline}
+where $\mathcal{G}(\mu,\Sigma)$ is a Gaussian random number with mean $\mu$ and standard deviation 
+$\Sigma$. If more than one team counted a given tract, $n$ is replaced by the average of their tallies 
+and the attendant counting error is divided by the square root of the number of teams.
+
+The final output probability distribution functions (PDFs) are based on 10,000 realizations of 
+Equation \ref{eq:monte}. For the Adult, and TAY, classes all weights are fixed to unity, such that 
+$(w,\sigma)\equiv(1,0)$ for all trials and uncertainties reflect only counting errors. One potential 
+family and one potential unaccompanied minor were reported, but not confirmed. We therefore
+set those entires to zero, though still infer upper-limits.
+
+We place a floor on the CVRTM mean occupancies at 1 person per dwelling; i.e., we assume that the average
+person does not own more than one tent. This is not to say no one may own more than one tent, just that
+such a statement is never representative. This choice induces a mild asymmetry in our global PDFs but
+does not significantly affect inferences.
+%letting the mean occupancies reach 0 moves the baseline result down by 40 ppl over all of grtr Hwood.
+%it's 0.4 sigma or in the IQR.
+
+\subsection{Duplicate Tract Counts}
+\label{sec:dupes}
+
+All volunteer tracts in each community were assigned to at least two independent counting teams.
+Four tracts additionally received a third counter. Pass 1 was organized numerically by tract number.
+Pass 2 paired high-population tracts with an adjacent tract. Pass 3 was Pass 1 with the tract pairings
+presented to the teams in reverse order (such that, if 2 teams were deployed simultaneously, they would
+likely start in different tracts). 
+
+Results for one of the two teams assigned to tract 1925.20 could not be interpreted, making that
+tract the only tract with one one estimate.
+
+Figure \ref{fig:dupeChar} shows the intercounter comparisons of raw counts (people+dwellings)
+at the tract and category levels. Average offsets are roughly consistent with Poisson expectations
+in all cases except for the highest occupancy tract (discussed momentarily), and RVs. The latter agree
+significantly better than random errors would suggest, which is expected as RVs are salient.
+
+The only tract whose intercounter variance is an outlier is 1901.00 ($\sim$8$\sigma$). There, 
+one team counted ${P,C,V,R,T,M}={23,1,1,1,6,2}$ while the other counted ${76,1,15,10,1,6,6,}$. 
+Abramson re-counted this tract on-foot 14 hours after the PIT tally, obtaining ${36, 4, 6, 0, 8, 2}$.
+In total, this tally ($56\pm7$) is within 1.9$\sigma$ of the mean of the two volunteer teams ($75\pm6$). 
+As such---and given the direction of this disagreement in the context of our main result---we treat 
+these entries identically to the rest. We show what the implied intercounter variance would be 
+without it, however, in Figure \ref{fig:dupeChar}, top.
+
+\begin{itemize}
+%	\item All vol tracts counted at least twice;
+%	\item 4 tracts counted 3x;
+%	\item One recount DQed for quality flag (1925.20);
+%	\item Dupe statistics look pretty good. Mean abs discrepancy is consistent
+%		with zero given standard error on mean except for TAY (2.7 sigma) and RVs (3.8).
+%		Normalized differences ($|n_{1}-n_{2}|/\sqrt{n_{1}+n_{2}}$) are a little higher
+%		than $1\sigma$ ($CVRTM=[1.7, 1.1, -, 1.6, 1.4, 0.6, 1.2, 1.6, -]\sigma$), suggesting 
+%		a little more than poisson counting uncertainty, but LEA cross-checked the one
+%		highly discrepant ($\sim$8$\sigma$) tract, 1901.00, and found raw counts consistent
+%		with the average of the two nighttime datasets ($\sim$9:00 AM 26 Feb). 
+	\item Above holds true for 1912.01, which is in Hwood and also a SELAH recount tract. LEA
+		counted 51 totoal ppl/dwellings 12:30 P on 27 Feb vs 51 by vols night of count.
+\end{itemize}
+
+No team counted tracts spanning communities. As such, the volunteer tracts in the Hollywood and
+East Hollywood areas are totally independent. The only cross talk is one tract in East Hollywood that
+was counted by the same team that counted 5 in Hollywood. We discuss comparisons between
+volunteer and professionally counted tracts in both communities in Section \ref{sec:comp} 
+
+
+
+%{\bfr PRO TRACT RAW COUNT SHARE 2020: 44\% (23 tracts)
+%
+%PRO TRACT RAW COUNT SHARE 2021: 43\% (all tracts)}
+%
+%{\bfr Barely consistent if all of last year's vans and cars are still here. 95\% confidence limit $996\pm69$ can reach 1065 (v 1058) 
+%in Hollywood, $598\pm 59= 657$ vs.\ 656 last yr in E.~Hollywood. BOTH AT 2020 SPA4 WEIGHTS!}
+
+
+\section{Results}
+\label{sec:results}
+
+
 \begin{figure}[]
 	\centering
 	\includegraphics[width =\linewidth]{volProfComp}
 	\caption{}
 \end{figure}
 
-Prioritized by raw 2020 counts (Hollywood) or total polulation estimates (EHo). 
-Paired by total counts + geography. 
-Third pass was first pass with tract pairings presented in reverse order.
-\begin{itemize}
-	\item All vol tracts counted at least twice;
-	\item 4 tracts counted 3x;
-	\item One recount DQed for quality flag (1925.20);
-	\item Dupe statistics look pretty good. Mean abs discrepancy is consistent
-		with zero given standard error on mean except for TAY (2.7 sigma) and RVs (3.8).
-		Normalized differences ($|n_{1}-n_{2}|/\sqrt{n_{1}+n_{2}}$) are a little higher
-		than $1\sigma$ ($CVRTM=[1.7, 1.1, -, 1.6, 1.4, 0.6, 1.2, 1.6, -]\sigma$), suggesting 
-		a little more than poisson counting uncertainty, but LEA cross-checked the one
-		highly discrepant ($\sim$8$\sigma$) tract, 1901.00, and found raw counts consistent
-		with the average of the two nighttime datasets ($\sim$9:00 AM 26 Feb). 
-	\item Above holds true for 1912.01, which is in Hwood and also a SELAH recount tract. LEA
-		counted 51 totoal ppl/dwellings 12:30 P on 27 Feb vs 51 by vols night of count.
-\end{itemize}
-
-Various governmental, nonprofit, and volunteer organizations\footnote{Including
-{\it \href{https://chnc.org}{The Central Hollywood Neighborhood Council}, \href{https://thecenterinhollywood.org}{The Center
-at Blessed Sacrament}, \href{https://www.myfriendsplace.org/}{My Friend's Place}, Hang Out Do Good, \href{https://hollywood4wrd.live}
-{Hollywood4WRD}}, and various resident organizers.} in Hollywood coordinated a Point-In-Time (PIT) 
-enumeration of people experiencing unsheltered homelessness to compensate for the cancellation of the 
-official 2021 countywide count. The event took place on 25 February and covered all 39 US Census tracts
-in the LAHSA-recognized Hollywood and East Hollywood communities. Nine tracts---mainly along US 
-Rte 101---were surveyed by professional outreach teams from {\it The Center at Blessed Sacrament} and
-{\it Covenant House} during daylight hours. The remaining 30 tracts were surveyed by 32 car-based volunteer
-teams recruited from the local community beginning at 7:00 PM.
-
-Each volunteer team was assigned two tracts in either Hollywood or E.~Hollywood; i.e., no team counted
-tracts spanning communities, keeping the two datasets as independent as possible. As such, each tract was
-counted by at least two independent teams, with four tracts counted by three teams. This redundancy
-enabled assessments of counting uncertainties through inter-counter comparisons, and also increased
-accuracy via averaging. The nine professional tracts did not receive duplicate coverage on the day of the 
-count, but only one team counted tracts in both Hollywood and E.~Hollywood, largely maintaining the
-independence of the two datasets to enable further cross-validation of trends.
-
-In sum, about 20\% of tracts in both communities were counted by professionals. These tracts comprised
-roughly 43\% of the total individuals and dwellings counted. Year-on-year trends are consistent between
-volunteer- and professionally counted tracts. The largest increase was observed by volunteers, the largest
-decrease by professionals; both tracts are located in E.~Hollywood.
-
-{\bfr PRO TRACT RAW COUNT SHARE 2020: 44\% (23 tracts)
-
-PRO TRACT RAW COUNT SHARE 2021: 43\% (all tracts)}
-
-{\bfr Barely consistent if all of last year's vans and cars are still here. 95\% confidence limit $996\pm69$ can reach 1065 (v 1058) 
-in Hollywood, $598\pm 59= 657$ vs.\ 656 last yr in E.~Hollywood. BOTH AT 2020 SPA4 WEIGHTS!}
-
-
-\section{Results}
-\label{sec:results}
 
 \begin{table}[]
 \caption{Census Tract-level Unsheltered Data}
