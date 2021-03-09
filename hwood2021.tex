@@ -87,8 +87,7 @@ regions in those communities, 1-in-30 residents are unhoused compared to 1-in-10
 			the latter from Western to Hoover Ave. Hollywood is bounded to the north
 			and south respectively by Franklin	and Melrose Aves, with East Hollywood
 			bounded by Hollywood Blvd and Beverly Ave. Hollywood comprises
-			21 census tracts; East Hollywood 18. The grey lines above show census 
-			sub-tracts used by LAHSA but ignored in this \Count.}
+			21 census tracts; East Hollywood 18.}
 	\label{fig:map}	
 \end{figure*}
 
@@ -312,6 +311,35 @@ does not significantly affect inferences.
 %letting the mean occupancies reach 0 moves the baseline result down by 40 ppl over all of grtr Hwood.
 %it's 0.4 sigma or in the IQR.
 
+\subsubsection{Null Entries}
+\label{sec:nulls}
+
+Some tracts were observed to have unsheltered populations near zero, at least in specific person or 
+dwelling categories. These tallies are consistent with a range of non-zero values for the true population 
+due to shot noise. As such, the Monte Carlo PDF reconstruction allows them to take non-zero values 
+based on an assumed background rate. 
+
+Ideally, that rate would be based on category variations in similar tracts defined by some independent 
+criteria. Sufficient data from, e.g., the US Census may enable such an exercise, but it is beyond the scope of 
+this analysis. Instead, we adopt a noise floor based on the counts expected if all elements of a given category
+were evenly distributed across all tracts. Hence:
+\begin{equation}
+	\sigma_{j,\,\rm min}^{2} = \frac{1}{39}\sum_{\rm tracts}n_{j},
+\end{equation}
+where $\sigma_{j}$ and $n_{j}$ are defined as in Equation \ref{eq:monte}.
+
+This method works for any category, $j$, for which there is at least one individual/dwelling observed in any 
+tract. However, for categories for which this is not the case---unaccompanied minors and families, in the
+case of Hollywood---we set $\sigma_{j, \rm min}$ to the lowest non-zero value of the other categories
+(corresponding to TAY). The adopted backgrounds are: 
+\begin{equation}
+	\sigma_{j,\, \rm min}=\{3.2, 0.4, 0.4, 0.9, 1.3, 1.1, 2.8, 2.5, 0.4\}
+\end{equation}
+adults, TAY, unaccompanied minors, cars, vans, RVs, tents, makeshifts, and families per tract.
+
+Such a treatment is somewhat arbitrary, but, since it is symmetric, and therefore unbiased, 
+serves mainly to set the upper limits of intrinsically low-frequency categories (TAY, minors, families).
+
 \subsection{Duplicate Counts}
 \label{sec:dupes}
 
@@ -362,7 +390,7 @@ comes only from one tract in East Hollywood counted by a team that surveyed five
 We discuss comparisons between volunteer and professionally counted tracts in both communities 
 in Section \ref{sec:comp}.
 
-\begin{table*}[h!]
+\begin{table*}[t!]
 \centering
 \caption{Greater Hollywood 2021 PIT Unsheltered Data and Population Estimates}
 %\resizebox{\linewidth}{!}{%
@@ -449,11 +477,13 @@ Tract & Community & Counter & Passes & Median Est. & 90\% CI \\
 \label{tbl:}
 \end{table}
 
-This section presents CoC level estimates for the number of unsheltered individuals and dwellings
-in the Hollywood and East Hollywood areas as of the evening of 25 February 2021. We start with
-summaries of each CoC in Sections \ref{sec:hWood} and \ref{sec:eHo} before discussing how these
-estimates compare to last year's official LAHSA count in Section \ref{sec:comp}. Section \ref{sec:discussion}
-describes how varying elements of Section \ref{sec:mc}'s analysis modulates these results.
+This section presents community level estimates for the number of unsheltered people living in
+Hollywood and East Hollywood as of 25 February 2021. We start with summaries of each community 
+in Sections \ref{sec:hWood} and \ref{sec:eHo} before discussing how those inferences compare to 
+the official 2020 LAHSA data in Section \ref{sec:comp}. 
+
+%Section \ref{sec:discussion} describes how 
+%varying elements of Section \ref{sec:mc}'s analysis modulates these results.
 
 \subsection{Hollywood CoC}
 \label{sec:hWood}
@@ -482,57 +512,15 @@ describes how varying elements of Section \ref{sec:mc}'s analysis modulates thes
 \subsection{Comparison to 2020}
 \label{sec:comp}
 
+\subsubsection{CVRTM Biases}
+\label{sec:CVRTM}
+
 \begin{figure}[]
 	\centering
-	\includegraphics[width =\linewidth]{volProfComp}
+	\includegraphics[width = \linewidth, trim = 0cm 0cm 0cm 0cm]{tractsYrYr}
 	\caption{}
+	\label{fig:tractYrYr}
 \end{figure}
-
-
-
-\section{Systematics}
-\label{sec:systematics}
-
-We discuss these potential sources of systematic errors below.
-
-\subsection{Null Entries}
-\label{sec:nulls}
-
-As stated in Section \ref{sec:training}, some (too few) tracts have unsheltered populations near zero, 
-or at least are not observed to host any people or dwellings of a specific category. Such null entries 
-are consistent with a range of non-zero values for the true population due to shot noise. As such, the 
-Monte Carlo PDF reconstruction must allow them to take non-zero values based on an assumed background
-rate. 
-%This fact is immaterial 
-%when the global category population is high, but such is not the case for TAY, unaccompanied 
-%minors, and families. Treatment of null entries therefore affects estimates for those sub-populations,
-%or defines their upper limits.
-
-Ideally, that rate would be based on the variations in a category's counts (or count densities) in other, 
-similar tracts defined by some independent criteria. While sufficient data from, e.g., the US Census 
-may enable such an exercise, it is beyond the scope of this analysis. Instead, we base our noise floor 
-on the number of counts of a given category expected if the total was evenly distributed across 
-all tracts. That is:
-\begin{equation}
-	\sigma_{j,\,\rm min}^{2} = \frac{1}{39}\sum_{\rm tracts}n_{j},
-\end{equation}
-where $\sigma_{j}$ and $n_{j}$ are defined as in Equation \ref{eq:monte}.
-
-This method works for any category, $j$, for which there is at least one individual/dwelling observed in any 
-tract. However, for categories for which even this is not the case---unaccompanied minors and families, in the
-case of Hollywood---we set $\sigma_{j, \rm min}$ to the lowest non-zero value of the other categories
-(corresponding to TAY).
-
-{\bfr State the bkg levels.}
-
-{\it While we admit that such a treatment is 
-somewhat arbitrary}, due to the intrinsically low levels of at least unsheltered unaccompanied minors 
-and families, it does not significantly affect our CoC level estimates. It does affect TAY, however, and
-as such, taken with the difficulty of disambiguating older TAY from younger adults, we caution against 
-relying on the TAY estimates for anything beyond lower-limits.
-
-\subsection{CVRTM Biases}
-\label{sec:CVRTM}
 
 \begin{figure*}[h!]
 	\centering
@@ -548,7 +536,14 @@ relying on the TAY estimates for anything beyond lower-limits.
 	\label{fig:wtComp}
 \end{figure*}
 
-\begin{table*}[h!]
+\begin{figure}[]
+	\centering
+	\includegraphics[width =\linewidth]{volProfComp}
+	\caption{}
+\end{figure}
+
+
+\begin{table*}[t!]
 \caption{Greater Hollywood 2021 PIT Unsheltered Data and Population Estimates}
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{lcccccccccc}
@@ -576,8 +571,6 @@ Typically, specialized teams perform detailed interviews of people experiencing 
 these weights in various geographic contexts. However, the cancellation of the official PIT count means
 that this will not occur in 2021. As such, we are forced to rely on year-old estimates.
 
-We present 
-
 \begin{figure*}[h]
 	\centering
 	\includegraphics[width = 0.47\textwidth, trim = 1cm 0cm 0cm 0cm]{Hwood2021Bars}
@@ -592,12 +585,6 @@ We present
 	\label{fig:rawCounts}
 \end{figure*}
 
-\begin{figure}[]
-	\centering
-	\includegraphics[width = \linewidth, trim = 0cm 0cm 0cm 0cm]{tractsYrYr}
-	\caption{}
-	\label{fig:tractYrYr}
-\end{figure}
 
 \subsubsection{Nulling the 2021 Result}
 \label{sec:nullOut}
