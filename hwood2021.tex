@@ -245,7 +245,7 @@ tract associated with the Hollywood or East Hollywood community, were averaged, 
 unweighted where appropriate by the CVRTM mean occupancies. This process was repeated 
 10,000 times randomly perturbing the counts and weights according to their respective 
 uncertainties (see below). The result is a $9\times10000\times39$ array can then 
-be split and summed to provide aggregate-, tract-, or category-level unsheltered
+be split and summed to provide aggregate, tract, or category-level unsheltered
 population estimates and uncertainties.
 
 Our baseline result incorporates the 2020 SPA-4/CD13 estimates of the CVRTM weights provided
@@ -270,11 +270,12 @@ occupancy surveys---do not significantly affect our findings.
 %All results discussed below derive from 10,000 Monte Carlo realizations of Item (5), above.
 %
 
-\begin{figure}[]
+\begin{figure}[t]
 \centering
 	\includegraphics[width=\linewidth]{intDupeChar}\\
 	\includegraphics[width=\linewidth]{catDupeChar}
-\caption{default}
+\caption{Duplicate tract (top) and category (bottom) count comparisons. Orange 
+		points at top exclude tract 1901.00, which is a significant outlier.}
 \label{fig:dupeChar}
 \end{figure}
 
@@ -311,51 +312,76 @@ does not significantly affect inferences.
 %letting the mean occupancies reach 0 moves the baseline result down by 40 ppl over all of grtr Hwood.
 %it's 0.4 sigma or in the IQR.
 
-\subsection{Duplicate Tract Counts}
+\subsection{Duplicate Counts}
 \label{sec:dupes}
 
-All volunteer tracts in each community were assigned to at least two independent counting teams.
-Four tracts additionally received a third counter. Pass 1 was organized numerically by tract number.
-Pass 2 paired high-population tracts with an adjacent tract. Pass 3 was Pass 1 with the tract pairings
-presented to the teams in reverse order (such that, if 2 teams were deployed simultaneously, they would
+Each volunteer tract in both communities (30) were assigned to at least two independent counting teams.
+Four tracts additionally received a third pass. Pass 1 was organized numerically by tract number.
+Pass 2 paired high projected population tracts with a nearby tract. Pass 3 was the same as Pass 1 with 
+tract pairings presented in reverse order (such that, if 2 teams were deployed simultaneously, they would
 likely start in different tracts). 
 
-Results for one of the two teams assigned to tract 1925.20 could not be interpreted, making that
-tract the only tract with one one estimate.
+Results for one of the two teams assigned to tract 1925.20 could not be interpreted, making it the only
+volunteer tract with one population estimate.
 
 Figure \ref{fig:dupeChar} shows the intercounter comparisons of raw counts (people+dwellings)
-at the tract and category levels. Average offsets are roughly consistent with Poisson expectations
-in all cases except for the highest occupancy tract (discussed momentarily), and RVs. The latter agree
-significantly better than random errors would suggest, which is expected as RVs are salient.
+at the tract and category levels. Average offsets are close to Poisson expectations in all cases 
+except for the highest occupancy tracts, where they are inflated by an outlier (see below).
+Explicitly, $\langle\sqrt{(n_{1}-n_{2})^{2}/(n_{1} + n_{2})}\rangle=1.4$, where
+$n$ are the total raw counts of dwellings and people in a given tract from one of the counting
+teams. Given their salience, agreement in counting RVs is also significantly better than random 
+errors would suggest.
 
-The only tract whose intercounter variance is an outlier is 1901.00 ($\sim$8$\sigma$). There, 
-one team counted ${P,C,V,R,T,M}={23,1,1,1,6,2}$ while the other counted ${76,1,15,10,1,6,6,}$. 
-Abramson re-counted this tract on-foot 14 hours after the PIT tally, obtaining ${36, 4, 6, 0, 8, 2}$.
+The outlier is tract 1901.00, whose repeat measurements differ by $6.6\sigma$. There, 
+one team counted $\{P,C,V,R,T,M\}=\{23,1,1,1,6,2\}$ while the other counted $\{77,15,10,1,6,6\}$. 
+Abramson re-counted this tract on-foot 14 hours after the PIT tally, obtaining $\{36, 4, 6, 0, 8, 2\}$.
 In total, this tally ($56\pm7$) is within 1.9$\sigma$ of the mean of the two volunteer teams ($75\pm6$). 
-As such---and given the direction of this disagreement in the context of our main result---we treat 
-these entries identically to the rest. We show what the implied intercounter variance would be 
-without it, however, in Figure \ref{fig:dupeChar}, top.
+As such, we treat the PIT entries identically to the rest.  As illustrated in Figure \ref{fig:dupeChar}, top,
+the mean intercounter variance drops (to $1.3\,\sigma$) if this tract is excluded.
 
-\begin{itemize}
-%	\item All vol tracts counted at least twice;
-%	\item 4 tracts counted 3x;
-%	\item One recount DQed for quality flag (1925.20);
-%	\item Dupe statistics look pretty good. Mean abs discrepancy is consistent
-%		with zero given standard error on mean except for TAY (2.7 sigma) and RVs (3.8).
-%		Normalized differences ($|n_{1}-n_{2}|/\sqrt{n_{1}+n_{2}}$) are a little higher
-%		than $1\sigma$ ($CVRTM=[1.7, 1.1, -, 1.6, 1.4, 0.6, 1.2, 1.6, -]\sigma$), suggesting 
-%		a little more than poisson counting uncertainty, but LEA cross-checked the one
-%		highly discrepant ($\sim$8$\sigma$) tract, 1901.00, and found raw counts consistent
-%		with the average of the two nighttime datasets ($\sim$9:00 AM 26 Feb). 
-	\item Above holds true for 1912.01, which is in Hwood and also a SELAH recount tract. LEA
-		counted 51 totoal ppl/dwellings 12:30 P on 27 Feb vs 51 by vols night of count.
-\end{itemize}
+%1901.00 inter-counter difference is 4.7 sigma (sqrt(delta) / root(n1 + n2) / root(2))
 
-No team counted tracts spanning communities. As such, the volunteer tracts in the Hollywood and
-East Hollywood areas are totally independent. The only cross talk is one tract in East Hollywood that
-was counted by the same team that counted 5 in Hollywood. We discuss comparisons between
-volunteer and professionally counted tracts in both communities in Section \ref{sec:comp} 
+%\begin{itemize}
+%%	\item All vol tracts counted at least twice;
+%%	\item 4 tracts counted 3x;
+%%	\item One recount DQed for quality flag (1925.20);
+%%	\item Dupe statistics look pretty good. Mean abs discrepancy is consistent
+%%		with zero given standard error on mean except for TAY (2.7 sigma) and RVs (3.8).
+%%		Normalized differences ($|n_{1}-n_{2}|/\sqrt{n_{1}+n_{2}}$) are a little higher
+%%		than $1\sigma$ ($CVRTM=[1.7, 1.1, -, 1.6, 1.4, 0.6, 1.2, 1.6, -]\sigma$), suggesting 
+%%		a little more than poisson counting uncertainty, but LEA cross-checked the one
+%%		highly discrepant ($\sim$8$\sigma$) tract, 1901.00, and found raw counts consistent
+%%		with the average of the two nighttime datasets ($\sim$9:00 AM 26 Feb). 
+%	\item Above holds true for 1912.01, which is in Hwood and also a SELAH recount tract. LEA
+%		counted 51 totoal ppl/dwellings 12:30 P on 27 Feb vs 51 by vols night of count.
+%\end{itemize}
 
+No team counted tracts in both Hollywood and East Hollywood, making the volunteer tract datasets
+totally independent in those communities. Once the professional-counted tracts are included, cross-talk
+comes only from one tract in East Hollywood counted by a team that surveyed five tracts in Hollywood. 
+We discuss comparisons between volunteer and professionally counted tracts in both communities 
+in Section \ref{sec:comp}.
+
+\begin{table*}[h!]
+\centering
+\caption{Greater Hollywood 2021 PIT Unsheltered Data and Population Estimates}
+%\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+ & $C$ & $V$ & $R$ & $T$ & $M$ \\ \cmidrule{1-6}
+{\bf SPA4/CD13} & $1.51\pm0.25$ & $1.77\pm0.42$ & $1.42\pm0.28$ & $1.48\pm0.11$ & $1.68\pm0.31$ \\
+2021 $T$ & -- & -- & -- & $1.39\pm0.14$ & --\\
+2021 $T$ w/ unocc & -- & -- & --& $1.51\pm0.24$ & --\\
+%2021 $T$ & $1.51\pm0.25$ & $1.77\pm0.42$ & $1.42\pm0.28$ & $1.39\pm0.14$ & $1.68\pm0.31$\\
+%2021 $T$ w/ modeled unocc & $1.51\pm0.25$ & $1.77\pm0.42$ & $1.42\pm0.28$ & $1.51\pm0.24$ & $1.68\pm0.31$\\
+SPA4 & $1.38\pm0.11$ & $1.68\pm0.22$ & $1.32\pm0.15$ & $1.45\pm0.06$ & $1.64\pm0.16$\\
+\bottomrule
+\end{tabular}
+%}
+\caption*{CVRTM weights tested. Dashes denote identical values to the entry above. Bold denotes 
+baseline scenario.}
+\label{tbl:weights}
+\end{table*}
 
 
 %{\bfr PRO TRACT RAW COUNT SHARE 2020: 44\% (23 tracts)
@@ -369,49 +395,58 @@ volunteer and professionally counted tracts in both communities in Section \ref{
 \section{Results}
 \label{sec:results}
 
-
-\begin{figure}[]
-	\centering
-	\includegraphics[width =\linewidth]{volProfComp}
-	\caption{}
-\end{figure}
-
-
 \begin{table}[]
-\caption{Census Tract-level Unsheltered Data}
+\caption{Tract-level Unsheltered Population Summary}
 \resizebox{\linewidth}{!}{%
-\begin{tabular}{lcccc}
+\begin{tabular}{cccccc}
 \toprule
-Tract & Team & $n_{\rm teams}$ & Median Est. & 90\% CI \\ 
-\cmidrule{1-5}
-1898.00 & V & 1 & 8 & 4--14 \\
-1899.02 & V & 1 & 23 & 15--32 \\
-1899.03 & V & 1 & 3 & 0--8 \\
-1899.04 & V & 1 & 38 & 27--50 \\
-1899.05 & V & 1 & 20 & 13--29 \\
-1901.00 & V & 1 & 67 & 53--80 \\
-1902.01 & V & 1 & 36 & 26--47 \\
-1902.02 & V & 1 & 23 & 15--31 \\
-1903.01 & V & 1 & 109 & 89--131 \\
-1905.10 & V & 1 & 52 & 38--66 \\
-1907.00 & V & 1 & 106 & 87--124 \\
-1908.01 & V & 1 & 88 & 70--105 \\
-1908.02 & V & 1 & 88 & 71--106 \\
-1909.01 & V & 1 & 39 & 27--52 \\
-1909.02 & V & 1 & 26 & 16--36 \\
-1910.00 & V & 1 & 156 & 132--181 \\
-1917.10 & V & 1 & 12 & 6--19 \\
-1917.20 & V & 1 & 25 & 15--35 \\
-1918.10 & V & 1 & 45 & 32--58 \\
-1918.20 & V & 1 & 16 & 9--23 \\
-1919.01 & V & 1 & 58 & 43--73\\
-1916.10 & V & 1 & 42 & 28--56 \\
-1916.20 & V & 1 & 16 & 9--24
+Tract & Community & Counter & Passes & Median Est. & 90\% CI \\ 
+ & & & & [people] & [people] \\ \cmidrule{1-6}
+1898.00 & Hollywood & Vol & 3 & 6 & 0--15 \\
+1899.02 & Hollywood & Vol & 3 & 18 & 12--24 \\
+1899.03 & Hollywood & Vol & 2 & 0 & 0--12 \\
+1899.04 & Hollywood & Vol & 2 & 18 & 11--25 \\
+1899.05 & Hollywood & Vol & 2 & 19 & 9--30 \\
+1901.00 & Hollywood & Vol & 2 & 88 & 75--102 \\
+1902.01 & Hollywood & Vol & 2 & 21 & 13--29 \\
+1902.02 & Hollywood & Vol & 2 & 30 & 20--40 \\
+1903.01 & Hollywood & Pro & 1 & 74 & 54--96 \\
+1905.10 & Hollywood & Pro & 1 & 34 & 22--46 \\
+1905.20 & E.~Hollywood & Vol & 2 & 12 & 6--18 \\
+1907.00 & Hollywood & Vol & 2 & 110 & 93--127 \\
+1908.01 & Hollywood & Vol & 2 & 63 & 50--76 \\
+1908.02 & Hollywood & Pro & 1 & 71 & 54--90 \\
+1909.01 & Hollywood & Pro & 1 & 55 & 39--71 \\
+1909.02 & Hollywood & Vol & 3 & 6 & 0--17 \\
+1910.00 & Hollywood & Pro & 1 & 169 & 140--201 \\
+1911.10 & E.~Hollywood & Vol & 2 & 9 & 2--15 \\
+1911.20 & E.~Hollywood & Pro & 1 & 66 & 48--85 \\
+1912.01 & E.~Hollywood & Vol & 2 & 55 & 44--68 \\
+1912.03 & E.~Hollywood & Vol & 2 & 26 & 14--38 \\
+1912.04 & E.~Hollywood & Vol & 2 & 6 & 0--16 \\
+1913.01 & E.~Hollywood & Vol & 2 & 31 & 22--42 \\
+1913.02 & E.~Hollywood & Vol & 2 & 23 & 15--30 \\
+1914.10 & E.~Hollywood & Vol & 2 & 20 & 13--28 \\
+1914.20 & E.~Hollywood & Vol & 2 & 24 & 16--32 \\
+1915.00 & E.~Hollywood & Vol & 2 & 29 & 21--38 \\
+1916.10 & E.~Hollywood & Pro & 1 & 48 & 31--68 \\
+1916.20 & E.~Hollywood & Pro & 1 & 17 & 6--30 \\
+1917.10 & Hollywood & Vol & 2 & 21 & 14--29 \\
+1917.20 & Hollywood & Vol & 3 & 21 & 12--31 \\
+1918.10 & Hollywood & Vol & 2 & 24 & 14--34 \\
+1918.20 & Hollywood & Vol & 2 & 16 & 10--23 \\
+1919.01 & Hollywood & Vol & 2 & 60 & 49--72 \\
+1925.10 & E.~Hollywood & Vol & 2 & 12 & 4--21 \\
+1925.20 & E.~Hollywood & Vol & 1 & 14 & 1--28 \\
+1926.10 & E.~Hollywood & Vol & 2 & 7 & 1--14 \\
+1926.20 & E.~Hollywood & Vol & 2 & 18 & 9--26 \\
+1927.00 & E.~Hollywood & Pro & 1 & 129 & 96--167
 \\ \bottomrule
 \end{tabular}
 }
-\caption*{\bfr this is a placeholder table}
-\label{tbl:tractStats}
+\caption*{Counter denotes volunteer vs.~professional team; passes denote number of
+		independent counts per tract.}
+\label{tbl:}
 \end{table}
 
 This section presents CoC level estimates for the number of unsheltered individuals and dwellings
@@ -446,6 +481,14 @@ describes how varying elements of Section \ref{sec:mc}'s analysis modulates thes
 
 \subsection{Comparison to 2020}
 \label{sec:comp}
+
+\begin{figure}[]
+	\centering
+	\includegraphics[width =\linewidth]{volProfComp}
+	\caption{}
+\end{figure}
+
+
 
 \section{Systematics}
 \label{sec:systematics}
@@ -551,7 +594,7 @@ We present
 
 \begin{figure}[]
 	\centering
-	\includegraphics[width = \textwidth, trim = 0cm 0cm 0cm 0cm]{tractsYrYr}
+	\includegraphics[width = \linewidth, trim = 0cm 0cm 0cm 0cm]{tractsYrYr}
 	\caption{}
 	\label{fig:tractYrYr}
 \end{figure}
