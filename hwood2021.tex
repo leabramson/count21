@@ -3,14 +3,15 @@
 \geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
 %\geometry{landscape}                % Activate for for rotated page geometry
 %\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
-\usepackage[breaklinks=true, colorlinks=true, linkcolor=red, urlcolor=blue, citecolor=black]{hyperref}
+\usepackage{color}
+\definecolor{myblue}{rgb}{0.0, 0.0, 0.85}
+\usepackage[breaklinks=true, colorlinks=true, linkcolor=red, urlcolor=myblue, citecolor=black]{hyperref}
 \urlstyle{rm}
 \usepackage{amsmath}
 \usepackage{mathptmx}
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{epstopdf}
-\usepackage{color}
 \usepackage{sidecap}
 \usepackage{authblk}
 \usepackage{booktabs}
@@ -89,8 +90,10 @@ government interventions will be substantially incomplete.
 
 Greater Hollywood is an epicenter of LA's homelessness crisis. According to the official 2020 
 Count, the Hollywood and East Hollywood Communities were home to 2203 unhoused residents,
-1714 of whom (78\%) were unsheltered. This figure corresponds to roughly 5\% of LA's homeless 
-population concentrated in an area with only 2.5\% ({\bfr CITE}) of its total population. In some 
+1714 of whom (78\%) were unsheltered. This figure corresponds to roughly 
+\href{https://www.lahsa.org/data?id=45-2020-homeless-count-by-community-city}
+{5\% of LA's homeless population} concentrated in an area with only 
+\href{https://empowerla.org/data/}{2.5\% of its total population}. In some 
 regions in those communities, 1-in-30 residents are unhoused compared to 1-in-100 citywide.
 
 \begin{figure*}
@@ -366,7 +369,9 @@ of the true number, $N$, of people in the $j$-th unsheltered class in any tract 
 \end{multline}
 where $\mathcal{G}(\mu,\Sigma)$ is a Gaussian random number with mean $\mu$ and standard deviation 
 $\Sigma$. If more than one team counted a given tract, $n$ is replaced by the average of their tallies 
-and the attendant counting error is divided by the square root of the number of teams.
+and the attendant counting error is divided by the square root of the number of teams. If no members
+of the $j$-th unsheltered category were observed, $\sqrt{n_{j}}$ is replaced in the first term above
+by the estimated background rate, $\sigma_{j}^{\rm bkg}$, of that category (Section \ref{sec:nulls}).
 
 The final output probability distribution functions (PDFs) are based on 10,000 realizations of 
 Equation \ref{eq:monte}. For the Adult, and TAY, classes all weights are fixed to unity, such that 
@@ -399,7 +404,10 @@ does not significantly affect inferences.
 	\centering
 	\includegraphics[width =0.47\linewidth]{hWood/HollywoodDist}
 	\includegraphics[width =0.47\linewidth]{eHo/EastHollywoodDist}
-	\caption{}
+	\caption{Explain what the PDFs and CDFs are, what the colors mean. Maybe 
+			remake these with bigger bins and the 2020 value instead of 
+			the mode shown.}
+	\label{fig:communityPDFs}
 \end{figure*}
 
 \subsubsection{Null Entries}
@@ -415,11 +423,9 @@ criteria. Sufficient data from, e.g., the US Census may enable such an exercise,
 this analysis. Instead, we adopt a noise floor based on the counts expected if all elements of a given category
 were evenly distributed across all tracts. Hence:
 \begin{equation}
-	\sigma_{j,\,\rm min}^{2} = \frac{1}{39}\sum_{\rm tracts}n_{j},
+	\sigma_{j}^{\rm bkg} \equiv \sqrt{\frac{1}{39}\sum_{\rm tracts}n_{j}},
 \end{equation}
-where $\sigma_{j}$ and $n_{j}$ are defined as in Equation \ref{eq:monte}.
-
-{\bfr tweak; not quite so-defined}
+where $n_{j}$ are the raw counts in that category as defined in Equation \ref{eq:monte}.
 
 This method works for any category, $j$, for which there is at least one individual/dwelling observed in any 
 tract. However, for categories for which this is not the case---unaccompanied minors and families, in the
@@ -547,6 +553,64 @@ the official 2020 LAHSA data in Section \ref{sec:comp}.
 \subsection{Hollywood}
 \label{sec:hWood}
 
+Counters identified $702\pm44$ (95\% CI) persons and dwellings in the 21 census tracts 
+comprising the Hollywood community. The 5 tracts counted by professional teams---largely
+along the US 101 corridor---comprised 42\% of those counts. Tract 1910.00 (pro-counted)
+had the highest number of people and dwellings (123); 1899.03 had the least (0). These
+tracts also bracket the total population statistics. The plurality
+of counts were of persons on the street, followed by tents and makeshift structures 
+(Figure \ref{fig:rawCounts}, left).
+
+Modulated by the baseline CVRTM weights, the above estimates imply a total unsheltered
+population in Hollywood of $936\pm92$ people (90\% CI; Figure \ref{fig:communityPDFs},
+left), with the plurality (35\%) living in tents (Table \ref{tbl:summary}).
+
+Modifying the CVRTM weights from the baseline SPA4/CD13 values to the SPA4 wide values 
+lowers Hollywood's inferred total unsheltered population to $912\pm68$ people; applying
+an updated tent weight based on a survey in Hollywood raises it to $944\pm118$ people.
+Neither represents a significant change from the baseline estimate.
+
+\subsection{East Hollywood}
+\label{sec:eHo}
+
+Counters identified $389\pm33$ (95\% CI) persons and dwellings in the 18 census tracts 
+comprising East Hollywood. The 4 tracts counted by professional teams comprised 46\% of 
+those counts. Tract 1927.00 (pro-counted) had the highest number of people and dwellings (87); 
+1912.04 had the least (5). These tracts also bracket the total population statistics. The plurality
+of counts were of makeshift structures---statistically consistent with the number of 
+persons identified on the street---followed by tents (Figure \ref{fig:rawCounts}, right).
+
+Modulated by the baseline CVRTM weights, the above estimates imply a total unsheltered
+population in East Hollywood of $556\pm83$ people (Figure \ref{fig:communityPDFs},
+right), with the plurality (39\%) living in makeshift structures (Table \ref{tbl:summary}).
+
+Modifying the CVRTM weights from the baseline SPA4/CD13 values to the SPA4 wide values 
+lowers East Hollywood's inferred total unsheltered population to $539\pm59$ people; applying
+an updated tent weight based on a survey in Hollywood raises it to $559\pm87$ people.
+Neither represents a significant change from the baseline estimate.
+
+%\begin{figure}[]
+%	\centering
+%	\includegraphics[width =\linewidth]{allTracts/allBreakdownBar}
+%	\caption{}
+%	\label{fig:popFracs}
+%\end{figure}
+
+\subsection{Comparison to 2020}
+\label{sec:comp}
+
+\begin{figure*}[]
+	\centering
+	\includegraphics[width = \linewidth, trim = 0cm 0cm 0cm 0cm]{tractsYrYr}
+	\caption{}
+	\label{fig:tractYrYr}
+\end{figure*}
+
+
+\subsubsection{CVRTM Effects}
+\label{sec:CVRTM}
+
+
 , from which we also draw 2020's person and CVRTM raw tallies. Those inferences yield 
 $936\pm92$ and $556\pm83$ people experiencing unsheltered homelessness, \resp\ (90\% CI). Modifying the weights
 to their 2020 \href{https://www.lahsa.org/documents?id=4693-2020-greater-los-angeles-homeless-count-cvrtm-conversion-factors}
@@ -629,30 +693,6 @@ Multiple cross-checks suggest that the raw counts from our 2021 PIT enumeration 
 
 {\bfr Up to the number of vehicle dwellers in safe parking locations,} the above suggests that our results 
 are both quantitatively and qualitatively reliable.\\
-
-\subsection{East Hollywood}
-\label{sec:eHo}
-
-\begin{figure}[]
-	\centering
-	\includegraphics[width =\linewidth]{allTracts/allBreakdownBar}
-	\caption{}
-\end{figure}
-
-\subsection{Comparison to 2020}
-\label{sec:comp}
-
-\begin{figure*}[]
-	\centering
-	\includegraphics[width = \linewidth, trim = 0cm 0cm 0cm 0cm]{tractsYrYr}
-	\caption{}
-	\label{fig:tractYrYr}
-\end{figure*}
-
-
-\subsubsection{CVRTM Effects}
-\label{sec:CVRTM}
-
 
 
 \begin{figure}[]
