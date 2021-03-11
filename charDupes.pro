@@ -137,14 +137,14 @@ pro charDupes, dataFits
   set_plot, 'PS'
   device, filename = 'intDupeChar.eps', $
           /col, /encap, /decomp, bits_per_pix = 8
-  !P.CHARTHICK = 4
-  !P.CHARSIZE = 1.25
+  !P.CHARTHICK = 5
+  !P.CHARSIZE = 1.5
   !X.THICK = 4
   !Y.THICK = 4
 
   cgloadct, 18, /brewer, ncol = 2, clip = [47,220], /rev
-  c1 = cgcolor(string(0));'69b498'x;'8de0b9'x;
-  c2 = cgcolor(string(1));'da8428'x;          
+  c2 = '69b498'x;cgcolor(string(0));'8de0b9'x;
+  c1 = 'da8428'x;cgcolor(string(1));          
   
   plotsym, 0, /fill
   plot, meanTots, nsp, psym = 8, $
@@ -159,18 +159,18 @@ pro charDupes, dataFits
 ;  oploterror, xs[*,0], ys[*,0,0], ys[*,1,0], psym = 8, $
 ;              errcol = c2, col = c2, symsize = 2, errthick = 8
 ;  oplot, xs[*,1], ys[*,0,1], psym = 8, symsize = 1.5, col = 'aa00aa'x
-  oplot, meanTots, nsp, psym = 8, symsize = 1.25, col = 'cccccc'x
-  oplot, meanTots, nsp, psym = 8, symsize = 0.75
+  oplot, x, sqrt(x), col = '0055ff'x, thick = 6, linesty = 4
+  oplot, meanTots, nsp, psym = 8, symsize = 1.7, col = 'cccccc'x
+  oplot, meanTots, nsp, psym = 8, symsize = 1.1
   oploterror, f0.LOC, f0.MEAN, f0.SIGMA/sqrt(f0.COUNT), $
-              psym = 8, errcol = c1, col = c1, symsize = 2, errthick = 6
+              psym = 8, errcol = c1, col = c1, symsize = 2.7, errthick = 6
   oploterror, f1[-1].LOC, f1[-1].MEAN, f1[-1].SIGMA/sqrt(f1[-1].COUNT), $
-              psym = 8, errcol = c2, col = c2, symsize = 2, errthick = 6
-  oplot, x, sqrt(x), col = 255, thick = 6, linesty = 4
+              psym = 8, errcol = c2, col = c2, symsize = 2.7, errthick = 6
   legend, /top, /left, box = 0, $
           ['tract-level', 'mean', 'mean excl 1901.00', 'Poisson'], $
           psym = [8,8,8,0], linesty = [0,0,0,4], $
-          col = [0,c1,c2,'0000ff'x], $
-          symsize = [0.7,1.5,1.5,1], pspacing = 1, $
+          col = [0,c1,c2,'0055ff'x], $
+          symsize = [1,2,2,1], pspacing = 1, $
           charsize = 1.25, thick = [1,1,1,6]
 
   device, /close
@@ -183,7 +183,9 @@ pro charDupes, dataFits
   
   ;; expected poisson noise from avg. occupancy per tract
   sigd = sqrt(mean(meanCounts, dim = 2, /nan))
-
+;  foo = mrdfits('countHollywoodResults2021.fits', 1)
+;  sigd2 = sqrt(mean(foo.COUNTS, dim = 2))
+  
   x = findgen(ncat)
   device, filename = 'catDupeChar.eps', $
           /col, /encap, /decomp, bits_per_pix = 8
@@ -192,22 +194,31 @@ pro charDupes, dataFits
         xtickname = [' ', '!18P!X', '!18C!X', '!18V!X', $
                      '!18R!X', '!18T!X', '!18M!X', ' '], $
         xticks = 7, xtickint = 1, $
-        ytitle = 'sqrt[(!18n!X!D1!N-!18n!X!D0!N)!E2!N!18/!X2] (persons or dwellings)', $
+        ytitle = 'sqrt[(!18n!X!D1!N-!18n!X!D2!N)!E2!N!18/!X2] (people or dwellings)', $
         xminor = 1, /nodat, yr = [0,5], yminor = 2 
 ;  polyfill, [x,reverse(x)], [sqrd+esqrd, reverse(sqrd-esqrd)], $
 ;            col = 'ffa500'x
 ;  oplot, x, sqrd, col = 'ff0000'x
-  oplot, x, sigd, col = '0000ff'x, thick = 10, psym = 10, linesty = 4
+  oplot, x, sigd, col = '0055ff'x, thick = 10, psym = 10, linesty = 4
   oploterror, x, sqrd, esqrd, psym = 8, $
-              symsize = 2, errthick = 6, errcol = c1, col = c1
+              symsize = 2.7, errthick = 6, errcol = c1, col = c1
   legend, /top, /right, box = 0, $
           ['mean, all pairs, w/ std. err', 'Poisson'], $
           psym = [8,0], linesty = [0,4], $
-          col = [c1,'0000ff'x], $
+          col = [c1,'0055ff'x], $
           symsize = [1.4,0], pspacing = 1, thick = [1,6], $
           charsize = 1.25, spacing = 1.5
   device, /close
-  spawn, 'open catDupeChar.eps &'
+;  spawn, 'open catDupeChar.eps &'
+  set_plot, 'X'
+
+  !X.thick = 1
+  !y.thick = 1
+  !p.charthick = 1
+  
+  plot, meanTots, sqrt(rtcomp^2)/rterr/sqrt(2), psym = 1
+
+;  stop
   
   if 0 then begin
   pctles = [0.05,0.16,0.50,0.84,0.95]

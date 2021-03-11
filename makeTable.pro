@@ -5,9 +5,9 @@ pro printHeader
   printf, 2, "\begin{table}[]"
   printf, 2, "\caption{Census Tract-level Unsheltered Data}"
   printf, 2, "\resizebox{\textwidth}{!}{%"
-  printf, 2, "\begin{tabular}{ccccc}"
+  printf, 2, "\begin{tabular}{cccccc}"
   printf, 2, "\toprule"
-  printf, 2, "Tract & Team & $n_{\rm teams}$ & Median Est. & 90\% CI \\ \cmidrule{1-5}"
+  printf, 2, "Tract & Community & Counter & Passes & Median Est. & 90\% CI \\ \cmidrule{1-6}"
   close, 2
 
   openw, 2, 'footer.txt', width = 1024
@@ -33,15 +33,24 @@ pro makeTable, resFile, output
   eastflag  = data.EASTFLAG
   tract     = data.TRACT
 
+  pts = idProTracts(data.TRACT)
+  pf = replicate('V', ntracts)
+  pf[where(pts)] = 'P'
+
+  comm = replicate('H', ntracts)
+  comm[where(eastFlag)] = 'E'
+
+  cts = reform(total(data.COUNTS, 1))
+  
   printHeader
   
   close, 1
   openw, 1, output, width = 1024
   for ii = 0, ntracts - 1 do begin
-     trs = summarizeRegion(data[ii])
-     printf, 1, f = '(%"%7.2f & %s & %i & %i & %i--%i \\")', $
-             tract[ii], 'V', ncounters[ii], trs[3], trs[0], trs[-1]
-     print, tract[ii], eastflag[ii]
+     trs = getCountProb(cts[*,ii], [0.05,0.5,0.95], /inv)
+     printf, 1, f = '(%"%7.2f & %s & %s & %i & %i & %i--%i \\")', $
+             tract[ii], comm[ii], pf[ii], $
+             ncounters[ii], trs[1], trs[0] > 0, trs[-1]
   endfor
   close, 1
 

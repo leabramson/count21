@@ -766,7 +766,7 @@ pro plotMultiWts, lastyear, $
                  symsize = 2, /nohat, thick = 5;, col = '555555'x, errcol = '555555'x
      oploterror, x, out[2,ii], out[3,ii]-out[2,ii], /hibar, psym = 8, $
                  symsize = 2.5, /nohat, thick = 10;, col = '555555'x, errcol = '555555'x
-     oploterror, x, out[2,ii], out[1,ii]-out[0,ii], /lobar, $
+     oploterror, x, out[2,ii], out[2,ii]-out[1,ii], /lobar, $
                  symsize = 2, /nohat, thick = 10;, col = '555555'x, errcol = '555555'x
      oplot, [x], [out[2,ii]], psym = 8, symsize = 2, col = col
      cgtext, x, !Y.CRANGE[0]-22, /data, key[ii], align = 0.5

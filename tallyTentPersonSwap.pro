@@ -23,14 +23,17 @@ pro tallyTentPersonSwap
   print, 'F tracts', nq1 / float(n_elements(ddelta))
   print, 'F T+M   ', total(data[q1].RAWCOUNTS[6:7])/total(data.RAWCOUNTS)
   print, 'F Dwel  ', total(data[q1].RAWCOUNTS[3:7])/total(data.RAWCOUNTS)
+  print, 'F Cts   ', total(data[q1].RAWCOUNTS)/total(data.RAWCOUNTS)
   print, data[q2].TRACT
   print, 'F tracts', nq2 / float(n_elements(ddelta))
   print, 'F T+M   ', total(data[q2].RAWCOUNTS[6:7])/total(data.RAWCOUNTS)
   print, 'F Dwel  ', total(data[q2].RAWCOUNTS[3:7])/total(data.RAWCOUNTS)
+  print, 'F Cts   ', total(data[q2].RAWCOUNTS)/total(data.RAWCOUNTS)
   print, data[q3].TRACT
   print, 'F tracts', nq3 / float(n_elements(ddelta))
   print, 'F T+M   ', total(data[q3].RAWCOUNTS[6:7])/total(data.RAWCOUNTS)
   print, 'F Dwel  ', total(data[q3].RAWCOUNTS[3:7])/total(data.RAWCOUNTS)
+  print, 'F Cts   ', total(data[q3].RAWCOUNTS)/total(data.RAWCOUNTS)
   
   swap = where(pdelta lt 0 AND ddelta gt 0, nswap)
   
@@ -46,5 +49,5 @@ pro tallyTentPersonSwap
   print, total(d.RAWCOUNTS)/total(data.RAWCOUNTS)
   print, total(mean(d.COUNTS, dim = 2)) $
          / total(mean(data.COUNTS, dim = 2))
-  
+ 
 end
