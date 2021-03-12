@@ -28,6 +28,7 @@
 \def\nprof{9}
 \def\nvol{30}
 \def\resp{respectively}
+%\raggedbottom
 
 \title{\bf
 	Results of the 2021 Greater Hollywood Volunteer Homeless Count
@@ -79,7 +80,7 @@ government initiatives reduced only the portion of people living unsheltered in 
 
 \end{abstract}
 
-\section{Introduction}
+\section{Context}
 \label{sec:intro}
 
 The Los Angeles Homelessness Services Authority (LAHSA) conducts an annual Point In Time (PIT) 
@@ -596,6 +597,16 @@ teams---largely along the US 101 corridor---comprised 42\% of raw counts and 43\
 unsheltered people. Tract 1910.00 (pro-counted) had the most people and dwellings ($123\rightarrow170$
 total population); 1899.03 had the fewest ($0\rightarrow$$<$12 total population). %These tracts also bracket the population statistics. 
 
+
+\begin{figure*}[]
+	\centering
+	\includegraphics[width = 0.8\linewidth, trim = 0cm 0cm 0cm 0cm]{tractsYrYr}
+	\caption{Tract-level year-on-year changes. Pro and vol trends are similar. Net loss of
+			about 200 people or identified persons+structures. 1927.00 saw the biggest
+			loss, which is explainable via XYZ.}
+	\label{fig:tractYrYr}
+\end{figure*}
+
 Modifying the CVRTM weights from the baseline SPA4/CD13 values to their SPA4 wide values 
 lowers Hollywood's inferred total unsheltered population to $912\pm68$ people; applying
 an updated tent weight based on a survey in Hollywood raises it to $944\pm118$ people (Section
@@ -611,7 +622,7 @@ right), with the plurality (39\%) living in makeshift structures (Table \ref{tbl
 Figure \ref{fig:rawCounts}, right). The four tracts counted by professional teams comprised 46\% of 
 those counts and 47\% of inferred unsheltered people. Tract 1927.00 (pro-counted) had the 
 most people and dwellings ($87\rightarrow129$ total population); 1912.04 had the fewest 
-($5\rightarrow$$<$17 total population). 
+($5\rightarrow$$<$16 total population). 
 %These tracts also bracket the total population statistics. 
 %The plurality of counts were of makeshift structures---statistically 
 %consistent with the number of persons identified on the street---followed by tents 
@@ -621,15 +632,6 @@ Modifying the CVRTM weights from the baseline SPA4/CD13 values to the SPA4 wide 
 lowers East Hollywood's inferred total unsheltered population to $539\pm59$ people; applying
 the updated tent weight raises it to $559\pm87$ people. Neither represents a significant change from 
 baseline.
-
-\begin{figure*}[]
-	\centering
-	\includegraphics[width = 0.8\linewidth, trim = 0cm 0cm 0cm 0cm]{tractsYrYr}
-	\caption{Tract-level year-on-year changes. Pro and vol trends are similar. Net loss of
-			about 200 people or identified persons+structures. 1927.00 saw the biggest
-			loss, which is explainable via XYZ.}
-	\label{fig:tractYrYr}
-\end{figure*}
 
 \begin{figure*}[]
 	\centering
@@ -709,7 +711,7 @@ datasets suggest the results are robust. Section \ref{sec:crossChecks} presents 
 %combined with COVID-related relaxations of tent-folding ordinances and the de-scoping of
 %sanitation efforts suggests that the 
 
-\subsection{Concentration}
+\subsection{Geographic Concentration}
 \label{sec:concentration}
 
 Everyday experience (and {\bfr maybe another map}) confirms that unsheltered homelessness is
@@ -728,7 +730,7 @@ The bottom panel plots the cumulative contribution of each tract to Greater Holl
 total and unsheltered populations. If people were equitably distributed, the curves would 
 correspond to a diagonal line with unit slope, yielding a Gini coefficient $c_{\rm Gini}=0$. 
 The total population in Greater Hollywood has $c_{\rm Gini}\simeq0.1$---50\% of people 
-living 40\% of tracts---making it close to evenly distributed. The unsheltered population, 
+living 40\% of tracts---close to evenly distributed. The unsheltered population, 
 on the other hand, has $c_{\rm Gini}=0.44\pm0.02$---50\% of people living in 20\% of 
 tracts---analogous to those describing income inequalities in 
 \href{https://en.wikipedia.org/wiki/List_of_countries_by_income_equality#UN,_World_Bank_and_CIA_list_\%E2\%80\%93_income_ratios_and_Gini_indices}{Rwanda, Philippines, or Malawi} 
@@ -908,6 +910,79 @@ All of the above suggests that our results are reliable.
 	\label{fig:1907}
 \end{figure}
 
+The upshot of the above is that, as far as we can assess, the number of people experiencing unsheltered
+homelessness in Greater Hollywood has declined to levels slightly above those in 2019 (917 and 491 people in 
+Hollywood and East Hollywood, \resp). A number of factors may contribute to this change, some 
+COVID-related and some not.
+
+\subsection{Government Initiatives}
+
+Foremost among these are government programs aimed at moving people indoors and staunch inflow into 
+homelessness. The two most salient are COVID-related: Project Roomkey and city and state eviction moratoria.
+%Note that Coordinate Entry System (CES) data will constrain all of the following scenarios.
+
+\subsubsection{Eviction Moratoria}
+
+We have no data on how many people the latter has prevented from becoming unhoused. However,
+per the LAHSA Count report, nearly 83,000 people became unhoused in 2020 from LA County's pool 
+of over half a million rent-burdened residents. Of these, $\sim$7500 could not be rehoused. Thus, if the eviction
+moratoria were capable of reducing even 10\% of last year's inflow, extant mechanisms may have had the 
+capacity to place everyone under a roof.
+
+\subsubsection{Project Roomkey}
+
+More information is accessible regarding Project Roomkey (PRK). Also according to the 2020 Count report, 
+over 6000 unhoused LA County residents became sheltered between March and May of that year.
+Examining only \href{https://www.lahsa.org/documents?id=4672-2020-homeless-count-council-district-13}
+{CD13's} share of \href{https://www.lahsa.org/documents?id=4585-2020-greater-los-angeles-homeless-count-los-angeles-continuum-of-care-coc-}{LA County's unsheltered senior population} (6.5\%), perhaps 100 of PRk's 
+\href{https://projectroomkeytracker.com/}{1608 occupied rooms} were filled with Greater Hollywood residents 
+on the night of 25 Feb. If so, this would account for about half the inferred global reduction.
+
+Data from the Coordinated Entry System (CES) will constrain this scenario.
+
+\subsubsection{A Bridge Home}
+
+Unrelated to COVID, at least one \href{https://www.lamayor.org/ABridgeHome}{\it A Bridge Home} (ABH) site 
+opened in Los Feliz between this year's grassroots and last year's official PIT count. The catchment area for this ABH's
+100 beds spans nearly all of Greater Hollywood. Assuming a 50\% occupancy reduction due to COVID precautions,
+this site can account for a further 50 people exiting the unsheltered population.
+
+Of course, ``decompression'' of congregate living sites due to COVID simultaneously reduces the occupancy of extant 
+shelters. Again assuming 50\% reductions in beds, we estimate that the five ABHs \href{https://arcg.is/0fy81}
+{whose catchments touch Greater Hollywood}---Schrader, YWCA/Lodi (recently expanded), Gardner, Riverside, and 
+Lafayette---to have contributed a net addition of 33 beds (398 total, 116 new, 83 lost to decompression). However,
+{\it locally}, the addition can be substantially larger. Indeed, tract 1927.00 overlaps with three ABHs, two of which 
+were new. In that tract, as many as 89 beds may have come online---excluding the contribution from a known new
+PATH permanent supportive housing site (see below).
+
+CES data will constrain this scenario.
+
+\subsubsection{Permanent Supportive Housing}
+
+Finally, 120 PATH permanent supportive housing (PSH) units may also have contributed. While all of those units did not 
+go to local residents, the site is located in tract 1927.00---that which saw the largest year-on-year decline from 2020. Any 
+units that {\it did} go to locals would help drive that tract's large observed decrease, along with the potential 89 new
+ABH beds just discussed. 
+
+CES data will constrain this scenario.
+
+\subsection{Other Losses}
+
+\subsubsection{Geographic Leakage/Edge Effects}
+
+Due to limited resources, our PIT \Count\ could only cover a limited geography. As such, an obvious potential source
+of population loss is people exiting Greater Hollywood to nearby communities. In border tracts, this would entail nothing
+more than moving across the street. Tract 1927.00 is, again, special in this regard as it has two borders to other communities.
+There is also a substantial community of unsheltered Angelenos opposite its eastern edge. We cannot exclude this possiblity,
+though additional upcoming grassroots PIT events in Mid City and Silver Lake---which bound Greater Hollywood to the
+southwest and east, \resp---may provide insights.
+
+\subsubsection{Deaths}
+
+
+Deaths (COVID $\sim$300; \href{http://publichealth.lacounty.gov/phcommon/public/media/mediapubhpdetail.cfm?prid=2900#:~:text=LOS\%20ANGELES\%20\%E2\%80\%93The\%20Los\%20Angeles,deaths\%20among\%20people\%20experiencing\%20homelessness.}{ODs}...at least 6x higher
+than that?).
+
 If the global picture is one of a general decline in unsheltered population, smaller scales tell different 
 stories. Seven tracts saw at least a 50\% increase in their number of dwellings; five saw more than 100\% 
 gains.\footnote{Tracts 1902.02, 1907.00, 1912.01, 1915.00, 1925.20, which together account for nearly 
@@ -926,15 +1001,6 @@ in Greater Hollywood.
 %erode comparability between this and past datasets. Limited daytime recounts also suggest that 
 %time-of-day effects are sub-dominant.
 
-A $\sim$30\% drop in unsheltered individuals in both Hollywood and 
-East Hollywood drives the decline we find, for which government initiatives to move people indoors 
-(Project Roomkey) and staunch inflow into homelessness (eviction moratoria) may be responsible. 
-Indeed, \href{https://www.lahsa.org/documents?id=4672-2020-homeless-count-council-district-13}{CD13's} share of \href{https://www.lahsa.org/documents?id=4585-2020-greater-los-angeles-homeless-count-los-angeles-continuum-of-care-coc-}{LA County's unsheltered senior population} (6.5\%) implies that perhaps 100 of its \href{https://projectroomkeytracker.com/}{1608 occupied rooms} were filled with Greater Hollywood residents on the night 
-of the count---about half the inferred change. The opening of at least one 
-\href{https://www.lamayor.org/ABridgeHome}{\it A Bridge Home} site in Los Feliz---whose catchment area 
-includes Greater Hollywood---and 120 PATH permanent supportive housing units may also have contributed. 
-The latter are located in tract 1927.00. While all of those units did not go to local residents, any that did would help
-drive that tract's large observed decrease. Coordinated Entry System data will constrain these possibilities.
 %1927.00 is actually in the catchment of 3 ABHs that were either new or expanded between PIT counts. 
 %Lodi, however, did not fill its new beds, and Lafayette doesn't cover the whole tract, so we won't speculate.
 %Nevertheless, technically, even at 50\% decompression, residents of 1927.00 may have been eligible 
@@ -955,20 +1021,11 @@ So, while the PIT data may support the efficacy of programs designed to reduce s
 homelessness, they do {\it not} suggest that the state of homelessness in Greater Hollywood has improved. In the 
 fight to rebuild lives---as well as build homes---that fact must remain paramount.
 
-PRK effects.
-
-ABH effects.
-
-PSH effects.
 
 {\bfr 1907.00 people and tents switched. Total unsheltered $\sim$constant but visual perceptions
 in this most-highly trafficked tract will make it *feel* like homelessness has increased by a lot.}
 
 
-Edges.
-
-Deaths (COVID $\sim$300; \href{http://publichealth.lacounty.gov/phcommon/public/media/mediapubhpdetail.cfm?prid=2900#:~:text=LOS\%20ANGELES\%20\%E2\%80\%93The\%20Los\%20Angeles,deaths\%20among\%20people\%20experiencing\%20homelessness.}{ODs}...at least 6x higher
-than that?).
 
 \section{Summary}
 \label{sec:summary}
