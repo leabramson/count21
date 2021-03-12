@@ -35,9 +35,13 @@ pro charVolOnly, $
   print, '2021'
   print, total(ph.RAWCOUNTS)/total(h.RAWCOUNTS), $
          total(pe.RAWCOUNTS)/total(e.RAWCOUNTS)
+  print, total(mean(ph.COUNTS,dim=2))/total(mean(h.COUNTS,dim=2)), $
+         total(mean(pe.COUNTS,dim=2))/total(mean(e.COUNTS,dim=2))
   print, '2020'
   print, total(ph2020.TOT_OBJ)/total(h2020.TOT_OBJ), $
          total(pe2020.TOT_OBJ)/total(e2020.TOT_OBJ)
+  print, total(ph2020.TOT_PPL)/total(h2020.TOT_PPL), $
+         total(pe2020.TOT_PPL)/total(e2020.TOT_PPL)
   
   hcts = [total(total(h.RAWCOUNTS[0:2], 1)), total(total(h.RAWCOUNTS[3:7], 1))]
   vhcts = [total(total(vh.RAWCOUNTS[0:2], 1)), total(total(vh.RAWCOUNTS[3:7], 1))]
@@ -70,48 +74,56 @@ pro charVolOnly, $
   set_plot, 'PS'
   device, filename = 'volProfComp.eps', $
           /col, /encap, /decomp, bits_per_pix = 8
-  !p.charsize = 1.25
-  !p.charthick = 4
+  !p.charsize = 1.5
+  !p.charthick = 5
   !X.thick = 4
   !y.thick = 4
+
+  cgloadct, 27, /brewer, ncol = 9
   
-  x = [0,1,2,3]
+  vc = cgcolor('2');'00a5ff'x; 
+  pc = cgcolor('4');'5c4cea'x; long('0055ff'x)
+  
+;  vc = '00bb00'x;;'898f2c'x; 
+;  pc = 'aa00cc'x;'5c4cea'x; long('0055ff'x)
+  
+  x = [-0.1,1,2,3.1]
   plotsym, 0, /fill
   plot, x, base2021/base2020, $
-        xtickname = [' ','Hollywood!CPersons', 'Hollywood!CDwellings', $
-                     'E. Ho.!CPersons', 'E. Ho.!CDwellings', ' '], $
-        yr = [0.3,1.3], xticks = 4, $
-        xr = [-0.5,3.5], xtickint = 1, ytickint = 0.25, xtickv = bx, /ys, $
-        ytitle = 'fraction of 2020 raw counts', xminor = 1, /nodat  
+        xtickname = ["Hollywood!CPersons", "Hollywood!CDwellings", $
+                     'E. Ho.!CPersons', 'E. Ho.!CDwellings'], $
+        yr = [0.3,1.3], xticks = 3, $
+        xr = [-0.5,3.5], ytickint = 0.25, xtickv = x, /ys, $
+        ytitle = 'fraction of 2020 raw counts', xminor = 1, /nodat
   oplot, !X.CRANGE, [1,1], col = 'aaaaaa'x, thick = 20
-  oplot, mean(!X.CRANGE)*[1,1], !Y.CRANGE, thick = 10, linesty = 2
+  oplot, mean(!X.CRANGE)*[1,1], !Y.CRANGE, thick = 10;, linesty = 2
   td = mrdfits('volCompNo1927.fits', 1)
   oploterror, x[2:3], td.BASE2021/td.BASE2020, td.BASE2021/td.BASE2020 * sqrt(1./td.BASE2021+1./td.BASE2020), $
               linesty = 2, thick = 6, errthick = 4
   oploterror, x, base2021/base2020, base2021/base2020 * sqrt(1./base2020 + 1./base2021), $
-              thick = 8, errthick = 8, psym = 3
+              thick = 8, errthick = 8, psym = 8, symsize = 1.5, /nohat
   oplot, x[0:1], (base2021/base2020)[0:1], thick = 8
   oplot, x[2:3], (base2021/base2020)[2:3], thick = 8
+  oplot, x[0:1]-0.1, (vol2021/vol2020)[0:1], col = vc, thick = 10
+  oplot, x[2:3]-0.1, (vol2021/vol2020)[2:3], col = vc, thick = 10
+  oplot, x[0:1]+0.1, (pro2021/pro2020)[0:1], col = pc, thick = 10
+  oplot, x[2:3]+0.1, (pro2021/pro2020)[2:3], col = pc, thick = 10
   oploterror, x-0.1, vol2021/vol2020, vol2021/vol2020 * sqrt(1./vol2020 + 1./vol2021), $
-              col = 'ffa500'x, errcol = 'ffa500'x, thick = 10, errthick = 10, psym = 3
-  oplot, x[0:1]-0.1, (vol2021/vol2020)[0:1], col = 'ffa500'x, thick = 10
-  oplot, x[2:3]-0.1, (vol2021/vol2020)[2:3], col = 'ffa500'x, thick = 10
+              thick = 10, errthick = 8, psym = 8, symsize = 1.5, /nohat ;, col = vc, errcol = vc
   oploterror, x[2:3]+0.1, td.PRO2021/td.PRO2020, td.PRO2021/td.PRO2020 * sqrt(1./td.PRO2021+1./td.PRO2020), $
-              linesty = 2, thick = 8, errthick = 6, col = '00a5ff'x, errcol = '00a5ff'x
+              linesty = 2, thick = 8, errthick = 6, col = pc, errcol = pc
   oploterror, x+0.1, pro2021/pro2020, pro2021/pro2020 * sqrt(1./pro2020 + 1./pro2021), $
-              col = '00a5ff'x, errcol = '00a5ff'x, thick = 10, errthick = 10, psym = 3
-  oplot, x[0:1]+0.1, (pro2021/pro2020)[0:1], col = '00a5ff'x, thick = 10
-  oplot, x[2:3]+0.1, (pro2021/pro2020)[2:3], col = '00a5ff'x, thick = 10
+              thick = 10, errthick = 8, psym = 8, symsize = 1.5, /nohat;, col = pc, errcol = pc
   oplot, x, base2021/base2020, psym = 8, symsize = 1.2
-  oplot, x-0.1, vol2021/vol2020, psym = 8, symsize = 1.2, col = 'ffa500'x
-  oplot, x+0.1, pro2021/pro2020, psym = 8, symsize = 1.2, col = '00a5ff'x
+  oplot, x-0.1, vol2021/vol2020, psym = 8, symsize = 1.2, col = vc
+  oplot, x+0.1, pro2021/pro2020, psym = 8, symsize = 1.2, col = pc
   legend, /bottom, /left, $
           ['Pro tracts', 'Vol tracts', 'All tracts'], $
-          col = ['00a5ff'x,'ffa500'x,0], $
-          pspacing = 1, linesty = 0, box = 0, thick = 10
+          col = [pc,vc,0], $
+          pspacing = 1, linesty = 0, box = 0, thick = 10, charsize = 1.25
   legend, /bottom, /right, $
-          'W/o 1927.00', $
-          pspacing = 1, linesty = 2, box = 0, thick = 8
+          'w/o 1927.00', $
+          pspacing = 1, linesty = 2, box = 0, thick = 8, charsize = 1.25
   device, /close
   spawn, 'open volProfComp.eps &'
   set_plot, 'X'

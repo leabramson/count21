@@ -125,7 +125,7 @@ pro countAll, datafile, niter, $
      else $
         baseCounts[*,ii] = input[*,hit]
 
-     baseErr = sqrt(baseCounts[*,ii] / nhit) ;; poison err on mean
+     baseErr = sqrt(baseCounts[*,ii] / nhit)                      ;; poison err on mean
      baseErr[where(baseErr eq 0)] = bkgRates[where(baseErr eq 0)] ;; fill nulls w/ bkg
      base    = baseCounts[*,ii] # replicate(1,niter)     
      bErr    = (baseErr # replicate(1,niter)) * randomn(seed, [nStruct,niter]) ;; poisson noise, accounting for multiple counters, with the bkg Rate

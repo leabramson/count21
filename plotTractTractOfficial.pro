@@ -72,7 +72,7 @@ pro plotTractTractOfficial, newData;, $
   print, f= '(%"Old total obj: %i")', total(oldRaw)
   print, f= '(%"New total obj: %i")', total(newRaw)
   print, f= '(%"Old total ppl: %i")', total(oldTot)
-  print, f= '(%"New total pp;: %i")', total(newTot)
+  print, f= '(%"New total ppl: %i")', total(newTot)
 
 ;  stop
 

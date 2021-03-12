@@ -19,25 +19,27 @@ pro show1907
   p2020 = [73., 104.-73.]
   p2020Err = sqrt(p2020)
 
-  pcol = 'aa00aa'x
-  dcol = '00aa00'x
+  cgloadct, 27, /brewer, ncol = 9
+  
+  pcol = cgcolor('3');'aa00aa'x
+  dcol = cgcolor('7');'00aa00'x
   
   plotsym, 0, /fill
-  x = [0,1]
+  x = [0.1,0.9]
 
   set_plot, 'PS'
   device, filename = 'tract1907comp.eps', $
           /col, /encap, /decomp, bits_per_pix = 8
-  !P.CHARSIZE = 1.25
-  !P.CHARTHICK = 4
+  !P.CHARSIZE = 1.5
+  !P.CHARTHICK = 5
   !X.THICK = 4
   !Y.THICK = 4
   
-  plot, [-1,2], [0,150], /nodat, xr = [-0.25,1.25], /xsty, $
+  plot, [-0.25,1.25], [0,150], /nodat, xr = [-0.25,1.25], /xsty, $
         xtitle = 'year', ytitle = 'total unsheltered people', $
-        xtickint = 1, xtickname = ['2020', '2021'], $
-        xminor = 1, xtickv = [0,1], xticks = 1, yr = [0,150], $
-        title = 'Tract 1907.00 (Central Hollywood)'
+        xtickname = ['2020', '2021'], $
+        xminor = 1, xtickv = x, xticks = 1, yr = [0,170], $
+        title = 'Tract 1907.00 (Central Hollywood)', /ys
   oplot, x, [total(p2020), total(outs[*,2])], col = 'aaaaaa'x, thick = 10
   oplot, x, [total(p2020), total(outs[*,2])], psym = 8, symsize = 2
   oplot, x, [total(p2020), total(outs[*,2])], psym = 8, col = 'aaaaaa'x, symsize = 1.5

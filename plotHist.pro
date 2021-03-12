@@ -6,7 +6,7 @@ pro plotHist, struct, $
   cts = total(total(struct.COUNTS, 3), 1)
   cts = cts[sort(cts)]
   h = histogram(cts, bins = 5, loc = bins)
-  ints = getCountProb(cts, [0.05,0.25,0.5,0.75,0.95], /inv)
+  ints = getCountProb(cts, [0.05,0.16,0.5,0.84,0.95], /inv)
   niter = n_elements(cts)
   
   !p.CHARTHICK = 5
@@ -59,7 +59,7 @@ pro plotHist, struct, $
      legend, /top, /left, /clear, box = 0, $
              ['last year ('+string(compval,f='(I0)')+')', $, $
               'median ('+string(ints[2],f='(I0)')+')', $
-              '25/75 pctle ('+$
+              '16/84 pctle ('+$
               string(ints[1],f='(I0)')+'/'+$
               string(ints[3],f='(I0)')+')', $
               '5/95 pctle ('+$
