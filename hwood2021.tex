@@ -423,7 +423,7 @@ $\sigma_{j}^{\rm bkg}$.
 %\resizebox{\linewidth}{!}{%
 \begin{tabular}{lccccc}
 \toprule
- & $C$ & $V$ & $R$ & $T$ & $M$ \\ \cmidrule{1-6}
+ & $w_{C}$ & $w_{V}$ & $w_{R}$ & $w_{T}$ & $w_{M}$ \\ \cmidrule{1-6}
 {\bf SPA4/CD13} & $1.51\pm0.25$ & $1.77\pm0.42$ & $1.42\pm0.28$ & $1.48\pm0.11$ & $1.68\pm0.31$ \\
 2021 $T$ & -- & -- & -- & $1.39\pm0.14$ & --\\
 2021 $T$ w/ unocc & -- & -- & --& $1.51\pm0.24$ & --\\
@@ -550,9 +550,11 @@ professionally counted tracts in Section \ref{sec:crossChecks}.
 \section{Results}
 \label{sec:results}
 
-This section presents community level estimates for the number of unsheltered people living in
-Hollywood and East Hollywood as of 25 February 2021. Sections \ref{sec:hWood} and \ref{sec:eHo} 
-summarize our results; Section \ref{sec:comp} compares them to the 2020 LAHSA PIT estimates.
+This section presents community- and aggregate-level estimates for the number of unsheltered people 
+living in Hollywood and East Hollywood as of 25 February 2021. Sections \ref{sec:hWood} and \ref{sec:eHo} 
+summarize our results, \ref{sec:comp} compares them to the 2020 LAHSA PIT estimates, 
+\ref{sec:concentration} quantifies the population's geographic distribution, and \ref{sec:crossChecks}
+presents cross-checks.
 
 %Section \ref{sec:discussion} describes how 
 %varying elements of Section \ref{sec:mc}'s analysis modulates these results.
@@ -586,15 +588,15 @@ $<$3 unsheltered families in either community.}
 \label{sec:hWood}
 
 Counters identified $702\pm44$ (95\% CI) persons and dwellings in the 21 census tracts 
-comprising the Hollywood community. Modulated by the baseline CVRTM weights, these 
-estimates imply a total unsheltered population in Hollywood of $936\pm92$ people 
+comprising the Hollywood Community. Modulated by the baseline CVRTM weights, these 
+estimates imply a total unsheltered population of $936\pm92$ people 
 (90\% CI; Figure \ref{fig:communityPDFs}, left), with the plurality (35\%) living in tents 
 (Table \ref{tbl:summary}; Figure \ref{fig:rawCounts}, left). The five tracts counted by professional 
 teams---largely along the US 101 corridor---comprised 42\% of raw counts and 43\% of inferred 
-unsheltered people. Tract 1910.00 (pro-counted) had the most people and dwellings (123); 
-1899.03 had the fewest (0). These tracts also bracket the population statistics. 
+unsheltered people. Tract 1910.00 (pro-counted) had the most people and dwellings ($123\rightarrow170$
+total population); 1899.03 had the fewest ($0\rightarrow$$<$12 total population). %These tracts also bracket the population statistics. 
 
-Modifying the CVRTM weights from the baseline SPA4/CD13 values to the SPA4 wide values 
+Modifying the CVRTM weights from the baseline SPA4/CD13 values to their SPA4 wide values 
 lowers Hollywood's inferred total unsheltered population to $912\pm68$ people; applying
 an updated tent weight based on a survey in Hollywood raises it to $944\pm118$ people (Section
 \ref{sec:discussion}). Neither represents a significant change from baseline.
@@ -604,12 +606,13 @@ an updated tent weight based on a survey in Hollywood raises it to $944\pm118$ p
 
 Counters identified $389\pm33$ (95\% CI) persons and dwellings in the 18 census tracts 
 comprising East Hollywood. Modulated by the baseline CVRTM weights, these estimates imply 
-a total unsheltered population in East Hollywood of $556\pm83$ people (Figure \ref{fig:communityPDFs},
+a total unsheltered population of $556\pm83$ people (Figure \ref{fig:communityPDFs},
 right), with the plurality (39\%) living in makeshift structures (Table \ref{tbl:summary}, 
 Figure \ref{fig:rawCounts}, right). The four tracts counted by professional teams comprised 46\% of 
 those counts and 47\% of inferred unsheltered people. Tract 1927.00 (pro-counted) had the 
-most people and dwellings (87); 1912.04 had the fewest (5). These tracts also bracket the 
-total population statistics. 
+most people and dwellings ($87\rightarrow129$ total population); 1912.04 had the fewest 
+($5\rightarrow$$<$17 total population). 
+%These tracts also bracket the total population statistics. 
 %The plurality of counts were of makeshift structures---statistically 
 %consistent with the number of persons identified on the street---followed by tents 
 %(Figure \ref{fig:rawCounts}, right).
@@ -654,7 +657,7 @@ baseline.
 \label{sec:comp}
 
 The official LAHSA estimates from the 2020 PIT count are overplotted in Figure \ref{fig:communityPDFs} 
-as a red vertical line in each panel: 1058 unsheltered people in Hollywood, 656 in East Hollywood.
+as red vertical lines in each panel: 1058 unsheltered people in Hollywood, 656 in East Hollywood.
 Our baseline inferences suggest a $>$95\% probability that the current population has fallen from 
 those levels. Using the median and 90\% CI, we infer declines of $11\%\pm9\%$ and $15\%\pm12\%$, \resp. 
 
@@ -666,43 +669,40 @@ from backing-out tract-level CVRTM counts from their total populations and perso
 by the LAHSA data portal.}
 
 The tracts with the largest year-on-year gain (1912.01, $+40$ people) and loss (1927.00, $-125$ people)
-are both in East Hollywood, and contain Barnsdall Park and US Rte.~101, \resp. 
+are both in East Hollywood. They contain Barnsdall Park and US 101, \resp. 
 
 %We speculate as to why these 
 %tracts, specifically, saw such changes in Section \ref{sec:discussion}, along with why counts of rough
 %saw particularly large declines.
 
 Given the deficit in raw counts, it seems unlikely that reasonable modifications to the CVRTM weights 
-will qualitatively change the trend we infer. The $T$ and $M$ weights are the largest potential error 
+will qualitatively change the trend we infer. The $w_{T}$ and $w_{M}$ weights are the largest potential error 
 sources due to the high proportion of people living in tents and makeshifts. To constrain their evolution
 from last year, \href{https://selahnhc.org}{SELAH} outreach teams surveyed 47 tents (38 responses) 
-in Hollywood on 28 Feb. While the full 2021 PIT area has not been assessed, this exercise
-yielding a mean occupancy of $T=1.39\pm0.14$ people per tent, or $T=1.50\pm0.22$ when 
-non-responses are modeled.\footnote{We assumed they were equally likely to have anywhere 
-from 0 to 4 occupants, each.} Although $M$ was not estimated, that $T$ value is consistent with 
-the official 2020 weight of $T=1.48\pm0.11$. 
+in Hollywood on 28 Feb. This exercise yielded a mean occupancy of $w_{T}=1.39\pm0.14$ people per tent, 
+or $w_{T}=1.50\pm0.22$ when non-responses are modeled.\footnote{We assumed they were equally likely to have anywhere 
+from 0 to 4 occupants, each.} While neither the full 2021 PIT area nor $w_{M}$ has been assessed, the 
+above values are consistent with the official 2020 weight of $w_{T}=1.48\pm0.11$. 
 
-Figure \ref{fig:wtComp} illustrates the effect of the above CVRTM modifications, none of which 
-alter our conclusions. In all cases, we infer at least a 93\% chance of a decline compared to the 2020 
-PIT count.
+Figure \ref{fig:wtComp} illustrates the effect of the above CVRTM modifications. In all cases, we infer at 
+least a 93\% chance of a decline compared to the 2020 PIT count.
 
-While we encourage robust efforts to update the CVRTM weights, we caution that the changes needed 
-to null the change we infer from 2020 are substantial. Only changes to $T$ and $M$ can achieve it, 
-which must rise to 2.2 and 2.6 people from 1.5 and 1.7 people, \resp, in 2020. Not withstanding
+We encourage robust efforts to update the CVRTM weights, but the changes needed to null the 
+decline we infer from 2020 are substantial. Only changes to $w_{T}$ and $w_{M}$ can reasonably 
+achieve it, and must rise to 2.2 and 2.6 people from 1.5 and 1.7 people, \resp, in 2020. Not withstanding
 the above survey, such $\sim$50\% increases in {\it mean} occupancies seem unlikely, especially as
 known COVID-related tent distribution efforts have pushed in the opposite direction (Section 
-\ref{sec:discussion}).
+\ref{sec:discussion}). While 2021 is unprecedented in many ways, historically, no SPA4/CD13 
+CVRTM weight has changed by more than $\sim$30\% year-on-year since 2018 
+($w_{R}$ fell from $\sim$2 to $\sim$1.4 from 2019 to 2020).
 
-All of the above is in large part a reflection of the fact that a $\sim$30\% reduction in persons seen 
-on the street drives the overall trend (Figure \ref{fig:rawCounts}). Cars and vans are also down from 
-last year by more than the number of available safe parking spaces would suggest 
-(Section \ref{sec:discussion}), but the total number of dwellings remained flat in most tracts. 
-(Only makeshift structures show a potential common gain in both communities.)
-Although uncertainties in East Hollywood are large, Figure \ref{fig:proVolComp} reveals these 
-trends to be common to both communities and to tracts counted by volunteers or professionals.
-
-Such consistencies in $\sim$independent datasets suggest the results are robust. Section
- \ref{sec:crossChecks} presents further cross-checks.
+All of the above is largely a reflection of the fact that persons seen on the street fell by $\sim$30\%
+(Figure \ref{fig:rawCounts}). Cars and vans are also down from last year by more than the number of 
+safe parking spaces (Section \ref{sec:discussion}), with only makeshift structures showing a potential 
+common gain. All told, the total number of dwellings remained flat in most tracts. Although uncertainties 
+in East Hollywood are large, Figure \ref{fig:proVolComp} reveals these trends to be common across 
+communities and tracts counted by volunteers or professionals. Such consistencies in nearly independent 
+datasets suggest the results are robust. Section \ref{sec:crossChecks} presents further cross-checks.
 
 %(Unsheltered people make up 3.5\% of tract 1907.00's total population, according to 2020 estimates
 %from the US Census.)
@@ -712,10 +712,10 @@ Such consistencies in $\sim$independent datasets suggest the results are robust.
 \subsection{Concentration}
 \label{sec:concentration}
 
-Everyday experience (and Figure \ref{fig:map}) comfirms that unsheltered homelessness is
+Everyday experience (and {\bfr maybe another map}) confirms that unsheltered homelessness is
 unevenly distributed. However, given the role of public opinion in policymaking, it is worth 
 providing empirical grounding for arguments over, e.g., the placement of new permanent supportive 
-housing (PSH) facilities by quantifying that statement. Figure \ref{fig:gini} in one attempt to do so. 
+housing (PSH) facilities by quantifying that statement. Figure \ref{fig:gini} is one attempt to do so. 
 
 Combining our PIT \Count\ results with 2020 
 \href{https://geomap.ffiec.gov/FFIECGeocMap/GeocodeMap1.aspx}{US Census} 
@@ -726,21 +726,22 @@ identified as unsheltered. This fraction spans $\sim$0\% to over 4\%, with a mea
 
 The bottom panel plots the cumulative contribution of each tract to Greater Hollywood's
 total and unsheltered populations. If people were equitably distributed, the curves would 
-correspond to a diagonal line with unit slope, yielding a Gini Coefficient $c_{\rm Gini}=0$. 
+correspond to a diagonal line with unit slope, yielding a Gini coefficient $c_{\rm Gini}=0$. 
 The total population in Greater Hollywood has $c_{\rm Gini}\simeq0.1$---50\% of people 
 living 40\% of tracts---making it close to evenly distributed. The unsheltered population, 
 on the other hand, has $c_{\rm Gini}=0.44\pm0.02$---50\% of people living in 20\% of 
-tracts---analogous to those describing income inequality in 
+tracts---analogous to those describing income inequalities in 
 \href{https://en.wikipedia.org/wiki/List_of_countries_by_income_equality#UN,_World_Bank_and_CIA_list_\%E2\%80\%93_income_ratios_and_Gini_indices}{Rwanda, Philippines, or Malawi} 
 as estimated by the World Bank. Such a concentration of lived trauma, real poverty, and the
 attendant externalities of unsheltered homelessness should condition the design of policies
-and the thoughts of policymakers who hold equity as a core value.
+and the thoughts of policymakers holding equity as a core value.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width =\linewidth, trim=0.75cm 0cm 0cm 0cm]{volProfComp}
 	\caption{Comparison of trends in pro- and vol-counted tracts in both communities.
-			Consistency is good, though 1927.00 counts for a lot.}
+			Consistency is good, though 1927.00 counts for a lot. We haven't
+			broken down the 2020 results at the tract+CVRTM level yet.}
 	\label{fig:proVolComp}
 \end{figure}
 
@@ -759,60 +760,59 @@ and the thoughts of policymakers who hold equity as a core value.
 \subsection{Cross-checks}
 \label{sec:crossChecks}
 
-Four cross-checks involving independent counters and the use of external datasets validate the
-results presented above by suggesting that the raw counts from our 2021 PIT \Count\ are accurate:
+Multiple cross-checks involving independent counters and external datasets suggest 
+that the raw counts from our 2021 PIT \Count\ are accurate. The validating data are also
+available at {\bfr website}.
 
 \subsubsection{Internal checks}
 
 First are Figure \ref{fig:dupeChar}'s inter-comparisons of the count's 37 duplicate tract 
 measurements, suggesting per-tract and -category counting uncertainties are consistent with  
-random errors built into the analysis. There is thus no evidence that counters were biased in
-identifying unsheltered persons or dwellings, although such data do not preclude the
-possibility of systematic blindnesses to cars and vans. However, that trends hold in tracts counted 
-by volunteers and professionals---who made their assessments on foot and in daylight---suggests 
-that such biases are not likely to be large, as do post-facto independent measurements of 
-key geographies.
+the random errors built into the analysis. There is thus no evidence that counters were biased in
+identifying unsheltered persons or dwellings. Such data do not preclude the possibility of systematic 
+inefficiencies in identifying, e.g., cars and vans---which can be difficult at night---but 
+Figure \ref{fig:proVolComp}'s illustration that at least person and dwelling trends are consistent 
+in tracts counted by volunteers and professionals---who surveyed on foot in daylight---suggests 
+that such biases are probably not large. Post-facto independent measurements of key geographies
+suggest this, too.
 
 \subsubsection{External checks}
 
-Six additional external checks also suggest our PIT enumerations are accurate.
-
-First, three specific census tracts were re-surveyed in detail:
+Three census tracts were re-surveyed in detail, none of which yield evidence of a PIT undercount:
 \begin{itemize}
-	\item Tract 1901.00: the only outlier tract in terms of inter-counter variability. L.~Abramson
-		  recounted this tract 14 hours after the PIT count (circa 9:00 AM) with results 
-		  $1.9\sigma$ {\it below} the average of the volunteer teams' results.
-	\item Tract 1912.01: the tract with the largest increase. L.~Abramson recounted this tract on 
-		27 Feb.\ circa 12:00 PM with results consistent with the PIT teams' assessments
-		to within $1\,\sigma$.
-	\item Tract 1927.00: the tract with the largest decrease. L.~Abramson recounted this tract
+	\item Tract 1901.00: intercounter variability outlier. Abramson
+		  assessed this tract 14 hours after the PIT count (circa 9:00 AM) with results 
+		  $1.9\,\sigma$ {\it lower} than the volunteers' average.
+	\item Tract 1912.01: largest increase. Abramson assessed this tract on 
+		27 Feb.\ circa 12:00 PM. Results were consistent with the PIT \Count\ to within 
+		$1\,\sigma$.
+	\item Tract 1927.00: largest decrease. Abramson assessed this tract
 		on 4 March circa 8:30 AM by vehicle with results lower than the PIT's assessment. 
-		However, because this tract is especially dense and contains many freeway shoulders,
-		it was originally surveyed on foot by outreach professionals. As such, the vehicular recount
-		suggests that the PIT data are not biased in ways that would induce an artificial 
-		year-on-dear decline.				
+		However, given this tract's density and configuration---home to many freeway ramps and
+		shoulders---it was originally surveyed on foot by outreach professionals. As such, A bramson's 
+		vehicular recount only suggests that the PIT data are not biased so as to induce an artificial decline.
 \end{itemize}
 
-Two larger-geography surveys also concur:
+Two larger-geography surveys concur quantitatively and qualitatively:
 \begin{itemize}
-	\item Biweekly survey data from \href{https://hollywoodpartnership.com/}{\it The Hollywood Partnership} 
-		from 19 Feb.\ are consistent with our PIT count in a common tract (1902.02) and with an independent 
-		recount of that entire geography performed 28 Feb.\ by Abramson and Kohan. These also show 
-		a decline from past values.
+	\item Biweekly data from \href{https://hollywoodpartnership.com/}{\it The Hollywood Partnership} 
+		from 19 Feb.\ are consistent with PIT data in a common tract (1902.02) and with an independent 
+		recount of the entire Business Improvement District's geography performed 28 Feb.\ by Abramson and 
+		Kohan. These data also imply a decline from past values.
 	\item Three tracts in Echo Park and Silver Lake monitored biweekly by SELAH since May 2020 
-		also show similar declines to that implied by our data. 
+		also show similar declines. 
 \end{itemize}
 %
 %A 27 Feb.\ recount of tract 1912.01 in East Hollywood conducted as as part of a
 %		\href{https://selahnch.org}{SELAH} monitoring campaign agrees with our PIT value.% in unsheltered homelessness.
 %
-Finally, safe parking---a known sink---seems unable to account for sufficient cars and vans
-to meaningfully affect our conclusions. 49 spaces exist in or near the survey area (Hollywood,
-East Hollywood, and Echo Park). These probably did go uncounted, and may have been occupied 
-by $80\pm16$ total car and van dwellers ($1\,\sigma$, assumes equal mix). If so, the chance of a 
-decline from 2020 falls from 98\% to 92\% in the baseline case. 
 
-All of the above suggests that our results are quantitatively and qualitatively reliable.
+Finally, safe parking---a known sink---provides 49 spaces in or near the survey area (Hollywood,
+East Hollywood, and Echo Park). If occupied on 25 Feb., these locations probably went uncounted.
+That suggests $80\pm16$ total car and van dwellers should be added to our results (assumes 
+equal mix). If so, the baseline chance of a decline from 2020 falls from 98\% to 92\%.
+
+All of the above suggests that our results are reliable.
 %Assumes equal mix of cars + vans.
 %From Starkey: Hwood = 25, Eho = 10, EchoPk = 14; total = 49; total CD13 = 59 but I think it's reasonable
 %to truncate at Echo Pk. It's 90% if you include all 59 spaces.
@@ -1018,48 +1018,48 @@ in the 2021 grassroots PIT \Count.
 \caption{Census Tract-level Unsheltered Counts}
 %\resizebox{\textwidth}{!}{%
 \centering
-\begin{tabular}{cccccccccc}
+\begin{tabular}{ccccccccccc}
 \toprule
-Tract & Community & Counter & $A$ & {\it TAY} & $C$ & $V$ & $R$ & $T$ & $M$ \\ \cmidrule{1-10}
-1898.00 & Hollywood & Vol &  3.3 &  0.3 &  0.0 &  0.7 & 0 &  1.3 &  0.0 \\
-1899.02 & Hollywood & Vol &  4.3 &  0.0 &  0.0 &  1.3 & 2 &  4.0 &  1.3 \\
-1899.03 & Hollywood & Vol &  0.0 &  0.0 &  0.0 &  0.0 & 0 &  0.0 &  0.0 \\
-1899.04 & Hollywood & Vol &  9.5 &  0.0 &  0.0 &  1.0 & 0 &  2.5 &  2.0 \\
-1899.05 & Hollywood & Vol &  3.0 &  0.0 &  3.0 &  4.5 & 1 &  2.0 &  0.0 \\
-1901.00 & Hollywood & Vol & 49.5 &  0.5 &  8.0 &  5.5 & 1 &  6.0 &  4.0 \\
-1902.01 & Hollywood & Vol & 14.5 &  0.0 &  0.5 &  0.0 & 0 &  2.5 &  1.5 \\
-1902.02 & Hollywood & Vol &  9.0 &  0.0 &  0.0 &  0.0 & 0 &  8.0 &  5.5 \\
-1903.01 & Hollywood & Pro & 10.0 &  0.0 &  0.0 &  0.0 & 0 & 19.0 & 22.0 \\
-1905.10 & Hollywood & Pro & 13.0 &  0.0 &  0.0 &  0.0 & 4 &  6.0 &  4.0 \\
-1905.20 & E.~Hollywood & Vol &  2.0 &  0.5 &  0.5 &  1.0 & 0 &  4.0 &  1.0 \\
-1907.00 & Hollywood & Vol & 38.5 &  0.0 &  2.0 &  0.0 & 0 & 38.5 &  7.0 \\
-1908.01 & Hollywood & Vol & 18.5 &  0.0 &  0.5 &  0.0 & 0 & 19.5 &  9.0 \\
-1908.02 & Hollywood & Pro & 22.0 &  0.0 &  0.0 &  1.0 & 5 & 13.0 & 13.0 \\
-1909.01 & Hollywood & Pro & 15.0 &  0.0 &  0.0 &  0.0 & 0 & 17.0 &  9.0 \\
-1909.02 & Hollywood & Vol &  2.7 &  0.3 &  0.7 &  1.7 & 0 &  0.0 &  0.0 \\
-1910.00 & Hollywood & Pro & 34.0 &  0.0 &  1.0 &  0.0 & 5 & 60.0 & 23.0 \\
-1911.10 & E.~Hollywood & Vol &  4.0 &  0.5 &  0.0 &  0.0 & 0 &  2.5 &  0.5 \\
-1911.20 & E.~Hollywood & Pro & 14.0 &  0.0 &  0.0 &  0.0 & 0 & 24.0 & 10.0 \\
-1912.01 & E.~Hollywood & Vol & 17.5 &  1.0 &  0.5 &  3.5 & 1 &  5.5 & 12.0 \\
-1912.03 & E.~Hollywood & Vol &  5.0 &  0.0 &  2.0 &  8.0 & 0 &  0.0 &  2.5 \\
-1912.04 & E.~Hollywood & Vol &  3.0 &  0.5 &  0.5 &  1.0 & 0 &  0.0 &  0.0 \\
-1913.01 & E.~Hollywood & Vol &  8.0 &  0.0 &  0.5 &  7.5 & 0 &  5.0 &  1.0 \\
-1913.02 & E.~Hollywood & Vol &  5.5 &  0.0 &  0.5 &  0.5 & 0 &  3.5 &  6.0 \\
-1914.10 & E.~Hollywood & Vol &  7.5 &  0.0 &  1.0 &  0.5 & 0 &  1.0 &  5.5 \\
-1914.20 & E.~Hollywood & Vol &  4.0 &  0.0 &  2.0 &  4.5 & 1 &  3.0 &  2.0 \\
-1915.00 & E.~Hollywood & Vol & 10.0 &  0.0 &  0.0 &  4.5 & 2 &  2.5 &  2.5 \\
-1916.10 & E.~Hollywood & Pro &  6.0 &  0.0 &  0.0 &  1.0 & 1 &  2.0 & 22.0 \\
-1916.20 & E.~Hollywood & Pro &  0.0 &  2.0 &  0.0 &  0.0 & 0 &  4.0 &  6.0 \\
-1917.10 & Hollywood & Vol &  6.5 &  0.0 &  2.0 &  4.5 & 1 &  1.0 &  0.5 \\
-1917.20 & Hollywood & Vol &  2.3 &  0.0 &  0.3 &  1.3 & 6 &  0.0 &  4.3 \\
-1918.10 & Hollywood & Vol &  3.5 &  0.0 &  1.0 &  1.5 & 1 & 10.0 &  0.0 \\
-1918.20 & Hollywood & Vol &  2.5 &  1.0 &  0.0 &  2.5 & 2 &  1.5 &  2.0 \\
-1919.01 & Hollywood & Vol & 16.0 &  0.0 &  2.0 &  1.5 & 5 & 13.0 &  7.5 \\
-1925.10 & E.~Hollywood & Vol &  4.0 &  0.0 &  1.5 &  1.0 & 1 &  0.0 &  1.5 \\
-1925.20 & E.~Hollywood & Vol &  1.0 &  0.0 &  1.0 &  6.0 & 1 &  0.0 &  0.0 \\
-1926.10 & E.~Hollywood & Vol &  2.0 &  0.0 &  0.0 &  0.0 & 0 &  3.5 &  0.5 \\
-1926.20 & E.~Hollywood & Vol &  1.0 &  0.0 &  0.0 &  0.0 & 0 & 11.0 &  0.5 \\
-1927.00 & E.~Hollywood & Pro & 20.0 &  0.0 &  0.0 &  0.0 & 7 &  6.0 & 54.0 \\
+Tract & Community & Counter & $A$ & {\it TAY} & $C$ & $V$ & $R$ & $T$ & $M$ & {\bf Total} \\ \cmidrule{1-11}
+1898.00 & Hollywood & V &  3.3 &  0.3 &  0.0 &  0.7 & 0 &  1.3 &  0.0 &   5.7 \\
+1899.02 & Hollywood & V &  4.3 &  0.0 &  0.0 &  1.3 & 2 &  4.0 &  1.3 &  13.7 \\
+1899.03 & Hollywood & V &  0.0 &  0.0 &  0.0 &  0.0 & 0 &  0.0 &  0.0 &   0.0 \\
+1899.04 & Hollywood & V &  9.5 &  0.0 &  0.0 &  1.0 & 0 &  2.5 &  2.0 &  15.0 \\
+1899.05 & Hollywood & V &  3.0 &  0.0 &  3.0 &  4.5 & 1 &  2.0 &  0.0 &  13.5 \\
+1901.00 & Hollywood & V & 49.5 &  0.5 &  8.0 &  5.5 & 1 &  6.0 &  4.0 &  74.5 \\
+1902.01 & Hollywood & V & 14.5 &  0.0 &  0.5 &  0.0 & 0 &  2.5 &  1.5 &  19.0 \\
+1902.02 & Hollywood & V &  9.0 &  0.0 &  0.0 &  0.0 & 0 &  8.0 &  5.5 &  22.5 \\
+1903.01 & Hollywood & P & 10.0 &  0.0 &  0.0 &  0.0 & 0 & 19.0 & 22.0 &  51.0 \\
+1905.10 & Hollywood & P & 13.0 &  0.0 &  0.0 &  0.0 & 4 &  6.0 &  4.0 &  27.0 \\
+1905.20 & E.~Hollywood & V &  2.0 &  0.5 &  0.5 &  1.0 & 0 &  4.0 &  1.0 &   9.0 \\
+1907.00 & Hollywood & V & 38.5 &  0.0 &  2.0 &  0.0 & 0 & 38.5 &  7.0 &  86.0 \\
+1908.01 & Hollywood & V & 18.5 &  0.0 &  0.5 &  0.0 & 0 & 19.5 &  9.0 &  47.5 \\
+1908.02 & Hollywood & P & 22.0 &  0.0 &  0.0 &  1.0 & 5 & 13.0 & 13.0 &  54.0 \\
+1909.01 & Hollywood & P & 15.0 &  0.0 &  0.0 &  0.0 & 0 & 17.0 &  9.0 &  41.0 \\
+1909.02 & Hollywood & V &  2.7 &  0.3 &  0.7 &  1.7 & 0 &  0.0 &  0.0 &   5.3 \\
+1910.00 & Hollywood & P & 34.0 &  0.0 &  1.0 &  0.0 & 5 & 60.0 & 23.0 & 123.0 \\
+1911.10 & E.~Hollywood & V &  4.0 &  0.5 &  0.0 &  0.0 & 0 &  2.5 &  0.5 &   7.5 \\
+1911.20 & E.~Hollywood & P & 14.0 &  0.0 &  0.0 &  0.0 & 0 & 24.0 & 10.0 &  48.0 \\
+1912.01 & E.~Hollywood & V & 17.5 &  1.0 &  0.5 &  3.5 & 1 &  5.5 & 12.0 &  41.5 \\
+1912.03 & E.~Hollywood & V &  5.0 &  0.0 &  2.0 &  8.0 & 0 &  0.0 &  2.5 &  17.5 \\
+1912.04 & E.~Hollywood & V &  3.0 &  0.5 &  0.5 &  1.0 & 0 &  0.0 &  0.0 &   5.0 \\
+1913.01 & E.~Hollywood & V &  8.0 &  0.0 &  0.5 &  7.5 & 0 &  5.0 &  1.0 &  22.5 \\
+1913.02 & E.~Hollywood & V &  5.5 &  0.0 &  0.5 &  0.5 & 0 &  3.5 &  6.0 &  16.5 \\
+1914.10 & E.~Hollywood & V &  7.5 &  0.0 &  1.0 &  0.5 & 0 &  1.0 &  5.5 &  15.5 \\
+1914.20 & E.~Hollywood & V &  4.0 &  0.0 &  2.0 &  4.5 & 1 &  3.0 &  2.0 &  16.5 \\
+1915.00 & E.~Hollywood & V & 10.0 &  0.0 &  0.0 &  4.5 & 2 &  2.5 &  2.5 &  22.0 \\
+1916.10 & E.~Hollywood & P &  6.0 &  0.0 &  0.0 &  1.0 & 1 &  2.0 & 22.0 &  32.0 \\
+1916.20 & E.~Hollywood & P &  0.0 &  2.0 &  0.0 &  0.0 & 0 &  4.0 &  6.0 &  12.0 \\
+1917.10 & Hollywood & V &  6.5 &  0.0 &  2.0 &  4.5 & 1 &  1.0 &  0.5 &  15.5 \\
+1917.20 & Hollywood & V &  2.3 &  0.0 &  0.3 &  1.3 & 6 &  0.0 &  4.3 &  14.7 \\
+1918.10 & Hollywood & V &  3.5 &  0.0 &  1.0 &  1.5 & 1 & 10.0 &  0.0 &  17.5 \\
+1918.20 & Hollywood & V &  2.5 &  1.0 &  0.0 &  2.5 & 2 &  1.5 &  2.0 &  11.5 \\
+1919.01 & Hollywood & V & 16.0 &  0.0 &  2.0 &  1.5 & 5 & 13.0 &  7.5 &  45.0 \\
+1925.10 & E.~Hollywood & V &  4.0 &  0.0 &  1.5 &  1.0 & 1 &  0.0 &  1.5 &   9.5 \\
+1925.20 & E.~Hollywood & V &  1.0 &  0.0 &  1.0 &  6.0 & 1 &  0.0 &  0.0 &   9.0 \\
+1926.10 & E.~Hollywood & V &  2.0 &  0.0 &  0.0 &  0.0 & 0 &  3.5 &  0.5 &   6.0 \\
+1926.20 & E.~Hollywood & V &  1.0 &  0.0 &  0.0 &  0.0 & 0 & 11.0 &  0.5 &  12.5 \\
+1927.00 & E.~Hollywood & P & 20.0 &  0.0 &  0.0 &  0.0 & 7 &  6.0 & 54.0 &  87.0 \\
 \bottomrule
 \end{tabular}
 %}
@@ -1071,48 +1071,48 @@ reflect averages over multiple counters.}
 \begin{table*}[]
 \caption{Census Tract-level Unsheltered Population Inferences}
 \resizebox{\linewidth}{!}{
-\begin{tabular}{cccccccccc}
+\begin{tabular}{ccccccccccc}
 \toprule
-Tract & Community & Counter & $A$ & {\it TAY} & $C$ & $V$ & $R$ & $T$ & $M$ \\ \cmidrule{1-10}
-1898.00 & H & V &  3.3 ( 1.7) &  0.9 ( 0.6) &  2.3 ( 2.2) &  2.8 ( 1.5) &  2.8 ( 2.8) &  1.9 ( 1.6) &  7.0 ( 7.0)  \\
-1899.02 & H & V &  4.3 ( 2.0) &  0.7 ( 0.7) &  2.3 ( 2.3) &  2.3 ( 2.2) &  3.8 ( 2.5) &  5.9 ( 2.9) &  2.2 ( 2.0)  \\
-1899.03 & H & V &  5.2 ( 5.2) &  0.7 ( 0.7) &  2.2 ( 2.2) &  3.9 ( 3.9) &  2.8 ( 2.8) &  6.8 ( 6.8) &  7.0 ( 7.1)  \\
-1899.04 & H & V &  9.5 ( 3.6) &  0.7 ( 0.7) &  2.2 ( 2.3) &  4.1 ( 2.2) &  2.7 ( 2.7) &  3.7 ( 2.7) &  3.3 ( 3.0)  \\
-1899.05 & H & V &  3.0 ( 2.0) &  0.7 ( 0.7) &  4.4 ( 3.3) &  7.7 ( 5.4) &  3.3 ( 1.7) &  2.9 ( 2.5) &  7.2 ( 7.1)  \\
-1901.00 & H & V & 49.5 ( 8.2) &  1.3 ( 0.8) & 11.8 ( 5.9) &  9.5 ( 6.1) &  3.3 ( 1.8) &  8.9 ( 4.3) &  6.6 ( 4.5)  \\
-1902.01 & H & V & 14.5 ( 4.4) &  0.7 ( 0.7) &  2.1 ( 1.3) &  4.0 ( 3.9) &  2.8 ( 2.8) &  3.7 ( 2.8) &  5.2 ( 2.5)  \\
-1902.02 & H & V &  9.0 ( 3.5) &  0.7 ( 0.7) &  2.2 ( 2.2) &  4.0 ( 4.0) &  2.8 ( 2.8) & 11.8 ( 5.0) &  9.1 ( 5.3)  \\
-1903.01 & H & P & 10.0 ( 5.2) &  0.7 ( 0.7) &  2.2 ( 2.2) &  3.9 ( 3.9) &  2.7 ( 2.7) & 27.8 (11.0) & 36.5 (16.8)  \\
-1905.10 & H & P & 12.9 ( 5.9) &  0.7 ( 0.7) &  2.3 ( 2.2) &  3.9 ( 4.0) &  5.7 ( 5.1) &  8.8 ( 6.0) &  6.5 ( 5.9)  \\
-1905.20 & E & V &  2.0 ( 1.6) &  1.3 ( 0.8) &  2.1 ( 1.3) &  4.2 ( 2.2) &  2.8 ( 2.8) &  5.9 ( 3.6) &  3.9 ( 2.1)  \\
-1907.00 & H & V & 38.5 ( 7.2) &  0.7 ( 0.7) &  3.0 ( 2.6) &  3.8 ( 3.9) &  2.8 ( 2.8) & 56.7 (12.8) & 11.6 ( 6.3)  \\
-1908.01 & H & V & 18.5 ( 4.9) &  0.7 ( 0.7) &  2.1 ( 1.3) &  3.9 ( 3.9) &  2.7 ( 2.8) & 28.6 ( 8.4) & 14.9 ( 7.4)  \\
-1908.02 & H & P & 21.9 ( 7.7) &  0.7 ( 0.7) &  2.2 ( 2.2) &  5.0 ( 3.1) &  7.1 ( 5.8) & 19.0 ( 9.1) & 21.3 (11.8)  \\
-1909.01 & H & P & 15.0 ( 6.3) &  0.7 ( 0.7) &  2.3 ( 2.3) &  4.0 ( 4.0) &  2.8 ( 2.8) & 24.9 (10.6) & 14.8 ( 9.4)  \\
-1909.02 & H & V &  2.7 ( 1.5) &  0.9 ( 0.6) &  2.2 ( 1.2) &  2.9 ( 2.5) &  2.7 ( 2.7) &  6.8 ( 6.8) &  7.2 ( 7.2)  \\
-1910.00 & H & P & 34.0 ( 9.6) &  0.7 ( 0.7) &  4.1 ( 2.6) &  4.0 ( 3.9) &  7.0 ( 5.7) & 88.1 (21.7) & 38.1 (17.4)  \\
-1911.10 & E & V &  4.0 ( 2.3) &  1.3 ( 0.8) &  2.2 ( 2.2) &  3.9 ( 3.9) &  2.8 ( 2.7) &  3.6 ( 2.8) &  2.3 ( 1.4)  \\
-1911.20 & E & P & 13.9 ( 6.1) &  0.7 ( 0.7) &  2.2 ( 2.2) &  3.9 ( 3.9) &  2.8 ( 2.7) & 35.3 (12.8) & 16.4 (10.1)  \\
-1912.01 & E & V & 17.5 ( 4.9) &  2.1 ( 1.1) &  2.1 ( 1.3) &  6.0 ( 4.6) &  4.5 ( 2.2) &  8.1 ( 4.2) & 19.9 ( 9.0)  \\
-1912.03 & E & V &  5.0 ( 2.6) &  0.7 ( 0.7) &  3.0 ( 2.6) & 13.9 ( 7.8) &  2.7 ( 2.8) &  6.8 ( 6.8) &  4.2 ( 3.3)  \\
-1912.04 & E & V &  3.0 ( 2.0) &  1.3 ( 0.8) &  2.1 ( 1.3) &  4.2 ( 2.2) &  2.8 ( 2.8) &  6.7 ( 6.8) &  7.0 ( 7.0)  \\
-1913.01 & E & V &  8.0 ( 3.3) &  0.7 ( 0.7) &  2.1 ( 1.3) & 13.0 ( 7.5) &  2.0 ( 1.2) &  7.3 ( 3.9) &  3.8 ( 2.0)  \\
-1913.02 & E & V &  5.5 ( 2.7) &  0.7 ( 0.7) &  2.1 ( 1.3) &  2.5 ( 1.5) &  2.0 ( 1.2) &  5.1 ( 3.2) &  9.9 ( 5.6)  \\
-1914.10 & E & V &  7.5 ( 3.2) &  0.7 ( 0.7) &  3.4 ( 1.8) &  2.6 ( 1.6) &  2.7 ( 2.8) &  3.2 ( 1.7) &  9.0 ( 5.3)  \\
-1914.20 & E & V &  4.0 ( 2.3) &  0.7 ( 0.7) &  3.0 ( 2.7) &  7.7 ( 5.3) &  3.3 ( 1.8) &  4.4 ( 3.0) &  3.3 ( 3.0)  \\
-1915.00 & E & V & 10.0 ( 3.6) &  0.7 ( 0.7) &  2.2 ( 2.2) &  7.8 ( 5.3) &  3.5 ( 2.9) &  3.7 ( 2.7) &  4.1 ( 3.4)  \\
-1916.10 & E & P &  6.0 ( 4.0) &  0.7 ( 0.7) &  2.3 ( 2.3) &  5.0 ( 3.1) &  4.0 ( 2.4) &  6.5 ( 3.4) & 36.4 (16.9)  \\
-1916.20 & E & P &  5.2 ( 5.2) &  4.3 ( 2.3) &  2.3 ( 2.3) &  3.9 ( 3.9) &  2.8 ( 2.8) &  5.8 ( 4.9) & 10.0 ( 7.5)  \\
-1917.10 & H & V &  6.5 ( 3.0) &  0.7 ( 0.7) &  3.0 ( 2.6) &  7.8 ( 5.4) &  3.3 ( 1.7) &  3.3 ( 1.8) &  2.3 ( 1.4)  \\
-1917.20 & H & V &  2.3 ( 1.5) &  0.7 ( 0.7) &  1.4 ( 0.9) &  2.3 ( 2.1) &  9.0 ( 4.3) &  6.6 ( 6.8) &  7.1 ( 3.9)  \\
-1918.10 & H & V &  3.5 ( 2.2) &  0.7 ( 0.7) &  3.4 ( 1.8) &  5.6 ( 2.7) &  4.4 ( 2.2) & 14.6 ( 5.7) &  7.0 ( 6.9)  \\
-1918.20 & H & V &  2.5 ( 1.8) &  2.2 ( 1.2) &  2.2 ( 2.3) &  4.3 ( 3.8) &  2.9 ( 2.6) &  2.2 ( 2.1) &  3.3 ( 3.0)  \\
-1919.01 & H & V & 16.0 ( 4.7) &  0.7 ( 0.7) &  2.9 ( 2.6) &  5.6 ( 2.7) &  7.1 ( 4.3) & 19.1 ( 6.6) & 12.4 ( 6.5)  \\
-1925.10 & E & V &  4.0 ( 2.3) &  0.7 ( 0.7) &  4.7 ( 2.2) &  4.2 ( 2.2) &  4.5 ( 2.2) &  6.7 ( 6.7) &  5.3 ( 2.6)  \\
-1925.20 & E & V &  2.6 ( 1.6) &  0.7 ( 0.7) &  4.1 ( 2.5) & 10.5 ( 8.3) &  3.9 ( 2.4) &  6.8 ( 6.8) &  7.1 ( 7.1)  \\
-1926.10 & E & V &  2.0 ( 1.6) &  0.7 ( 0.7) &  2.2 ( 2.3) &  4.0 ( 4.0) &  2.8 ( 2.8) &  5.1 ( 3.3) &  2.3 ( 1.4)  \\
-1926.20 & E & V &  2.2 ( 1.2) &  0.7 ( 0.7) &  2.2 ( 2.2) &  3.9 ( 4.0) &  2.8 ( 2.8) & 16.1 ( 6.1) &  2.3 ( 1.4)  \\
-1927.00 & E & P & 19.9 ( 7.4) &  0.7 ( 0.7) &  2.3 ( 2.3) &  3.9 ( 3.9) & 10.0 ( 7.0) &  8.8 ( 6.0) & 90.4 (33.2)\\ 
+Tract & Community & Counter & $A$ & {\it TAY} & $C$ & $V$ & $R$ & $T$ & $M$ & {\bf Total}\\ \cmidrule{1-11}
+1898.00 & H & V &  3.3 ( 1.7) &  0.0 ( 0.6) &  0.0 ( 2.2) &  0.0 ( 1.5) &  0.0 ( 2.8) &  1.9 ( 1.6) &  0.0 ( 7.0) &   6.9 (  8.4) \\
+1899.02 & H & V &  4.3 ( 2.0) &  0.0 ( 0.7) &  0.0 ( 2.3) &  2.3 ( 2.2) &  3.8 ( 2.5) &  5.9 ( 2.9) &  2.2 ( 2.0) &  18.7 (  5.8) \\
+1899.03 & H & V &  0.0 ( 5.2) &  0.0 ( 0.7) &  0.0 ( 2.2) &  0.0 ( 3.9) &  0.0 ( 2.8) &  0.0 ( 6.8) &  0.0 ( 7.1) &   0.0 ( 12.3) \\
+1899.04 & H & V &  9.5 ( 3.6) &  0.0 ( 0.7) &  0.0 ( 2.3) &  0.0 ( 2.2) &  0.0 ( 2.7) &  3.7 ( 2.7) &  3.3 ( 3.0) &  18.3 (  7.0) \\
+1899.05 & H & V &  3.0 ( 2.0) &  0.0 ( 0.7) &  4.4 ( 3.3) &  7.7 ( 5.4) &  0.0 ( 1.7) &  2.9 ( 2.5) &  0.0 ( 7.1) &  19.9 ( 10.3) \\
+1901.00 & H & V & 49.5 ( 8.2) &  0.0 ( 0.8) & 11.8 ( 5.9) &  9.5 ( 6.1) &  0.0 ( 1.8) &  8.9 ( 4.3) &  6.6 ( 4.5) &  88.8 ( 13.5) \\
+1902.01 & H & V & 14.5 ( 4.4) &  0.0 ( 0.7) &  0.0 ( 1.3) &  0.0 ( 3.9) &  0.0 ( 2.8) &  3.7 ( 2.8) &  0.0 ( 2.5) &  21.5 (  7.7) \\
+1902.02 & H & V &  9.0 ( 3.5) &  0.0 ( 0.7) &  0.0 ( 2.2) &  0.0 ( 4.0) &  0.0 ( 2.8) & 11.8 ( 5.0) &  9.1 ( 5.3) &  30.2 (  9.9) \\
+1903.01 & H & P & 10.0 ( 5.2) &  0.0 ( 0.7) &  0.0 ( 2.2) &  0.0 ( 3.9) &  0.0 ( 2.7) & 27.8 (11.0) & 36.5 (16.8) &  74.8 ( 21.3) \\
+1905.10 & H & P & 12.9 ( 5.9) &  0.0 ( 0.7) &  0.0 ( 2.2) &  0.0 ( 4.0) &  5.7 ( 5.1) &  8.8 ( 6.0) &  6.5 ( 5.9) &  34.2 ( 12.4) \\
+1905.20 & E & V &  2.0 ( 1.6) &  0.0 ( 0.8) &  0.0 ( 1.3) &  0.0 ( 2.2) &  0.0 ( 2.8) &  5.9 ( 3.6) &  0.0 ( 2.1) &  12.7 (  6.0) \\
+1907.00 & H & V & 38.5 ( 7.2) &  0.0 ( 0.7) &  3.0 ( 2.6) &  0.0 ( 3.9) &  0.0 ( 2.8) & 56.7 (12.8) & 11.6 ( 6.3) & 110.1 ( 16.9) \\
+1908.01 & H & V & 18.5 ( 4.9) &  0.0 ( 0.7) &  0.0 ( 1.3) &  0.0 ( 3.9) &  0.0 ( 2.8) & 28.6 ( 8.4) & 14.9 ( 7.4) &  63.2 ( 13.2) \\
+1908.02 & H & P & 21.9 ( 7.7) &  0.0 ( 0.7) &  0.0 ( 2.2) &  0.0 ( 3.1) &  7.1 ( 5.8) & 19.0 ( 9.1) & 21.3 (11.8) &  71.7 ( 18.1) \\
+1909.01 & H & P & 15.0 ( 6.3) &  0.0 ( 0.7) &  0.0 ( 2.3) &  0.0 ( 4.0) &  0.0 ( 2.8) & 24.9 (10.6) & 14.8 ( 9.4) &  55.3 ( 16.4) \\
+1909.02 & H & V &  2.7 ( 1.5) &  0.0 ( 0.6) &  0.0 ( 1.2) &  2.9 ( 2.5) &  0.0 ( 2.7) &  0.0 ( 6.8) &  0.0 ( 7.2) &   6.9 ( 10.7) \\
+1910.00 & H & P & 34.0 ( 9.6) &  0.0 ( 0.7) &  0.0 ( 2.6) &  0.0 ( 3.9) &  7.0 ( 5.7) & 88.1 (21.7) & 38.1 (17.4) & 169.7 ( 30.4) \\
+1911.10 & E & V &  4.0 ( 2.3) &  0.0 ( 0.8) &  0.0 ( 2.2) &  0.0 ( 3.9) &  0.0 ( 2.7) &  3.6 ( 2.8) &  0.0 ( 1.4) &   9.0 (  6.7) \\
+1911.20 & E & P & 13.9 ( 6.1) &  0.0 ( 0.7) &  0.0 ( 2.2) &  0.0 ( 3.9) &  0.0 ( 2.7) & 35.3 (12.8) & 16.4 (10.1) &  66.2 ( 18.2) \\
+1912.01 & E & V & 17.5 ( 4.9) &  0.0 ( 1.1) &  0.0 ( 1.3) &  6.0 ( 4.6) &  0.0 ( 2.2) &  8.1 ( 4.2) & 19.9 ( 9.0) &  55.8 ( 12.4) \\
+1912.03 & E & V &  5.0 ( 2.6) &  0.0 ( 0.7) &  3.0 ( 2.6) & 13.9 ( 7.8) &  0.0 ( 2.8) &  0.0 ( 6.8) &  4.2 ( 3.3) &  26.4 ( 11.9) \\
+1912.04 & E & V &  3.0 ( 2.0) &  0.0 ( 0.8) &  0.0 ( 1.3) &  0.0 ( 2.2) &  0.0 ( 2.8) &  0.0 ( 6.8) &  0.0 ( 7.0) &   6.2 ( 10.7) \\
+1913.01 & E & V &  8.0 ( 3.3) &  0.0 ( 0.7) &  0.0 ( 1.3) & 13.0 ( 7.5) &  0.0 ( 1.2) &  7.3 ( 3.9) &  0.0 ( 2.0) &  31.8 (  9.5) \\
+1913.02 & E & V &  5.5 ( 2.7) &  0.0 ( 0.7) &  0.0 ( 1.3) &  0.0 ( 1.5) &  0.0 ( 1.2) &  5.1 ( 3.2) &  9.9 ( 5.6) &  23.1 (  7.5) \\
+1914.10 & E & V &  7.5 ( 3.2) &  0.0 ( 0.7) &  0.0 ( 1.8) &  0.0 ( 1.6) &  0.0 ( 2.8) &  0.0 ( 1.7) &  9.0 ( 5.3) &  20.6 (  7.4) \\
+1914.20 & E & V &  4.0 ( 2.3) &  0.0 ( 0.7) &  3.0 ( 2.7) &  7.7 ( 5.3) &  0.0 ( 1.8) &  4.4 ( 3.0) &  3.3 ( 3.0) &  24.1 (  8.0) \\
+1915.00 & E & V & 10.0 ( 3.6) &  0.0 ( 0.7) &  0.0 ( 2.2) &  7.8 ( 5.3) &  3.5 ( 2.9) &  3.7 ( 2.7) &  4.1 ( 3.4) &  29.6 (  8.6) \\
+1916.10 & E & P &  6.0 ( 4.0) &  0.0 ( 0.7) &  0.0 ( 2.3) &  0.0 ( 3.1) &  0.0 ( 2.4) &  0.0 ( 3.4) & 36.4 (16.9) &  48.7 ( 18.3) \\
+1916.20 & E & P &  0.0 ( 5.2) &  0.0 ( 2.3) &  0.0 ( 2.3) &  0.0 ( 3.9) &  0.0 ( 2.8) &  5.8 ( 4.9) & 10.0 ( 7.5) &  17.9 ( 11.9) \\
+1917.10 & H & V &  6.5 ( 3.0) &  0.0 ( 0.7) &  3.0 ( 2.6) &  7.8 ( 5.4) &  0.0 ( 1.7) &  0.0 ( 1.8) &  0.0 ( 1.4) &  21.3 (  7.4) \\
+1917.20 & H & V &  2.3 ( 1.5) &  0.0 ( 0.7) &  0.0 ( 0.9) &  2.3 ( 2.1) &  9.0 ( 4.3) &  0.0 ( 6.8) &  7.1 ( 3.9) &  21.7 (  9.6) \\
+1918.10 & H & V &  3.5 ( 2.2) &  0.0 ( 0.7) &  0.0 ( 1.8) &  0.0 ( 2.7) &  0.0 ( 2.2) & 14.6 ( 5.7) &  0.0 ( 6.9) &  24.6 ( 10.2) \\
+1918.20 & H & V &  2.5 ( 1.8) &  0.0 ( 1.2) &  0.0 ( 2.3) &  4.3 ( 3.8) &  2.9 ( 2.6) &  2.2 ( 2.1) &  3.3 ( 3.0) &  16.4 (  6.7) \\
+1919.01 & H & V & 16.0 ( 4.7) &  0.0 ( 0.7) &  2.9 ( 2.6) &  0.0 ( 2.7) &  7.1 ( 4.3) & 19.1 ( 6.6) & 12.4 ( 6.5) &  60.6 ( 11.9) \\
+1925.10 & E & V &  4.0 ( 2.3) &  0.0 ( 0.7) &  0.0 ( 2.2) &  0.0 ( 2.2) &  0.0 ( 2.2) &  0.0 ( 6.7) &  0.0 ( 2.6) &  12.8 (  8.5) \\
+1925.20 & E & V &  0.0 ( 1.6) &  0.0 ( 0.7) &  0.0 ( 2.5) & 10.5 ( 8.3) &  0.0 ( 2.4) &  0.0 ( 6.8) &  0.0 ( 7.1) &  14.8 ( 13.6) \\
+1926.10 & E & V &  2.0 ( 1.6) &  0.0 ( 0.7) &  0.0 ( 2.3) &  0.0 ( 4.0) &  0.0 ( 2.8) &  5.1 ( 3.3) &  0.0 ( 1.4) &   8.0 (  6.7) \\
+1926.20 & E & V &  0.0 ( 1.2) &  0.0 ( 0.7) &  0.0 ( 2.2) &  0.0 ( 4.0) &  0.0 ( 2.8) & 16.1 ( 6.1) &  0.0 ( 1.4) &  18.0 (  8.4) \\
+1927.00 & E & P & 19.9 ( 7.4) &  0.0 ( 0.7) &  0.0 ( 2.3) &  0.0 ( 3.9) & 10.0 ( 7.0) &  8.8 ( 6.0) & 90.4 (33.2) & 129.4 ( 35.4) \\
 \bottomrule
 \end{tabular}
 }
