@@ -46,7 +46,7 @@
 \author[1,10]{Arnali Ray}
 \author[5]{Elyse Schwartz}
 \author[1,5]{Douglas Walker}
-\author[1]{Kerry Morrison}
+%\author[1]{Kerry Morrison}
 \affil[1]{\it \small Hollywood 4WRD Homelessness Coalition, 6255 Sunset Blvd, Ste 150, Los Angeles, CA 90028}
 \affil[2]{\it Central Hollywood Neighborhood Council, PO Box 93907, Los Angeles, CA 90093}
 \affil[3]{\it Carnegie Observatories, 813 Santa Barbara St, Pasadena, CA 91101}
@@ -235,8 +235,8 @@ and paper references were corrected to the paper tally.
 
 Given turnout, every volunteer tract was counted by at least two teams. Four tracts were counted
 in triplicate. Beyond increasing the accuracy of the count, repeat measurements enhance our 
-understanding of errors (Sections \ref{sec:dupes}) and provide robustness.\footnote{One tally was 
-uninterpretable, leaving only the result from the second assigned team.}
+understanding of errors (Sections \ref{sec:dupes}) and provide robustness: one tally was 
+uninterpretable, leaving only the result from the second team.
 
 All told, the data comprise 37 pair-wise volunteer measurements,
 %---29 duplicates + 
@@ -290,17 +290,17 @@ Tract & Community & Counter$^{\rm a}$ & Passes$^{\rm b}$ & Median Est. & 90\% CI
 1918.20 & Hollywood & Vol & 2 & 16 & 10--23 \\
 1919.01 & Hollywood & Vol & 2 & 60 & 49--72 \\
 1925.10 & E.~Hollywood & Vol & 2 & 12 & 4--21 \\
-1925.20 & E.~Hollywood & Vol & 1 & 14 & 1--28 \\
+1925.20 & E.~Hollywood & Vol & 1$^{\rm c}$ & 14 & 1--28 \\
 1926.10 & E.~Hollywood & Vol & 2 & 7 & 1--14 \\
 1926.20 & E.~Hollywood & Vol & 2 & 18 & 9--26 \\
 1927.00 & E.~Hollywood & Pro & 1 & 129 & 96--167\\
 \cmidrule{1-6}
-{\bf All} & & & {\bf 72}$^{\rm c}$ & {\bf 1494} & {\bf 1342--1657}
+{\bf All} & & & {\bf 72} & {\bf 1494} & {\bf 1342--1657}
 \\ \bottomrule
 \end{tabular}
 }
-\caption*{$^{\rm a}$Volunteer vs.~professional surveyor; $^{\rm b}$independent 
-		tract counts; $^{\rm c}$reflects one tally rejected during quality control.}
+\caption*{$^{\rm a}$Volunteer vs.~professional surveyor; $^{\rm b}$teams deployed to 
+		tract; $^{\rm c}$one tally rejected during quality control.}
 \label{tbl:tractStats}
 \end{table}
 
@@ -400,17 +400,6 @@ global PDFs but does not significantly affect inferences.
 %letting the mean occupancies reach 0 moves the baseline result down by 40 ppl over all of grtr Hwood.
 %it's 0.4 sigma or in the IQR.
 
-\begin{figure}[t]
-\centering
-	\includegraphics[width=\linewidth, trim = 1cm 0cm 0cm 0cm]{intDupeChar}\\
-	\includegraphics[width=\linewidth, trim = 1cm 0.5cm 0cm 0cm]{catDupeChar}
-\caption{Duplicate tract (top) and category (bottom) count comparisons. Orange 
-		points at top exclude tract 1901.00, which is a significant outlier.}
-\label{fig:dupeChar}
-\end{figure}
-\subsubsection{Null Entries and Background Rates}
-\label{sec:nulls}
-
 Often, no persons or dwellings of a specific category are observed in a given tract. Due to shot 
 noise, these data are consistent with non-zero values for the true population. The Monte Carlo 
 PDF reconstruction allows all such entries to fluctuate based on an assumed background rate,
@@ -439,6 +428,22 @@ baseline scenario incorporating the
 \href{https://www.lahsa.org/documents?id=4686-2020-greater-los-angeles-city-community-homelessness-report-service-planning-area-4.pdf}{Community Summaries}.}
 \label{tbl:weights}
 \end{table*}
+
+\begin{figure}[t]
+\centering
+	\includegraphics[width=\linewidth, trim = 1cm 0cm 0cm 0cm]{intDupeChar}\\
+	\includegraphics[width=\linewidth, trim = 1cm 0.5cm 0cm 0cm]{catDupeChar}
+\caption{Intercounter count comparisons. {\it Top:} mean tract-level differences (large blue 
+		points; 10-pair bins) are 1.4$\times$ the Poisson expectation (dot-dashes; 
+		$\sqrt{\langle\nu\rangle}$); 1.3$\times$ if tract 1901.00 is removed (large green 
+		point). Small points show pairwise differences. {\it Bottom:} mean category-level 
+		dispersions are consistent with random errors except for RVs, which are identified 
+		significantly more consistently. Only means are shown at bottom to reduce visual
+		clutter.}
+\label{fig:dupeChar}
+\end{figure}
+\subsubsection{Null Entries and Background Rates}
+\label{sec:nulls}
 
 Ideally, $\sigma_{j}^{\rm bkg}$ would derive from category variations in similar tracts defined 
 by independent criteria. Sufficient data may exist to support that exercise, but it is beyond the scope 
