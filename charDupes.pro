@@ -145,13 +145,14 @@ pro charDupes, dataFits
   cgloadct, 18, /brewer, ncol = 2, clip = [47,220], /rev
   c2 = '69b498'x;cgcolor(string(0));'8de0b9'x;
   c1 = 'da8428'x;cgcolor(string(1));          
+  nu = greek('nu')
   
   plotsym, 0, /fill
   plot, meanTots, nsp, psym = 8, $
-        xtitle = '(!18n!X!D1!N+!18n!X!D2!N)!18/!X2 [avg. total people + dwellings]', $
-        ytitle = 'sqrt[(!18n!X!D1!N-!18n!X!D2!N)!E2!N!18/!X2]', $
-        /nodat, yr = [0,2*sqrt(max(meanTots))], xr = [0,60]
-  x = findgen((!X.CRANGE[1]-!X.CRANGE[0])/0.25+1)*0.25 + !X.CRANGE[0]
+        xtitle = '(!18'+nu+'!X!D1!N+!18'+nu+'!X!D2!N)!18/!X2 [avg. total people + dwellings]', $
+        ytitle = 'sqrt[(!18'+nu+'!X!D1!N-!18'+nu+'!X!D2!N)!E2!N!18/!X2]  [people or dwellings]', $
+        /nodat, yr = [0,2*sqrt(max(meanTots))], xr = [1,120], /xlog, /xsty
+  x = findgen((10.^!X.CRANGE[1]-10.^!X.CRANGE[0])/0.25+1)*0.25 + !X.CRANGE[0]
 ;  oplot, xs[*,1], ys[*,0,1], psym = 8, symsize = 2.5, col = 'aaaaaa'x
 ;  oplot, xs[*,0], ys[*,0,0], psym = 8, symsize = 2.5, col = 'aaaaaa'x
 ;  oploterror, xs[*,1], ys[*,0,1], ys[*,1,1], psym = 8, $
@@ -160,6 +161,7 @@ pro charDupes, dataFits
 ;              errcol = c2, col = c2, symsize = 2, errthick = 8
 ;  oplot, xs[*,1], ys[*,0,1], psym = 8, symsize = 1.5, col = 'aa00aa'x
   oplot, x, sqrt(x), col = '0055ff'x, thick = 6, linesty = 4
+  oploterror, meanTots, nsp, rterr/sqrt(2), errthick = 3, errcol = 'cccccc'x, /nohat, psym = 3
   oplot, meanTots, nsp, psym = 8, symsize = 1.7, col = 'cccccc'x
   oplot, meanTots, nsp, psym = 8, symsize = 1.1
   oploterror, f0.LOC, f0.MEAN, f0.SIGMA/sqrt(f0.COUNT), $
@@ -194,7 +196,7 @@ pro charDupes, dataFits
         xtickname = [' ', '!18P!X', '!18C!X', '!18V!X', $
                      '!18R!X', '!18T!X', '!18M!X', ' '], $
         xticks = 7, xtickint = 1, $
-        ytitle = 'sqrt[(!18n!X!D1!N-!18n!X!D2!N)!E2!N!18/!X2] (people or dwellings)', $
+        ytitle = 'sqrt[(!18'+nu+'!X!D1!N-!18'+nu+'!X!D2!N)!E2!N!18/!X2] [people or dwellings]', $
         xminor = 1, /nodat, yr = [0,5], yminor = 2 
 ;  polyfill, [x,reverse(x)], [sqrd+esqrd, reverse(sqrd-esqrd)], $
 ;            col = 'ffa500'x
