@@ -196,7 +196,7 @@ pro charDupes, dataFits
         xtickname = [' ', '!18P!X', '!18C!X', '!18V!X', $
                      '!18R!X', '!18T!X', '!18M!X', ' '], $
         xticks = 7, xtickint = 1, $
-        ytitle = 'sqrt[(!18'+nu+'!X!D1!N-!18'+nu+'!X!D2!N)!E2!N!18/!X2] [people or dwellings]', $
+        ytitle = 'sqrt[(!18n!X!D1!N-!18n!X!D2!N)!E2!N!18/!X2] [people or dwellings]', $
         xminor = 1, /nodat, yr = [0,5], yminor = 2 
 ;  polyfill, [x,reverse(x)], [sqrd+esqrd, reverse(sqrd-esqrd)], $
 ;            col = 'ffa500'x

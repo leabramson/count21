@@ -8,6 +8,11 @@ pro plotHist, struct, $
   h = histogram(cts, bins = 5, loc = bins)
   ints = getCountProb(cts, [0.05,0.16,0.5,0.84,0.95], /inv)
   niter = n_elements(cts)
+
+  cgloadct, 1, /brewer, ncol = 12
+
+  s1col = cgcolor('10')
+  s2col = cgcolor('3')
   
   !p.CHARTHICK = 5
   !p.CHARSIZE = 1.5
@@ -70,10 +75,10 @@ pro plotHist, struct, $
              pspacing = 1, charsize = 1, charthick = 4, thick = 6, $
              spacing = 1.
   polyfill, [hf.bins[qui[0]], hf.bins[qui], hf.bins[qui[-1]]], $
-            [0,hf.hist[qui],0], col = 'ffa500'x, $
+            [0,hf.hist[qui],0], col = s2col, $
             /line_fill, spacing = 0.025, thick = 1, orien = 45
   polyfill, [hf.bins[qui2[0]], hf.bins[qui2], hf.bins[qui2[-1]]], $
-            [0,hf.hist[qui2],0], col = 'ff0000'x, $
+            [0,hf.hist[qui2],0], col = s1col, $
             /line_fill, spacing = 0.025, thick = 1, orien = -45
   oplot, bins, h / total(h), psym = 10, thick = 8
   axis, yaxis = 1, yr = [0,1], /ysty, col = '00a5ff'x, $
@@ -81,7 +86,7 @@ pro plotHist, struct, $
         charthick = 4, charsize = 1.25
   oplot, cts, ty, col = '00a5ff'x, thick = 6, linesty = 4
   device, /close
-  
+  set_plot, 'X'
   
 end
 
@@ -94,5 +99,14 @@ pro plotStuff
   plotHist, data[where(data.EASTFLAG)], $
             region = 'East Hollywood', output = 'ehoHist.eps', $
             compval = 656.
+
+  data = mrdfits('countHollywoodResults2021_revisedWtErr.fits', 1)
+  plotHist, data[where(~data.EASTFLAG)], $
+            region = 'Hollywood', output = 'hwoodHist_revErr.eps', $
+            compval = 1058.
+  plotHist, data[where(data.EASTFLAG)], $
+            region = 'East Hollywood', output = 'ehoHist_revErr.eps', $
+            compval = 656.
+
   
 end

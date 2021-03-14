@@ -67,6 +67,6 @@ pro doGini
   set_plot, 'X'
   spawn, 'open gini.eps &'
 
-  stop
+;  stop
   
 end

@@ -88,23 +88,28 @@ pro makeBigTables, resfile
   printf, 2, "\begin{table}[]"
   printf, 2, "\caption{Census Tract-level Unsheltered Population Inferences}"
   printf, 2, "\resizebox{\textwidth}{!}{%"
-  printf, 2, "\begin{tabular}{cccccccccc}"
+  printf, 2, "\begin{tabular}{ccccccccccc}"
   printf, 2, "\toprule"
-  printf, 2, "Tract & Community & Counter & $A$ & {\it TAY} & $C$ & $V$ & $R$ & $T$ & $M$ \\ \cmidrule{1-10}"
+  printf, 2, "Tract & Community & Counter & $A$ & {\it TAY} & $C$ & $V$ & $R$ & $T$ & $M$ & {\bf Total}\\ \cmidrule{1-11}"
   close, 2
   
   close, 1
   openw, 1, 'ppl.txt', width = 1024
   for ii = 0, ntracts - 1 do begin
-     trs = arrstats(cts[*,*,ii])
+     c = cts[*,*,ii]
+     trs = arrstats(c)
      err = (trs.P95 - trs.P05) / 2
      mid = trs.P50
-     
-     mid[where(mid lt err)] = trs[where(mid lt err)].P95
-     printf, 1, f = '(%"%7.2f & %s & %s & %4.1f (%4.1f) & %4.1f (%4.1f) & %4.1f (%4.1f) & %4.1f (%4.1f) & % 4.1f (%4.1f) & %4.1f (%4.1f) & %4.1f (%4.1f) \\")', $
+
+     ct = total(c, 1)
+     ct = ct[sort(ct)]
+
+     mid[where(mid lt err)] = 0;trs[where(mid lt err)].P95
+     printf, 1, f = '(%"%7.2f & %s & %s & %4.1f (%4.1f) & %4.1f (%4.1f) & %4.1f (%4.1f) & %4.1f (%4.1f) & % 4.1f (%4.1f) & %4.1f (%4.1f) & %4.1f (%4.1f) & %5.1f (%5.1f) \\")', $
              tract[ii], comm[ii], pf[ii], $
              mid[0], err[0], mid[1], err[1], $
-             mid[3], err[3], mid[4], err[4], mid[5], err[5], mid[6], err[6], mid[7], err[7]
+             mid[3], err[3], mid[4], err[4], mid[5], err[5], mid[6], err[6], mid[7], err[7], $
+             ct[0.5*n_elements(ct)-1]>0, (ct[0.95*n_elements(ct)-1] - ct[0.05*n_elements(ct)-1]) / 2
   endfor
   close, 1
 
@@ -117,18 +122,18 @@ pro makeBigTables, resfile
   printf, 2, "\begin{table}[]"
   printf, 2, "\caption{Census Tract-level Unsheltered Counts}"
   printf, 2, "\resizebox{\textwidth}{!}{%"
-  printf, 2, "\begin{tabular}{cccccccccc}"
+  printf, 2, "\begin{tabular}{ccccccccccc}"
   printf, 2, "\toprule"
-  printf, 2, "Tract & Community & Counter & $A$ & {\it TAY} & $C$ & $V$ & $R$ & $T$ & $M$ \\ \cmidrule{1-10}"
+  printf, 2, "Tract & Community & Counter & $A$ & {\it TAY} & $C$ & $V$ & $R$ & $T$ & $M$ & {\bf Total} \\ \cmidrule{1-11}"
   close, 2
   
   close, 1
   openw, 1, 'cts.txt', width = 1024
   for ii = 0, ntracts - 1 do begin
      mid = rcts[*,ii]
-     printf, 1, f = '(%"%7.2f & %s & %s & %4.1f & %4.1f & %4.1f & %4.1f & % i & %4.1f & %4.1f \\")', $
+     printf, 1, f = '(%"%7.2f & %s & %s & %4.1f & %4.1f & %4.1f & %4.1f & %4.1f & %4.1f & %4.1f & %5.1f \\")', $
              tract[ii], comm[ii], pf[ii], $
-             mid[[0,1,3,4,5,6,7]]
+             mid[[0,1,3,4,5,6,7]], total(mid[[0,1,3,4,5,6,7]])
   endfor
   close, 1
 

@@ -504,7 +504,7 @@ end
 pro runit, csv
 
   cd13spa4 = [1.51,1.77,1.42,1.48,1.68]  ;; SPA4-derived! -- this should be the default
-  cd13spa4errs = [0.25,0.42,0.28,0.11,0.31]
+  cd13spa4errs = [0.25,0.42,0.28,0.11,0.31] ;; these might be 2 sigma...
 
   fitsCount, csv, 'countHollywood2021.fits'
   data = mrdfits('countHollywood2021.fits', 1)
@@ -592,6 +592,9 @@ pro multiWts
             output = 'hwoodCVRTMtests/tmod2021.fits', $
             peaks = p2021m, stderrs = p2021merrs
 
+    countAll, 'countHollywood2021.fits', 1d4, $
+            output = 'countHollywoodResults2021_revisedWtErr.fits', $
+            peaks = cd13Spa4, stderrs = cd13spa4errs/1.96
   
 ;  cd4Wts = [0.92,2.10,1.77,1.67,2.06]
 ;  cd4errs = [1.52,2.45,1.99,2.40,2.56]/1.96
@@ -602,7 +605,7 @@ pro multiWts
 ;  cd13wts = [1.10,1.16,1.74,1.40,1.22]         ;; LOCAL!
 ;  cd13errs = [0.47,1.08,1.26,0.84,0.93]/1.96
 
-  spawn, 'rm hwoodCVRTMtets/*.fits'
+  spawn, 'rm hwoodCVRTMtests/*.fits'
   
   plotsym, 0, /fill
   cgbarplot, cd13spa4, barcoord = bx, $
@@ -735,7 +738,7 @@ pro plotMultiWts, lastyear, $
   print, cchange
   
   key = ['2020!CSPA4-CD13', '2020!CSPA4', $
-         '2021 !18T!X', '2021 !18T!X!Cnon-resp model']
+         '2021 !18w!DT!X!N', '2021 !18w!DT!X!N!Cnon-resp model']
 
   set_plot, 'PS'
   device, filename = output, $
