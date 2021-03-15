@@ -16,7 +16,8 @@ pro charVolOnly, $
   ph = h[where(hpro)]
   pe = e[where(epro)]
   
-  d2020 = mrdfits('official2020occupancies.fits',1)
+;  d2020 = mrdfits('official2020occupancies.fits',1)
+  d2020 = mrdfits('official2020completeOccupancies.fits',1)
   d2020 = trans2020official(d2020, wts = data[0].WTS[3:7])
   if keyword_set(cut1927) then $
      ;; chuck 1927 and see what happens

@@ -3,9 +3,10 @@
 pro plotTractTractOfficial, newData;, $
 ;                            region = region
 
-  foo  = mrdfits('official2020occupancies.fits', 1)
+;  foo  = mrdfits('official2020Occupancies.fits', 1)
+  foo  = mrdfits('official2020CompleteOccupancies.fits', 1)
   newd = mrdfits(newData, 1)
-  oldD = trans2020official(foo, wts = newD.WTS[3:7]) ;; ensure same weights used year on year at least
+  oldD = trans2020official(foo, wts = newD[0].WTS[3:7]) ;; ensure same weights used year on year at least
   
   ;; sort, align, cull
 
@@ -24,14 +25,23 @@ pro plotTractTractOfficial, newData;, $
   oldRaw    = oldD.TOT_OBJ
   oldRawErr = sqrt(oldRaw)
   oldTot    = oldD.TOT_PPL
-  oldTotErr = oldRawErr * mean(newD[0].WTS[3:7])
+;  oldTotErr = oldRawErr * mean(newD[0].WTS[3:7])
 
+  wts = newD[0].WTS[3:7]
+  oldTotErr = sqrt(total([[oldD.C*wts[0]^2], [oldD.V*wts[1]^2], $
+                          [oldD.R*wts[2]^2], [oldD.T*wts[3]^2], [oldD.M*wts[4]^2]], 2) $
+                   + oldD.TOT_IND)
+  
+  
 ;  if strupcase(region) eq 'HWOOD' then $
 ;     oldtypes = [410,0,0,55,48,32,222,64,0] $
 ;  else if strupcase(REGION) eq 'EHO' then $
 ;     oldtypes = [164,0,0,29,58,11,94,113,0]
 
-  oldtypes = [410,0,0,55,48,32,222,64,0] + [164,0,0,29,58,11,94,113,0]
+;  oldtypes = [410,0,0,55,48,32,222,64,0] + [164,0,0,29,58,11,94,113,0]
+  oldTypes = [total(oldD.TOT_IND), 0, 0, $
+              total(oldD.C), total(oldD.V), total(oldD.R), total(oldD.T), total(oldD.M), $
+              0]
   
   oldTypesErr = sqrt(oldTypes)
   newTypes    = total(newD.RAWCOUNTS, 2)
@@ -42,7 +52,7 @@ pro plotTractTractOfficial, newData;, $
   newTypesErr[[1,2,8]] = 0
   
   newRaw    = total(newD.RAWCOUNTS, 1)
-  newTot    = mean(total(newD.COUNTS, 1), dim = 1)
+  newTot    = median(total(newD.COUNTS, 1), dim = 1)
   newRawErr = sqrt(newRaw / newD.NCOUNTERS)
   newTotErr = stddev(total(newD.COUNTS, 1), dim = 1)
   
@@ -164,9 +174,9 @@ pro plotTractTractOfficial, newData;, $
           col = [0, 'ff00ff'x, 0], psym = [0,0,8], linesty = [0,0,0], thick = 6, pspacing = 0.5
   legend, /bottom, /right, box = 0, $
           ['!18N!X!Dcounts, up!N: '+string(nupRaw, f = '(I0)')+' ('+string(nupRawSig, f = '(I0)')+')', $
-           '!18N!X!Dcounts, dn!N: '+string(nupRaw, f = '(I0)')+' ('+string(ndnRawSig, f = '(I0)')+')', $
+           '!18N!X!Dcounts, dn!N: '+string(ndnRaw, f = '(I0)')+' ('+string(ndnRawSig, f = '(I0)')+')', $
            '!18N!X!Dpeople, up!N: '+string(nupTot, f = '(I0)')+' ('+string(nupTotSig, f = '(I0)')+')', $
-           '!18N!X!DPeople, dn!N: '+string(nupTot, f = '(I0)')+' ('+string(ndnTotSig, f = '(I0)')+')', $
+           '!18N!X!DPeople, dn!N: '+string(ndnTot, f = '(I0)')+' ('+string(ndnTotSig, f = '(I0)')+')', $
            'Net counts: '+string(netRaw, f = '(I0)')+texToIdl('\pm')+string(netRawErr, f = '(I0)'), $
            'Net people: '+string(netTot, f = '(I0)')+texToIdl('\pm')+string(netTotErr, f = '(I0)')], $
           linesty = -1, pspacing = 0.5

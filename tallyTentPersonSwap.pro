@@ -7,18 +7,24 @@ pro tallyTentPersonSwap
   dwellings = tents + vehicles
 
   ;; get 2020
-  d2 = mrdfits('official2020occupancies.fits', 1)
+;  d2 = mrdfits('official2020occupancies.fits', 1)
+  d2 = mrdfits('official2020completeOccupancies.fits', 1)
   d2 = trans2020official(d2, wts = data[0].WTS)
 
   p2020 = d2.TOT_IND
   d2020 = d2.TOT_OBJ - p2020
-
+  t2020 = total(transpose([[d2.T],[d2.M]]), 1)
+  
   pdelta = persons - p2020
   ddelta = dwellings - d2020
-
+  tdelta = tents - t2020
+  
+;  stop
+  
   q1 = where(ddelta / d2020 gt 0.1, nq1)
   q2 = where(ddelta / d2020 gt 0.5, nq2)
   q3 = where(ddelta / d2020 gt 1.0, nq3)
+  q4 = where(tdelta / t2020 gt 1.0, nq4)
   print, data[q1].TRACT
   print, 'F tracts', nq1 / float(n_elements(ddelta))
   print, 'F T+M   ', total(data[q1].RAWCOUNTS[6:7])/total(data.RAWCOUNTS)
@@ -34,6 +40,11 @@ pro tallyTentPersonSwap
   print, 'F T+M   ', total(data[q3].RAWCOUNTS[6:7])/total(data.RAWCOUNTS)
   print, 'F Dwel  ', total(data[q3].RAWCOUNTS[3:7])/total(data.RAWCOUNTS)
   print, 'F Cts   ', total(data[q3].RAWCOUNTS)/total(data.RAWCOUNTS)
+  print, data[q4].TRACT
+  print, 'F tracts', nq4 / float(n_elements(ddelta))
+  print, 'F T+M   ', total(data[q4].RAWCOUNTS[6:7])/total(data.RAWCOUNTS)
+  print, 'F Dwel  ', total(data[q4].RAWCOUNTS[3:7])/total(data.RAWCOUNTS)
+  print, 'F Cts   ', total(data[q4].RAWCOUNTS)/total(data.RAWCOUNTS)
   
   swap = where(pdelta lt 0 AND ddelta gt 0, nswap)
   
