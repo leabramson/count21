@@ -1,6 +1,6 @@
 pro printULs
 
-  data = mrdfits('countHollywoodResults2021.fits', 1)
+  data = mrdfits('countHollywoodResults2021w191902.fits', 1)
   e = where(data.EASTFLAG, compl = h)
 
   hc = total(data[h].COUNTS, 3)

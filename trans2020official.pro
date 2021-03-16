@@ -93,3 +93,32 @@ pro fitsCSVactual
   mwrfits, savedata, 'official2020CompleteOccupancies.fits', /create
      
 end
+
+pro fitsCSVredux
+
+  readcol, '2020actualCountsW191902.csv', tract,pop,p,c,v,r,t,m,cts, $
+           f = 'A,F,F,F,F,F,F,F,F'
+  tract = strmid(tract,0,4)+'.'+strmid(tract,1,/rev)
+
+  savedata = {TRACT: '0', $
+              PERSONS: 0., $
+              C: 0., $
+              V: 0., $
+              R: 0., $
+              T: 0., $
+              M: 0., $
+              TOTAL: 0.}
+  savedata = replicate(saveData, n_elements(tract))
+  for ii = 0, n_elements(tract) - 1 do begin
+     savedata[ii].TRACT   = tract[ii]
+     savedata[ii].TOTAL   = pop[ii]
+     savedata[ii].PERSONS = p[ii]
+     savedata[ii].C = c[ii]
+     savedata[ii].V = v[ii]
+     savedata[ii].R = r[ii]
+     savedata[ii].T = t[ii]
+     savedata[ii].M = m[ii]
+  endfor
+  mwrfits, savedata, 'official2020CompleteOccupanciesW191902.fits', /create
+     
+end

@@ -92,7 +92,7 @@ end
 
 pro plotStuff
 
-  data = mrdfits('countHollywoodResults2021.fits', 1)
+  data = mrdfits('countHollywoodResults2021w191902.fits', 1)
   plotHist, data[where(~data.EASTFLAG)], $
             region = 'Hollywood', output = 'hwoodHist.eps', $
             compval = 1058.

@@ -11,6 +11,7 @@ pro plotBarNewOld, struct, lastYearRaw, $
      tcol = long('0000ff'x)
   endif else if keyword_set(HWOOD) then begin
      lastYearRaw = [411.,55.,48.,32.,222.,64.,0]
+;     lastYearRaw -= [10, 2, 2, 3, 2, 2, .0]
      title = 'Hollywood CoC'
      col = 'ff5500'x
      errcol = 'ffa500'x
@@ -19,9 +20,9 @@ pro plotBarNewOld, struct, lastYearRaw, $
   
   ;; A C V R T M F
     
-  thisYearRaw = total(d.RAWCOUNTS, 2)
-  thisYearRawErr = d.RAWCOUNTS $
-                   / (d.NCOUNTERS ## replicate(1,n_elements(thisYearRaw))) ;; variance per tract
+  thisYearRaw = total(struct.RAWCOUNTS, 2)
+  thisYearRawErr = struct.RAWCOUNTS $
+                   / (struct.NCOUNTERS ## replicate(1,n_elements(thisYearRaw))) ;; variance per tract
   thisYearRawErr = sqrt(total(thisYearRawErr,2))                           ;; total RMS
 
   tyR       = fltarr(7)

@@ -1,7 +1,8 @@
 pro plotTotPopFrac
 
   readcol, 'hwood2020usCensus.csv', tract, pop, f = 'A,F', delim = ','
-  data = mrdfits('countHollywoodResults2021.fits', 1)
+;  data = mrdfits('countHollywoodResults2021.fits', 1)
+  data = mrdfits('countHollywoodResults2021w191902.fits', 1)
 
   up = total(data.COUNTS, 1)
   up = arrstats(transpose(up))

@@ -1,7 +1,8 @@
 pro charVolOnly, $
    cut1927 = cut1927
 
-  data = mrdfits('countHollywoodResults2021.fits', 1)
+;  data = mrdfits('countHollywoodResults2021.fits', 1)
+  data = mrdfits('countHollywoodResults2021w191902.fits', 1)
   if keyword_set(cut1927) then $
      ;; chuck 1927 and see what happens
      data = data[where(data.TRACT ne 1927.00)]
@@ -17,7 +18,8 @@ pro charVolOnly, $
   pe = e[where(epro)]
   
 ;  d2020 = mrdfits('official2020occupancies.fits',1)
-  d2020 = mrdfits('official2020completeOccupancies.fits',1)
+;  d2020 = mrdfits('official2020completeOccupancies.fits',1)
+  d2020 = mrdfits('official2020completeOccupanciesW191902.fits',1)
   d2020 = trans2020official(d2020, wts = data[0].WTS[3:7])
   if keyword_set(cut1927) then $
      ;; chuck 1927 and see what happens

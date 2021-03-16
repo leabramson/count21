@@ -41,6 +41,7 @@ pro tallyTentPersonSwap
   print, 'F Dwel  ', total(data[q3].RAWCOUNTS[3:7])/total(data.RAWCOUNTS)
   print, 'F Cts   ', total(data[q3].RAWCOUNTS)/total(data.RAWCOUNTS)
   print, data[q4].TRACT
+  print, tdelta[q4]
   print, 'F tracts', nq4 / float(n_elements(ddelta))
   print, 'F T+M   ', total(data[q4].RAWCOUNTS[6:7])/total(data.RAWCOUNTS)
   print, 'F Dwel  ', total(data[q4].RAWCOUNTS[3:7])/total(data.RAWCOUNTS)

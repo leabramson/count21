@@ -114,6 +114,9 @@ pro countAll, datafile, niter, $
   bkgRates = (sqrt(total(foo, 2) / n_elements(foo[0,*]))) ;< 1
   bkgRates[where(bkgRates eq 0)] = min(bkgRates[where(bkgRates gt 0)])
 
+  print, f = '(%"Bkgs: %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f")', $
+         bkgrates
+  
   ;; Count, looping over unique tracts and averaging where
   ;; mutiple counters.
   baseCounts  = fltarr(nStruct, nutracts)
@@ -539,6 +542,42 @@ end
 ;;
 ;;
 
+pro runitRedux
+
+  csv = 'countHollywood2021w191902.csv'
+  
+  cd13spa4 = [1.51,1.77,1.42,1.48,1.68]  ;; SPA4-derived! -- this should be the default
+  cd13spa4errs = [0.25,0.42,0.28,0.11,0.31] ;; these might be 2 sigma...
+
+  fitsCount, csv, 'countHollywood2021w191902.fits'
+  data = mrdfits('countHollywood2021w191902.fits', 1)
+  hoTractLookup, data.TRACT
+  countAll, 'countHollywood2021w191902.fits', 1d4, $
+            output = 'countHollywoodResults2021w191902.fits', $
+            peaks = cd13Spa4, stderrs = cd13spa4errs
+;  summarize, 'countHollywoodResults2021.fits'
+;  makeplots, 'countHollywoodResults2021.fits'
+;  data = mrdfits('countHollywoodResults2021w191902.fits', 1)
+;  plotBarNewOld, data[where(~data.EASTFLAG)], /hwood, $
+;                   output = 'Hwood2021Bars.eps'
+;  plotBarNewOld, data[where(data.EASTFLAG)], /eho, $
+;                   output = 'Eho2021Bars.eps'
+;  lastYear = 1058.
+;  td = data[where(~data.EASTFLAG)]
+;  mwrfits, td, 'hwood2021results.fits', /create
+;  findNullWeights, 'hwood2021Results.fits', lastYear
+;  cts = total(total(td.COUNTS, 3), 1)
+;  print, getCountProb(cts, lastYear)
+
+;  lastYear = 656.
+;  td = data[where(data.EASTFLAG)]
+;  mwrfits, td, 'eho2021results.fits', /create
+;  cts = total(total(td.COUNTS, 3), 1)
+;  print, getCountProb(cts, lastYear)
+  
+end
+
+
 pro runitRetry, csv
   fitsCount, csv, '2020sandbox/retry2020_hwoodOnly.fits'
   data = mrdfits('2020sandbox/retry2020_hwoodOnly.fits', 1)
@@ -578,21 +617,22 @@ pro multiWts
   p2021merrs = cd13spa4errs
   p2021merrs[3] = tw[3]
 
+  spawn, 'rm hwoodCVRTMtests/*.fits'
   
-  countAll, 'countHollywood2021.fits', 1d4, $
+  countAll, 'countHollywood2021w191902.fits', 1d4, $
             output = 'hwoodCVRTMtests/base2020.fits', $
             peaks = cd13spa4, stderrs = cd13spa4errs
-  countAll, 'countHollywood2021.fits', 1d4, $
+  countAll, 'countHollywood2021w191902.fits', 1d4, $
             output = 'hwoodCVRTMtests/spa42020.fits', $
             peaks = p2020, stderrs = p2020Errs
-  countAll, 'countHollywood2021.fits', 1d4, $
+  countAll, 'countHollywood2021w191902.fits', 1d4, $
             output = 'hwoodCVRTMtests/tent2021.fits', $
             peaks = p2021, stderrs = p2021errs
-  countAll, 'countHollywood2021.fits', 1d4, $
+  countAll, 'countHollywood2021w191902.fits', 1d4, $
             output = 'hwoodCVRTMtests/tmod2021.fits', $
             peaks = p2021m, stderrs = p2021merrs
 
-    countAll, 'countHollywood2021.fits', 1d4, $
+  countAll, 'countHollywood2021w191902.fits', 1d4, $
             output = 'countHollywoodResults2021_revisedWtErr.fits', $
             peaks = cd13Spa4, stderrs = cd13spa4errs/1.96
   
@@ -604,8 +644,6 @@ pro multiWts
 ;  cityErrs = [0.21,0.29,0.27,0.09,0.21]/1.96
 ;  cd13wts = [1.10,1.16,1.74,1.40,1.22]         ;; LOCAL!
 ;  cd13errs = [0.47,1.08,1.26,0.84,0.93]/1.96
-
-  spawn, 'rm hwoodCVRTMtests/*.fits'
   
   plotsym, 0, /fill
   cgbarplot, cd13spa4, barcoord = bx, $
