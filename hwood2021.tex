@@ -126,7 +126,7 @@ may drive qualitative impressions as to the ``felt'' state of the crisis. Sectio
 summarizes. The Appendix provides additional information, including tract-level tallies and 
 population inferences. All data are available at {\bfr website}.
 
-\section{Methodology}
+\section{Methods}
 \label{sec:procedure}
 %
 %The \Count\ took place on 25 February 2021 circa at 7.00 PM. This timing corresponds to one month 
@@ -182,11 +182,11 @@ personal protective equipment and maintained social distancing when appropriate.
 \begin{figure*}[t!]
 	\centering
 	\includegraphics[width=0.8\linewidth]{totalPopMap}
-	\includegraphics[width=0.8\linewidth]{countMap}
+	\includegraphics[width=0.8\linewidth]{diffMap}
 	\caption{The 2021 volunteer \Count\ covered the LAHSA-recognized Hollywood and East 
 			Hollywood Communities. The former spans Laurel Canyon at Franklin to Western
 			at Melrose. The latter spans Western at Hollywood to Hoover at Temple. 
-			{\it Top:} inferred 2021 unsheltered population (purple high, yellow low). 
+			{\it Top:} inferred 2021 unsheltered population (darker is higher). 
 			{\it Bottom:} inferred change from 2020 (red$+$, blue$-$). The tracts with the 
 			largest gain (1912.01) and loss (1927.00) from 2020 are highlighted
 			in both panels.}
@@ -258,11 +258,11 @@ volunteer- and professional-counted tracts (Section \ref{sec:crossChecks}).
 \label{sec:191902}
 
 Tract 1919.02 escaped assignment on the night of the \Count. This omission was recognized 15 March
-and the area independently surveyed by experienced volunteers circa 6:00 AM (Abramson) and 
+and the area independently surveyed by experienced volunteers at 6:00 AM (Abramson) and 
 8:15 PM (Eigenberg) the next day. Despite the 19-day delay, we include these data to conform the 
 the 2021 PIT results to LAHSA-defined geographies. While \href{https://selahnhc.org}
 {SELAH} tract monitoring suggests counts are stable on $\sim$month timescales, no conclusions
-change if this tract is excluded.% from all analyses.
+change if this tract is excluded.% counts are consistent to <1sigma in total and per category.
 
 \begin{table}[t!]
 \caption{Tract-level Unsheltered Population Summary}
@@ -344,7 +344,7 @@ LAHSA PIT results. No other prior was established. The training presentation is 
 \subsection{Data Analysis}
 \label{sec:analysis}
 
-The data form a $9\times74$ array containing each team's tract-level tallies for each unhoused 
+The data form a $9\times75$ array containing each team's tract-level tallies for each unhoused 
 individual/dwelling class. The population inference entails averaging duplicate tract counts and 
 weighting CVRTM by their mean occupancies. We produce 10,000 realizations of this inference 
 incorporating random perturbations of the counts and weights based on their 
@@ -355,9 +355,9 @@ Our baseline result assumes the
 \href{https://www.lahsa.org/documents?id=4635-usc-2018-2020-multipliers-and-estimates-overview.pdf}
 {2020 SPA4/CD13 CVRTM weights} underpinning the 2020 LAHSA 
 \href{https://www.lahsa.org/documents?id=4686-2020-greater-los-angeles-city-community-homelessness-report-service-planning-area-4.pdf}{Community Summaries}. We recognize that these weights may have changed since they were last
-defined. We encourage robust efforts to reassess them, but at least one survey of tent-dwellers in Hollywood 
-suggests the tent weight has not changed significantly. Section \ref{sec:comp} reviews the impact of adopting three 
-other CVRTM choices (Table \ref{tbl:weights}); none significantly affect our findings.
+defined and encourage robust efforts to reassess them. However, at least one survey of tent-dwellers in Hollywood 
+suggests that the tent weight has remained stable. Section \ref{sec:comp} reviews the impact of adopting
+the other CVRTM choices in Table \ref{tbl:weights}; none significantly affects our findings.
 %COVID-related activities such as tent  distribution efforts may have changed
 
 %While an estimate of the underlying population, uncertainties in each visual count and weight 
@@ -516,7 +516,7 @@ intrinsically rare categories and inflates aggregate uncertainties.
 
 Each volunteer tract in both communities (30) were assigned to at least two independent counting teams.
 Four tracts additionally received a third pass. Pass 1 paired tracts by tract number. Pass 2 paired projected 
-high-population tracts with one that was geographically nearby. Pass 3 was the same as Pass 1 with 
+high-population tracts with ones geographically nearby. Pass 3 was the same as Pass 1 with 
 pairings presented in reverse order, such that teams deployed simultaneously would likely start in different 
 tracts. 
 
@@ -534,7 +534,7 @@ both teams agreed exactly.
 The outlier is tract 1901.00, whose repeat measurements differ by $6.6\,\sigma$. There, 
 one team counted $\{P,C,V,R,T,M\}=\{23,1,1,1,6,2\}$ while the other counted $\{77,15,10,1,6,6\}$. 
 Abramson re-counted this tract on-foot 14 hours after the PIT tally, obtaining $\{36, 4, 6, 0, 8, 2\}$.
-In total, this tally ($\nu_{\rm Abramson}=56\pm7$) is within $1.9\,\sigma$ of the volunteers' mean 
+In total, this tally ($\nu_{\rm Abr}=56\pm7$) is within $1.9\,\sigma$ of the volunteers' mean 
 ($\langle\nu_{\rm PIT}\rangle=75\pm6$). As such, we retain the volunteer PIT estimate as-is. As illustrated in 
 Figure \ref{fig:dupeChar}, top, the mean intercounter dispersion drops to $1.3\,\sigma$ if this tract is 
 excluded.
@@ -697,12 +697,13 @@ Figure \ref{fig:tractYrYr} shows the tract-level changes in counts and inferred 
 geographically illustrated in Figure \ref{fig:map}. We find significant gains in 7 tracts and significant 
 declines in 14, resulting in net changes of $-199\pm45$ and $-218\pm71$ counts or people, \resp.\footnote{Tract-level 
 CVRTM counts inferred from \href{https://www.lahsa.org/data?id=45-2020-homeless-count-by-community-city}
-{LAHSA's data portal}.} Tract 1912.01 saw the largest year-on-year gain (Barnsdall Park; $+40$ people), tract 
+{LAHSA's data portal}. We verified that they sum to the correct community totals.} 
+Tract 1912.01 saw the largest year-on-year gain (Barnsdall Park; $+40$ people), tract 
 1927.00 the largest loss (US 101; $-125$ people). Both are located in East Hollywood.
 
 Tract 1927.00 is unique (Section \ref{sec:discussion}). Foremost among the reasons why is that its precipitous 
 decline since 2020 can account for all of East Hollywood's total unsheltered population change. It is also the only 
-tract assessed by a team that worked in both Greater Hollywood communities. If it is excluded, we infer $427\pm61$ unsheltered 
+tract assessed by a team that worked in both communities. If it is excluded, we infer $427\pm61$ unsheltered 
 people in E.~Hollywood vs.\ 407 in 2020. Person/dwelling trends remain similar to those in 
 Hollywood regardless of whether 1927.00 is examined, however (Figure \ref{fig:proVolComp}).
 %368.808      426.952      491.580
@@ -717,11 +718,11 @@ makeshift structures, $w_{T}$ and $w_{M}$ are the largest potential error source
 To constrain their evolution
 from last year, \href{https://selahnhc.org}{SELAH} outreach teams surveyed 47 tents (38 responses) 
 in Hollywood on 28 Feb. This exercise yielded a mean occupancy of $w_{T}=1.39\pm0.14$ people per tent, 
-or $w_{T}=1.50\pm0.22$ when non-responses are modeled.\footnote{Assuming they were equally likely to have 
-0--4 occupants, each.} While neither the full 2021 PIT area nor $w_{M}$ has been assessed,
+or $w_{T}=1.50\pm0.22$ if non-responses are assumed to have anywhere from 0 to 4 occupants, each. 
+While neither the full 2021 PIT area nor $w_{M}$ has been assessed,
 %\footnote{$w_{M}=1.75\pm0.66$ was estimated using four makeshifts on 14 March but the sample size precludes.} 
-the above values are consistent with the 2020 estimate of $w_{T}=1.48\pm0.11$. Neither adopting the updated 
-$w_{T}$ value nor replacing all weights with the last SPA4-wide values leads to less than a
+the above values are consistent with the 2020 estimate of $w_{T}=1.48\pm0.11$. Neither adopting the 
+updated $w_{T}$ value nor replacing all weights with the last SPA4-wide values leads to less than a
 89\% chance of a decline in unsheltered populations compared to 2020. %93\%
 
 %Figure \ref{fig:wtComp} illustrates the impact of various CVRTM choices, including the above. All cases imply at 
@@ -736,13 +737,13 @@ $\sim$2 to $\sim$1.4 between 2019 and 2020.}
 % especially as known COVID-related tent distribution efforts have pushed 
 %in the opposite direction (Section \ref{sec:discussion}). 
 
-All of the above is largely a reflection of the fact that persons seen on the street fell by $\sim$30\%
-(Figure \ref{fig:rawCounts}). Cars and vans are also down from last year by more than the number of 
-safe parking spaces (Section \ref{sec:crossChecks}), with only makeshift structures showing a potential 
-common gain. All told, the total number of dwellings remained essentially flat. Although uncertainties 
-in East Hollywood and effects from tract 1927.00 are large, Figure \ref{fig:proVolComp} reveals the above 
-trends to be common across communities and areas counted by volunteers or professionals. Such consistencies 
-in nearly independent datasets suggest the results are robust. 
+Largely, our results reflect the fact that persons seen on the street fell by $\sim$30\% (Figure 
+\ref{fig:rawCounts}). Cars and vans are also down from last year by more than the number of 
+safe parking spaces (Section \ref{sec:crossChecks}). Only makeshift structures show a potential 
+common gain. All told, however, the total number of dwellings remained roughly flat. Although 
+uncertainties in East Hollywood and effects from tract 1927.00 are large, Figure \ref{fig:proVolComp} 
+reveals this trend to be common across communities and areas counted by volunteers or professionals. 
+Such consistencies in nearly independent datasets suggest the results are robust. 
 %Section \ref{sec:crossChecks} presents further checks.
 
 %(Unsheltered people make up 3.5\% of tract 1907.00's total population, according to 2020 estimates
@@ -959,10 +960,10 @@ All of the above suggests that our results are reliable.
 	\label{fig:1907}
 \end{figure}
 
-The upshot of the above is that, as far as we can assess, the number of people experiencing unsheltered
-homelessness in Greater Hollywood has declined to close to 2019 levels.\footnote{917, 491 
-people in Hollywood and E.~Hollywood, \resp.} A number of factors may contribute to this change, some 
-COVID-related and some not.
+As far as we can assess, the number of people experiencing unsheltered
+homelessness in Greater Hollywood has fallen by roughly 10\% from its Jan.~2020 level. A number of factors 
+may contribute to this decline, some COVID-related and some not.
+%\footnote{917 and 491 people in Hollywood and E.~Hollywood, \resp.} 
 
 \subsection{Government Initiatives}
 
@@ -1005,9 +1006,9 @@ pre-existing shelters. Assuming 50\% reductions, we estimate that the five ABHs 
 {whose catchments touch Greater Hollywood}---Schrader, YWCA/Lodi (recently expanded), Gardner, Riverside, and 
 Lafayette---constitute a net addition of just 33 beds (398 total, 116 gained, 83 lost to decompression). 
 
-Local contributions can be substantially larger, however. Tract 1927.00---which saw the largest year-on-year 
-decline---overlaps with three ABHs, two of them new. As many as 89 beds may therefore have come online to service 
-that tract's unsheltered residents. This corresponds to $\sim$70\% of that tract's inferred population change.
+Local contributions can be larger, however. Tract 1927.00---which saw the largest year-on-year 
+decline---overlaps with three ABH catchments, two of them new. As many as 89 beds may thus have become
+available to that tract's unsheltered residents, corresponding to $\sim$70\% of that tract's inferred population change.
 % without considering any contributions from a new PATH permanent supportive housing site (see below).
 
 CES data will constrain this scenario.
@@ -1074,13 +1075,12 @@ as to nearly conserve the total number of identified people+dwellings (Figure \r
 enhance the impression of unsheltered living even as the population as a whole remained unchanged.
 
 Meanwhile, tract 1912.01's population did not remain the same, but more than {\it tripled}, leading to the largest 
-overall gain vs.~2020. This tract contains the western edge of Vermont Ave between Fountain and Hollywood
-Blvd, and the southern edge of Hollywood Blvd between Vermont and Normandie (Barnsdall Park). Both are
-are high-traffic corridors, and so areas of enhanced visibility. 
+absolute gain vs.~2020. Containing Vermont Ave between Fountain and Hollywood Blvd, and Hollywood Blvd between 
+Vermont and Normandie (Barnsdall Park), this tract, like 1907.00, is a high-traffic area, and so one of enhanced visibility. 
 
-The above local trends show how, even as overall numbers declined, data in key areas would support impressions
-that the opposite occurred. This is, of course, to say nothing of deteriorations in the conditions of street living
-for those unable to get indoors, which we touch on in the next section.
+Even as overall numbers declined, the above local trends show how facts in key areas would support impressions
+that the opposite occurred. This is to say nothing of deteriorations in the conditions of street living
+for those unable to get indoors (see next section).
 
 Finally, the above trends also provide some evidence of the impact of COVID-related tent distribution efforts 
 by professional and volunteer service providers. Anecdotally, these are reported as robust despite the global 
@@ -1098,38 +1098,36 @@ substantial fraction going to replacing damaged or destroyed tents may have soak
 
 \subsection{Quality of Life Degradation}
 
-If there are fewer people on the street today, their quality of life has doubtless degraded markedly. 
+If there are fewer people on the street today, their quality of life has doubtless degraded. 
 COVID has restricted or eliminated access to restaurant and park bathrooms, libraries (so 
 \href{https://www.lapl.org/homeless-resources/the-source}{\it The Source} service days), Dept.~of Public Social Services 
 (EBT, Medi-Cal), Dept.~of Motor Vehicles (ID replacement), and Dept.~of Mental Health facilities. Physical limitations 
-on client access at hospitals and clinics has also hindered caseworkers from managing successful discharges. These 
-harms are reflected by the aforementioned 25\% increase in 
+on client access at hospitals has also hindered caseworkers from managing successful discharges. These 
+harms are reflected by said 25\% increase in 
 \href{https://www.latimes.com/california/story/2021-01-07/the-powerful-synthetic-opioid-fentanyl-is-behind-rising-deaths-in-the-homeless-population}{overdose deaths}, and amplified by the simultaneous 
 \href{https://clkrep.lacity.org/onlinedocs/2020/20-0147_misc_3-17-20_p.pdf} {suspension or de-scoping} of city 
-and state sanitation programs (which further increase the visual impact of the aforementioned 
-tent doublings). 
+and state sanitation programs (which further increase the visual impact of aforementioned tent doublings). 
 
-As such, while our 2021 PIT data may support the efficacy of programs designed to reduce street 
+As such, while 2021 PIT data may support the efficacy of programs designed to reduce street 
 homelessness, they do {\it not} suggest that the state of homelessness in Greater Hollywood has improved. 
 In the fight to rebuild lives---as well as build homes---that fact must remain paramount.
 
 \section{Summary}
 \label{sec:summary}
 
-Data from February 25, 2021 censuses of Hollywood and East Hollywood show that 
-unsheltered homelessness has fallen in those communities by $11\%\pm9\%$ and 
-$15\%\pm12\%$, \resp, compared to the 2020 LAHSA PIT Count (90\% CI). 
-Multiple internal and external cross-checks support the quality of the data---29/39 tracts
-counted by multiple independent teams; consistency between volunteer- and 
-professional-counted tract trends; consistency with data from other efforts---which
+Data from February 25, 2021 show that unsheltered homelessness has fallen in Hollywood and 
+East Hollywood  by $10\%\pm9\%$ and $15\%\pm12\%$, \resp, compared to the 2020 LAHSA PIT 
+Count (90\% CI). Multiple internal and external cross-checks support the quality of the 
+data---30/40 tracts counted by multiple teams; consistency between volunteer- and 
+professional-counted tract trends; consistency with external data---which
 point to a 30\% drop in individuals seen on the street driving the year-on-year change.
-The latter make it difficult for updates to average dwelling occupancies to erase the 
+The size of this shift makes it difficult for updates to dwelling occupancies to erase the 
 community-scale declines we infer. 
 
 We attribute the declines mainly to government initiatives---e.g., eviction moratoria, Project 
-Roomkey---aimed at bringing or keeping people in their homes. The opening of at least one {\it A Bridge Home} 
-facility and new permanent supportive housing units likely also contributed, as, unfortunately, 
-did deaths. Data from the Coordinated Entry System will test these statements.
+Roomkey---aimed at bringing or keeping people indoors. The opening of at least one {\it A Bridge Home} 
+facility and new permanent supportive housing units likely also contributed. Data from the 
+Coordinated Entry System will test these statements.
 
 While community-level counts declined, 28\% of tracts saw at least a doubling in tents and 
 makeshift structures. This phenomenon---amplified by suspension of LAMC 56.11 enforcement
@@ -1222,27 +1220,28 @@ Marilyn Wells.
 
 \section{Example Documents}
 
-Figure \ref{fig:tallySheet} shows the PIT tally sheet/data collection tool. Figure \ref{fig:tractMap} shows
-an example tract map. Figure \ref{fig:primer} shows the 1-sheet training summary provided to volunteer
-counting teams on deployment.
+Figure \ref{fig:tractMap} shows an example tract map. 
+Figure \ref{fig:tallySheet} shows the PIT tally sheet.
+Figure \ref{fig:primer} shows the training summary provided to volunteer
+teams on deployment.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width =\linewidth, trim = 2cm 6cm 2cm 0cm]{Hollywood2021CountDataSheet}
-	\caption{Counter tally-sheet.}
-	\label{fig:tallySheet}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\includegraphics[width =\linewidth, trim = 2cm 0cm 2cm 0cm]{tractMap}
+	\includegraphics[width =\linewidth, trim = 1cm 0cm 1cm 0cm]{tractMap}
 	\caption{Example Hollywood tract map.}
 	\label{fig:tractMap}
 \end{figure}
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width =\linewidth]{primerFront}
+	\includegraphics[width =\linewidth, trim = 2cm 6cm 2cm 0cm]{Hollywood2021CountDataSheet}
+	\caption{Counter tally sheet/data collection tool.}
+	\label{fig:tallySheet}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width =0.85\linewidth]{primerFront}
 	\caption{Count primer. The telephone number for the on-site emergency contact has been omitted for 
 			privacy reasons.}
 	\label{fig:primer}
@@ -1250,11 +1249,9 @@ counting teams on deployment.
 
 \section{Full Tract-level Results}
 
-Table \ref{tbl:allCount} presents the final tallies for all 39 Greater Hollywood tracts surveyed 
-on 25 Feb.~2021. Volunteer tracts were surveyed beginning at 7:00 PM; professional-counted tracts 
-circa 3:00 PM. Decimals reflect averages across multiple counts of the same tract.
-
-Table \ref{tbl:allPop} presents the tract-level population inferences based on the above data. 
+Tables \ref{tbl:allCount} and \ref{tbl:allPop} present counts and population inferences, \resp, for all 40 
+Greater Hollywood census tracts. Professional surveying took place circa 3:00 PM on 25 Feb. Volunteers 
+counted from 7 PM to 10 PM except in tract 1919.02, assessed the morning and evening of 16 March. 
 
 \begin{table*}[t]
 \caption{Census Tract-level Unsheltered Counts}
