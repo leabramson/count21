@@ -88,11 +88,11 @@ pro teamSizeCheck
      meanCounts[*,jj] = (input[*,master] + input[*,slave])/2.
      meanTots[jj]   = (tmp0+tmp1)/2.
 
-     bt = max(teamSize[hit[0:1]], bti)
-     st = min(teamSize[hit[0:1]], sti)
-     bti = bti[0]
-     sti = sti[0]
-     if bti eq sti OR teamsize(hit[0]) eq -1 OR teamsize(hit[1]) eq -1 then $
+     inds = hit[0:1]
+     
+     bt = max(teamSize[inds], bti)
+     st = min(teamSize[inds], sti)
+     if bt eq st OR teamsize[inds[0]] eq -1 OR teamsize[inds[1]] eq -1 then $
         eqteam[jj] = 1 
 
      if bti ne sti then $
@@ -122,28 +122,36 @@ pro teamSizeCheck
         meanCounts[*,jj+2] = (input[*,slave]+input[*,trip])/2.
         meanTots[jj+1]   = (tmp0+tmp2)/2.
         meanTots[jj+2]   = (tmp1+tmp2)/2.
-        
-        bt = max(teamSize[hit[[0,2]]], bti)
-        st = min(teamSize[hit[[0,2]]], sti)
 
-        bti = bti[0]
-        sti = sti[0]
-        if bti eq sti OR teamsize(hit[0]) eq -1 OR teamsize(hit[2]) eq -1 then $
+        inds = hit[[0,2]]
+        
+        bt = max(teamSize[inds], bti)
+        st = min(teamSize[inds], sti)
+
+        if bt eq st OR teamsize[inds[0]] eq -1 OR teamsize[inds[1]] eq -1 then $
            eqteam[jj+1] = 1 
 
-        if bti eq sti then sti++
+        if bt ne st then $
+           print, f = '(%"Tract: %7.2f; Large Tream: %s; Small Team: %s")', $
+                  data[inds[bti]].TRACT, data[inds[bti]].COUNTER, data[inds[sti]].COUNTER
+        
+        if bt eq st then sti++
         bigTeam[jj+1] = ([tmp0,tmp2])[bti]
         smallTeam[jj+1] = ([tmp0,tmp2])[sti]
 
-        bt = max(teamSize[hit[[1,2]]], bti)
-        st = min(teamSize[hit[[1,2]]], sti)
+        inds = hit[[1,2]]
+                
+        bt = max(teamSize[inds], bti)
+        st = min(teamSize[inds], sti)
 
-        bti = bti[0]
-        sti = sti[0]
-        if bti eq sti OR teamsize(hit[1]) eq -1 OR teamsize(hit[2]) eq -1 then $
+        if bt eq st OR teamsize[inds[0]] eq -1 OR teamsize[inds[1]] eq -1 then $
            eqteam[jj+2] = 1 
 
-        if bti eq sti then sti++
+        if bt ne st then $
+           print, f = '(%"Tract: %7.2f; Large Tream: %s; Small Team: %s")', $
+                  data[inds[bti]].TRACT, data[inds[bti]].COUNTER, data[inds[sti]].COUNTER
+        
+        if bt eq st then sti++
         bigTeam[jj+2] = ([tmp1,tmp2])[bti]
         smallTeam[jj+2] = ([tmp1,tmp2])[sti]
         
