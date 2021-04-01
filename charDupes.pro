@@ -1,13 +1,16 @@
-pro charDupes, dataFits
+pro charDupes, dataFits, $
+               outdir = outdir
+
+  if NOT keyword_set(outDir) then outdir = './'
 
   data = mrdfits(dataFits, 1)
   data = data[where(~data.FLAG)]
-  nlines = n_elements(data)
-
+  nlines = n_elements(data)     
+  
   tract = data.TRACT
   s = sort(tract)
   stract = tract[s]
-  utract = tract[uniq(stract)]
+  utract = stract[uniq(stract)]
   nutract = n_elements(utract)
 
   ;; find ncounters
@@ -75,10 +78,10 @@ pro charDupes, dataFits
         tmp2 = total(input[*,trip])
 
         team3[*,ii]   = input[*,trip]
-        rcomp[*,jj+1] = team3[*,jj] - team1[*,jj]
-        rcomp[*,jj+2] = team3[*,jj] - team2[*,jj]
-        rerr[*,jj+1]  = sqrt(team3[*,jj] + team1[*,jj])
-        rerr[*,jj+2]  = sqrt(team3[*,jj] + team2[*,jj])
+        rcomp[*,jj+1] = team3[*,ii] - team1[*,ii]
+        rcomp[*,jj+2] = team3[*,ii] - team2[*,ii]
+        rerr[*,jj+1]  = sqrt(team3[*,ii] + team1[*,ii])
+        rerr[*,jj+2]  = sqrt(team3[*,ii] + team2[*,ii])
         rtcomp[jj+1]  = tmp2 - tmp0
         rtcomp[jj+2]  = tmp2 - tmp1
         rterr[jj+1]   = sqrt(tmp2+tmp0)
@@ -100,7 +103,7 @@ pro charDupes, dataFits
   nsp = sqrt(rtcomp^2) / sqrt(2)
 
   norm = where(ptracts ne 1901.00, compl = oddTract) ;; known shite tract
-  
+
   ;; cut the sample into nths and do the exercise w/ and w/o hot tract
   nsplit = 4
   xs = fltarr(nsplit,2)
@@ -110,12 +113,12 @@ pro charDupes, dataFits
         0: begin
            tmt = meanTots
            trt = rtcomp
-           f0 = fn_stats(tmt, sqrt(trt^2/2), n=10)
+           f0 = fn_stats(tmt, sqrt(trt^2/2), n=10, /meanloc)
         end
         1: begin
            tmt = meanTots[norm]
            trt = rtcomp[norm]
-           f1 = fn_stats(tmt, sqrt(trt^2/2), n=10)
+           f1 = fn_stats(tmt, sqrt(trt^2/2), n=10, /meanloc)
         end
      endcase
 
@@ -124,6 +127,8 @@ pro charDupes, dataFits
 
      tmt = tmt[s]
      trt = trt[s]
+
+     print, mean(sqrt(trt^2/2)/sqrt(tmt), /nan)
      
      for jj = 0, nsplit - 1 do begin
         stt = (ceil(jj*nt/nsplit)-1)>0
@@ -135,7 +140,7 @@ pro charDupes, dataFits
   endfor
 
   set_plot, 'PS'
-  device, filename = 'intDupeChar.eps', $
+  device, filename = outdir+'intDupeChar.eps', $
           /col, /encap, /decomp, bits_per_pix = 8
   !P.CHARTHICK = 5
   !P.CHARSIZE = 1.5
@@ -160,7 +165,7 @@ pro charDupes, dataFits
 ;  oploterror, xs[*,0], ys[*,0,0], ys[*,1,0], psym = 8, $
 ;              errcol = c2, col = c2, symsize = 2, errthick = 8
 ;  oplot, xs[*,1], ys[*,0,1], psym = 8, symsize = 1.5, col = 'aa00aa'x
-  oplot, x, sqrt(x), col = '0055ff'x, thick = 6, linesty = 4
+  oplot, x, sqrt(x), col = '0055ff'x, thick = 10, linesty = 4
   oploterror, meanTots, nsp, rterr/sqrt(2), errthick = 3, errcol = 'cccccc'x, /nohat, psym = 3
   oplot, meanTots, nsp, psym = 8, symsize = 1.7, col = 'cccccc'x
   oplot, meanTots, nsp, psym = 8, symsize = 1.1
@@ -173,7 +178,7 @@ pro charDupes, dataFits
           psym = [8,8,8,0], linesty = [0,0,0,4], $
           col = [0,c1,c2,'0055ff'x], $
           symsize = [1,2,2,1], pspacing = 1, $
-          charsize = 1.25, thick = [1,1,1,6]
+          thick = [1,1,1,6], spacing = 1.7
 
   device, /close
 ;  spawn, 'open intDupeChar.eps &'
@@ -189,7 +194,7 @@ pro charDupes, dataFits
 ;  sigd2 = sqrt(mean(foo.COUNTS, dim = 2))
   
   x = findgen(ncat)
-  device, filename = 'catDupeChar.eps', $
+  device, filename = outDir+'catDupeChar.eps', $
           /col, /encap, /decomp, bits_per_pix = 8
 
   plot, x, sigd, xr = [-1,6], /xsty, $
@@ -209,7 +214,7 @@ pro charDupes, dataFits
           psym = [8,0], linesty = [0,4], $
           col = [c1,'0055ff'x], $
           symsize = [1.4,0], pspacing = 1, thick = [1,6], $
-          charsize = 1.25, spacing = 1.5
+          spacing = 1.7
   device, /close
 ;  spawn, 'open catDupeChar.eps &'
   set_plot, 'X'
@@ -217,9 +222,24 @@ pro charDupes, dataFits
   !X.thick = 1
   !y.thick = 1
   !p.charthick = 1
-  
-  plot, meanTots, sqrt(rtcomp^2)/rterr/sqrt(2), psym = 1
 
+  s = sort(meanTots)
+  qui = s[where(ptracts[s] eq 1901.00, compl = use)]
+  use = s[use]
+  plotsym, 0, /fill
+  plot, meanTots[s], sqrt(rtcomp[s]^2)/rterr[s], psym = 1, $
+        xtitle = '!18<n>!X', $
+        ytitle = 'sqrt[(!18n!X!D1!N-!18n!X!D2!N)!E2!N!18/(n!X!D1!N+!18n!D!X2!N)]', $
+        /xlog, xr = [1,100]
+  f = fn_Stats(meanTots[s], sqrt(rtcomp[s]^2)/rterr[s], n=5, /meanLoc)
+  g = fn_Stats(meanTots[use], sqrt(rtcomp[use]^2)/rterr[s], n=5, /meanLoc)
+  oplot, 10.^!X.CRANGE, [1,1], col = 255
+  oplot, g.LOC, g.MEAN, psy = 8, col = '00a500'x
+  oplot, f.LOC, f.MEAN, psy = 8, col = 'ffa500'x
+  oploterror, g.loc, g.mean, g.sigma/sqrt(g.count), psym = 3, errcol = '00a500'x, /nohat
+  oploterror, f.loc, f.mean, f.sigma/sqrt(f.count), psym = 3, errcol = 'ffa500'x, /nohat
+  print, mean(sqrt(rtcomp[s]^2)/rterr[s], /nan), median(sqrt(rtcomp[s]^2)/rterr[s]), n_elements(s)
+  
 ;  stop
   
   if 0 then begin
@@ -265,4 +285,5 @@ pro charDupes, dataFits
   endif
   
 end
-;chardupes, 'countHollywood2021.fits'
+;chardupes, 'countHollywood2021w191902.fits'
+;chardupes, 'mcw/countMidCity2021.fits', outdir = 'mcw/'
