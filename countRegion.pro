@@ -1,67 +1,9 @@
-function drawDist, x, pdf, n, $
-                   normalize = normalize
-
-  dx = x[1] - x[0]
-  cdf = total(pdf * dx, /cum)
-  
-  if keyword_set(normalize) then cdf /= max(cdf)
-
-  out = x[value_locate(CDF, randomu(seed, n))]
-
-  RETURN, out
-end
-
-;;
-;;
-;;
-
-function genFunc, x, peak, sigma, cutoff
-
-  func = 1./sqrt(sigma^2 * 2 * !pi) $
-         * exp(-0.5 * (x-peak)^2/sigma^2)
-
-  func[where(x lt cutoff)] = 0
-
-  func /= total(func * (x[1]-x[0]))
-  
-  RETURN, func
-end
-
-;;
-;;
-;;
-
-function findSig, x, peak, sigi, sigf, $
-                  nsteps = nsteps, $
-                  ntile = ntile, $
-                  cutoff = cutoff, $
-                  target = target
-
-  if NOT keyword_set(ntile) then ntile = 0.95
-  
-  dsig = (sigf - sigi)/(nsteps-1)
-  sigran = findgen(nsteps) * dsig + sigi
-  nout = fltarr(nsteps)
-  for ii = 0, nsteps - 1 do begin
-     foo = genFunc(x, peak, sigran[ii], 1)
-     cdf = total(foo, /cum)
-     nout[ii] = x[value_locate(cdf, ntile * cdf[-1])]
-  endfor
-
-  sigma = (sigran[value_locate(nout, target)] > min(sigran)) < max(sigran)
-  
-  RETURN, sigma
-end
-
-;;
-;;
-;;
-
 pro countRegion, datafile, niter, $
                  output = output, $
                  wtTargets = wtTargets, $
                  RegName = regName, $
-                 peaks = peaks
+                 peaks = peaks, $
+                 stdErrs = stderrs
 
   ;; SPA 4 CVRTM weights & Stats
   ;; https://www.lahsa.org/documents?id=4693-2020-greater-los-angeles-homeless-count-cvrtm-conversion-factors
@@ -71,18 +13,25 @@ pro countRegion, datafile, niter, $
   nppl  = [674., 1117., 930., 3050., 1990.]
   se    = [50., 141., 102., 122., 190.]
 
-  ;; Standard errors on the means
-  ;; They seem to find the weight by N_tot/N_obj, and then use the
-  ;; "standard error" on N_tot to define the error on the weight.
-  ;; The error on N_tot, however, is like 2-4x sqrt(N_tot),
-  ;; so one could assume the 95% limit is "1" standard error on the mean...
-  ;; I dunno; I'll default 2 for now.
-  stderrs = [0.11, 0.22, 0.15, 0.06, 0.16] ;; LAHSA 2020 SPA4
+  if NOT keyword_set(STDERRS) then $
+     stderrs = [0.11, 0.22, 0.15, 0.06, 0.16] ;; 2020 SPA4
+  ;; [0.47,1.08,1.26,0.84,0.93] CD 13 2020
   if NOT keyword_set(wtTargets) then $
-     wtTargets = peaks + 2*stderrs
-
+     wtTargets = peaks + 2 * stderrs
+  
   ;; Read in count data and find unique tracts and Ncounters
   data = mrdfits(dataFile, 1)
+
+    ;; cull bad data
+  if total(tag_names(data) eq "FLAG") gt 0 then begin
+     bad = where(data.FLAG, compl = good, nbad)
+     if nbad gt 0 then $
+        for ii = 0, nbad-1 do $
+           print, f = '(%"Bad data detected at tract %7.2f by counter %s")', $
+                  data[bad[ii]].TRACT, data[bad[ii]].COUNTER
+     data = data[good]
+  endif
+
   nlines = n_elements(data)
   tracts = data.TRACT
   utracts = tracts[UNIQ(tracts)]
@@ -100,29 +49,6 @@ pro countRegion, datafile, niter, $
   tentSig = stderrs[3]
   makeSig = stderrs[4]
   
-;  carSig = findSig(pplPer, peaks[0], 0.05, 1.0, $
-;                   nsteps = 200, $
-;                   cutoff = 1, $
-;                   target = wtTargets[0])
-;  vanSig = findSig(pplPer, peaks[1], 0.05, 1.0, $
-;                   nsteps = 200, $
-;                   cutoff = 1, $
-;                   target = wtTargets[1])
-;  rvSig = findSig(pplPer, peaks[2], 0.05, 1.0, $
-;                  nsteps = 200, $
-;                  cutoff = 1, $
-;                  target = wtTargets[2])
-;  tentSig = findSig(pplPer, peaks[3], 0.01, 1.0, $
-;                    nsteps = 2000, $
-;                    cutoff = 1, $
-;                    target = wtTargets[3])
-;  makeSig = findSig(pplPer,  peaks[4], 0.05, 1.0, $
-;                    nsteps = 200, $
-;                    cutoff = 1, $
-;                    target = wtTargets[4])
-;
-;  print, carSig, vanSig, rvSig, tentSig, makeSig
-
   ;; Draw niter realizations for the weights from the PDFs
   carPDF  = genFunc(pplPer, peaks[0], carSig, 1) ;; 2020 wts = maxLike
   vanPDF  = genFunc(pplPer, peaks[1], vanSig, 1)
@@ -481,6 +407,35 @@ pro makePlots, resFile, $
   endfor
   
   set_plot, 'X'
+
+end
+
+;;
+;;
+;;
+
+pro runmcw, csv
+
+  cd5Errs = [0.24,0.32,0.26,0.11,0.23]
+  
+  fitscount, csv, 'mcw/unmerged_countMidCity2021.fits'
+  mergesplits, 'mcw/unmerged_countMidCity2021.fits', 'mcw/countMidCity2021.fits'
+  countRegion, 'mcw/countMidCity2021.fits', 1d4, $
+               output = 'mcw/countMidCityResults2021.fits', $
+               regName = 'Mid City West', $
+               peaks = getMCWwts(), $
+               stderrs = cd5errs
+
+  data = mrdfits('mcw/countMidCityResults2021.fits', 1)
+
+  printNeedToKnow, data, lastYEar = 247., region = 'Mid City West'
+  plotHist, data, out = 'mcw/mcw2021Hist.eps', compval = 247.
+  plotTractTractOfficial, 'mcw/countMidCityResults2021.fits', old = 'mcw/2020actualCounts.fits', outdir = 'mcw/'
+
+  d = mrdfits('mcw/2020actualCounts.fits', 1)
+  d = trans2020Official(d, wts = getMCWwts())
+  r = transpose([[d.TOT_IND], [d.C], [d.V], [d.R], [d.T], [d.M]])
+  plotBarNewOld, data, [total(r, 2),0], output = 'mcw/bars.eps'
 
 end
 

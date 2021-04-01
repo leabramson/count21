@@ -32,7 +32,6 @@ pro countAll, datafile, niter, $
      data = data[good]
   endif
   
-  
   nlines = n_elements(data)
   tracts = data.TRACT
   utracts = tracts[UNIQ(tracts)]

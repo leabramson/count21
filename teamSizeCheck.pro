@@ -2,7 +2,14 @@ pro teamSizeCheck
 
   readcol, 'teamSizes.csv', id, nc, f = 'A,F', $
            delim = ','
-  nc = strcompress(nc, /rem)
+  id = strcompress(id, /rem)
+
+  print, total(nc eq 3) / 2.
+  print, total(nc eq 2) / 2.
+  print, total(nc lt 0)
+  print, total(nc eq 3) / total(nc gt 0)
+  qui = where(nc gt 0)
+  print, mean(nc[qui])
   
   data = mrdfits('countHollywood2021w191902.fits',1)
   data = data[where(~data.FLAG)]
@@ -10,7 +17,7 @@ pro teamSizeCheck
 
   teamSize = intarr(nlines)
   for ii = 0, nlines - 1 do begin
-     hit = where(id eq strcompress(data[ii].COUNTER, /rem), nhit)
+     hit = where(id eq strcompress(strlowcase(data[ii].COUNTER), /rem), nhit)
      if nhit gt 0 then teamSize[ii] = nc[hit[0]]
   endfor
 
@@ -166,7 +173,7 @@ pro teamSizeCheck
 
   !p.multi = [0,2,0]
   
-  plot, smallTeam, bigTeam, psym = 1, xr = [0,120], yr = [0,120], /iso, $
+  plot, smallTeam, bigTeam, psym = 1, xr = [0,60], yr = [0,60], /iso, $
         xtitle = 'smaller team on tract', $
         ytitle = 'larger team on tract', /nodat
   one_one, col = 'ffa500'x
@@ -199,9 +206,9 @@ pro teamSizeCheck
         xtitle = 'sqrt[(!18n!D1!X!N - !18n!X!D2!N)!E2!N!18/!X(!18n!X!D1!N+!18n!X!D2!N)]', $
         ytitle = '!18f!X!Dpairs!N', /nodat
   polyfill, dp[2] + em * [-1,-1,1,1], !Y.CRANGE[[0,1,1,0]], $
-            /line_fill, orien = 45, col = 'cccccc'x, spacing = 0.05
+            /line_fill, orien = -45, col = 'cccccc'x, spacing = 0.05, thick = 1
   polyfill, d2p[2] + e2m * [-1,-1,1,1], !Y.CRANGE[[0,1,1,0]], $
-            /line_fill, orien = 45, col = '00a5ff'x, spacing = 0.05
+            /line_fill, orien = 45, col = '00a5ff'x, spacing = 0.05, thick = 1
   oplot, td, findgen(n_elements(td))/(n_elements(td)-1), col = '777777'x, psym = 10
   oplot, d, findgen(n_elements(d))/(n_elements(d)-1), psym = 10
   oplot, d2, findgen(n_elements(d2))/(n_elements(d2)-1), col = 255, psym = 10

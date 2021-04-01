@@ -41,7 +41,8 @@ pro hoTractLookUp, inTracts
               1917.20, $
               1918.10, $
               1918.20, $
-              1919.01]
+              1919.01, $
+              1919.02]
 
   tracts = [eHoTracts, hoTracts]
   

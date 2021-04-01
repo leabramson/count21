@@ -34,7 +34,7 @@ pro charVolOnly, $
   
   print, total(hpro), total(epro)
   print, total(hpro)/n_elements(h), total(epro)/n_elements(e)
-  
+
   print, '2021'
   print, total(ph.RAWCOUNTS)/total(h.RAWCOUNTS), $
          total(pe.RAWCOUNTS)/total(e.RAWCOUNTS)

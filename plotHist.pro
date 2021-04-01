@@ -1,11 +1,14 @@
 pro plotHist, struct, $
               region = region, $
               compval = compval, $
-              output = output
+              output = output, $
+              binsize = binsize
+
+  if NOT keyword_set(binsize) then binsize = 5
 
   cts = total(total(struct.COUNTS, 3), 1)
   cts = cts[sort(cts)]
-  h = histogram(cts, bins = 5, loc = bins)
+  h = histogram(cts, bins = binsize, loc = bins)
   ints = getCountProb(cts, [0.05,0.16,0.5,0.84,0.95], /inv)
   niter = n_elements(cts)
 
@@ -13,13 +16,13 @@ pro plotHist, struct, $
 
   s1col = cgcolor('10')
   s2col = cgcolor('3')
-  
+    
+  set_plot, 'PS'
   !p.CHARTHICK = 5
   !p.CHARSIZE = 1.5
   !X.THICK = 4
   !Y.THICK = 4
-  
-  set_plot, 'PS'
+
   device, filename = output, $
           /col, /encap, /decomp, bits_per_pix = 8
   plot, bins, h / total(h), psym = 10, $
@@ -29,8 +32,7 @@ pro plotHist, struct, $
         pos = [0.15,0.15,0.9,0.9], $
         title = region, $
 ;        xr = [400,600], $;allTotal[[0.05,0.95]*n-1] + [-20,20], $
-        ymin = 2, /nodat, xthick = 4, ythick = 4, $
-        charthick = 4, charsize = 1.25
+        ymin = 2, /nodat, xthick = 4, ythick = 4
   hf = histofill(bins, h/total(h), /pad)
   qui = where(hf.BINS ge ints[0] and hf.BINS le ints[4])
   qui2 = where(hf.BINS ge ints[1] and hf.BINS le ints[3])
@@ -82,8 +84,7 @@ pro plotHist, struct, $
             /line_fill, spacing = 0.025, thick = 1, orien = -45
   oplot, bins, h / total(h), psym = 10, thick = 8
   axis, yaxis = 1, yr = [0,1], /ysty, col = '00a5ff'x, $
-        ytitle = '!18P!X(<!18X!X)', ythick = 4, $
-        charthick = 4, charsize = 1.25
+        ytitle = '!18P!X(<!18X!X)', ythick = 4
   oplot, cts, ty, col = '00a5ff'x, thick = 6, linesty = 4
   device, /close
   set_plot, 'X'
@@ -99,7 +100,10 @@ pro plotStuff
   plotHist, data[where(data.EASTFLAG)], $
             region = 'East Hollywood', output = 'ehoHist.eps', $
             compval = 656.
-
+  plotHist, data, $
+            region = 'Greater Hollywood', output = 'allHoHist.eps', $
+            compval = 656.+1058., bins = 10
+  
   data = mrdfits('countHollywoodResults2021_revisedWtErr.fits', 1)
   plotHist, data[where(~data.EASTFLAG)], $
             region = 'Hollywood', output = 'hwoodHist_revErr.eps', $

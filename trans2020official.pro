@@ -2,7 +2,7 @@ function trans2020official, struct, $
                             wts = wts
 
   if not keyword_set(wts) then $
-     wts = [1.51,1.77,1.42,1.48,1.68]               ;; 2020 Spa4 interp into CD13
+     wts = [1.51,1.77,1.42,1.48,1.68] ;; 2020 Spa4 interp into CD13
 
   if total(strcompress(tag_names(struct),/rem) eq 'C') then begin
      oth = transpose([[struct.C/wts[0]], $
@@ -44,25 +44,6 @@ function trans2020official, struct, $
 
   return, output
   
-end
-
-pro fitsCSV
-
-  readcol, '2020impliedCounts.csv', tract, raw, tot, ind, $
-           f = 'A,F,F,F'
-  tract = strmid(tract,0,4)+'.'+strmid(tract,1,/rev)
-
-  savedata = {TRACT: '0', $
-              PERSONS: 0., $
-              TOTAL: 0.}
-  savedata = replicate(saveData, n_elements(tract))
-  for ii = 0, n_elements(tract) - 1 do begin
-     savedata[ii].TRACT   = tract[ii]
-     savedata[ii].TOTAL   = tot[ii]
-     savedata[ii].PERSONS = ind[ii]
-  endfor
-  mwrfits, savedata, 'official2020occupancies.fits', /create
-     
 end
 
 pro fitsCSVactual
@@ -122,3 +103,56 @@ pro fitsCSVredux
   mwrfits, savedata, 'official2020CompleteOccupanciesW191902.fits', /create
      
 end
+
+;;
+;;
+;;
+
+pro fitsCSV, sheet, output
+
+  readcol, sheet, tract, pop, p,c,v,r,t,m, cts, $
+           f = 'A,F,F,F,F,F,F,F,F', delim = ',', skipline = 1
+  tract = strmid(tract,0,4)+'.'+strmid(tract,1,/rev)
+
+  savedata = {TRACT: '0', $
+              PERSONS: 0., $
+              C: 0., $
+              V: 0., $
+              R: 0., $
+              T: 0., $
+              M: 0., $
+              TOTAL: 0.}
+  savedata = replicate(saveData, n_elements(tract))
+  for ii = 0, n_elements(tract) - 1 do begin
+     savedata[ii].TRACT   = tract[ii]
+     savedata[ii].TOTAL   = pop[ii]
+     savedata[ii].PERSONS = p[ii]
+     savedata[ii].C = c[ii]
+     savedata[ii].V = v[ii]
+     savedata[ii].R = r[ii]
+     savedata[ii].T = t[ii]
+     savedata[ii].M = m[ii]
+  endfor
+  mwrfits, savedata, output, /create
+
+end
+
+
+;pro fitsCSV
+;
+;  readcol, '2020impliedCounts.csv', tract, raw, tot, ind, $
+;           f = 'A,F,F,F'
+;  tract = strmid(tract,0,4)+'.'+strmid(tract,1,/rev)
+;
+;  savedata = {TRACT: '0', $
+;              PERSONS: 0., $
+;              TOTAL: 0.}
+;  savedata = replicate(saveData, n_elements(tract))
+;  for ii = 0, n_elements(tract) - 1 do begin
+;     savedata[ii].TRACT   = tract[ii]
+;     savedata[ii].TOTAL   = tot[ii]
+;     savedata[ii].PERSONS = ind[ii]
+;  endfor
+;  mwrfits, savedata, 'official2020occupancies.fits', /create
+;     
+;end

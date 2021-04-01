@@ -1,13 +1,22 @@
 ;; Tract by tract comparison between years
 
-pro plotTractTractOfficial, newData;, $
+pro plotTractTractOfficial, newData, $
+                            oldData = oldData, $
+                            outdir = outdir
 ;                            region = region
 
+  if Not keyword_set(outdir) then outdir = './'
+  
 ;  foo  = mrdfits('official2020Occupancies.fits', 1)
 ;  foo  = mrdfits('official2020CompleteOccupancies.fits', 1)
-  foo  = mrdfits('official2020CompleteOccupanciesW191902.fits', 1)
   newd = mrdfits(newData, 1)
-  oldD = trans2020official(foo, wts = newD[0].WTS[3:7]) ;; ensure same weights used year on year at least until we have better weights for this year's count
+  if NOT keyword_set(oldData) then begin
+     foo  = mrdfits('official2020CompleteOccupanciesW191902.fits', 1)
+     oldD = trans2020official(foo);, wts = newD[0].WTS[3:7])
+  endif else begin
+     foo = mrdfits(oldData, 1)
+     oldD = trans2020official(foo, wts = getMcwWts())
+  endelse
   
   ;; sort, align, cull
 
@@ -124,10 +133,10 @@ pro plotTractTractOfficial, newData;, $
   netTot    = total(newTot - oldTot)
   netTotErr = sqrt(total(newTotErr^2 + oldTotErr^2))
 
-  eho = where(newD[s].EASTFLAG)
+;  eho = where(newD[s].EASTFLAG)
 
   foo = idProTracts(newD[s].Tract)
-  pros = where(foo)
+  pros = where(foo, npros)
 
   cgloadct, 18, /brewer, /rev
 ;  cgloadct, 8, /brewer, ncol = 12
@@ -136,9 +145,9 @@ pro plotTractTractOfficial, newData;, $
   pc = cgcolor('200')
   
   set_plot, 'PS'
-  device, filename = 'tractsYrYr.eps', $
+  device, filename = outdir+'tractsYrYr.eps', $
           /col, /encap, /decomp, bits_per_pix = 8, $
-          xsize = 8, /in
+          xsize = 8.5, /in
   !X.THICK = 4
   !Y.THICK = 4
   !P.CHARTHICK = 4
@@ -167,16 +176,18 @@ pro plotTractTractOfficial, newData;, $
   oploterror, bx2, delTot[s], delTotErr[s], $
               psym = 3, /nohat, errcol = cgcolor('255'), errthick = 4;'aa00aa'x
   plotsym, 0, /fill
-  oplot, bx[pros], delRaw[s[pros]], psym = 8, symsize = 1, col = cgcolor('60') 
-  oplot, bx2[pros], delTot[s[pros]], psym = 8, symsize = 1, col = cgcolor('255');'aa00aa'x
+  if npros gt 0 then begin
+     oplot, bx[pros], delRaw[s[pros]], psym = 8, symsize = 1, col = cgcolor('60') 
+     oplot, bx2[pros], delTot[s[pros]], psym = 8, symsize = 1, col = cgcolor('255') ;'aa00aa'x
+  endif
   oplot, !X.CRANGE, [0,0], thick = 4, col = 0
 ;  for ii = 0, total(foo) - 1 do $
 ;     cgtext, 0.5*(bx+bx2)[pros[ii]], delRaw[s[pros[ii]]]+5, /data, "pro", charsize = 1, charthick = 2, col = 0, align = 0.5
   cgloadct, 0
   for ii = 0, n_elements(bx) - 1 do $
      cgtext, 0.5 * (bx + bx2)[ii], !Y.CRANGE[0] - 0.05 * (!Y.CRANGE[1]-!Y.CRANGE[0]), $
-             string(oldD[s[ii]].TRACT, f = '(F7.2)'), align = 0.75, orien = 45, /data, col = 0, $
-             charsize = 0.8
+             string(oldD[s[ii]].TRACT, f = '(F7.2)'), align = 0.75, orien = 65, /data, col = 0, $
+             charsize = 1
   legend, /top, /left, box = 0, $
           ['counts', 'people', 'pro counters'], $
           col = [nc, pc, 0], psym = [0,0,8], linesty = [0,0,0], thick = 10, pspacing = 0.5
@@ -189,7 +200,7 @@ pro plotTractTractOfficial, newData;, $
            'Net people: '+string(netTot, f = '(I0)')+texToIdl('\pm')+string(netTotErr, f = '(I0)')], $
           linesty = -1, pspacing = 0.5
   device, /close
-  spawn, 'open tractsYrYr.eps &'
+  spawn, 'open '+outdir+'tractsYrYr.eps &'
   
   stop
   

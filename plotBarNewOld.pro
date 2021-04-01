@@ -3,6 +3,10 @@ pro plotBarNewOld, struct, lastYearRaw, $
                    eho = eho, $
                    hwood = hwood
 
+  cgloadct, 25, /brewer, ncol = 4
+  col = cgcolor('1')
+  errcol = cgcolor('2')
+    
   if keyword_set(EHO) then begin
      lastYearRaw = [164.,29.,58.,11.,94.,113.,0] ;; from the LAHSA community sheets
      title = 'East Hollywood CoC'
@@ -90,7 +94,16 @@ pro plotBarNewOld, struct, lastYearRaw, $
              string(sqrt(total(lastYearRaw)) * 2, f = '(I0)'), /data, align = 0
      cgtext, bx[1]*1.05, 115, 'Volunteers ......... '+string(total(tyR), f='(I0)')+textoidl('\pm')+$
              string(sqrt(total(tyRe^2)) * 2, f = '(I0)'), /data, align = 0
-  endif
+  endif else begin
+     legend, /top, /right, box=0, $
+             ['LAHSA 2020 PIT', 'Feb 2021', '95% CI'], $
+             psym = [8,8,0], linesty = [0,0,0], col = ['777777'x, col,0], $
+             thick = [1,1,6], pspacing = 0.5
+     cgtext, !X.WINDOW[1]-0.025, 0.65, 'LAHSA PIT total . '+string(total(lastYearRaw), f='(I0)')+textoidl('\pm')+$
+             string(sqrt(total(lastYearRaw)) * 2, f = '(I0)'), /norm, align = 1
+     cgtext, !X.WiNDOW[1]-0.025, 0.6, 'Volunteers ......... '+string(total(tyR), f='(I0)')+textoidl('\pm')+$
+             string(sqrt(total(tyRe^2)) * 2, f = '(I0)'), /norm, align = 1
+  endelse
   device, /close
   spawn, 'open '+output+' &'
   

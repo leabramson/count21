@@ -14,7 +14,7 @@ pro fitsCount, infile, outfile, $
            delim = ',', /preserve_null, skipline = 1
   nLines = n_elements(tract)
   for ii = 0, nLines - 1 do $
-     tract[ii] = strmid(tract[ii],0,4)+'.'+strmid(tract[ii], 1, /rev)
+     tract[ii] = strmid(tract[ii],0,4)+'.'+strmid(tract[ii], 5, strlen(tract[ii])-5)
   s = sort(tract)
 
   tflag = bytarr(nLines)

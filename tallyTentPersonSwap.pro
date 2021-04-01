@@ -1,6 +1,7 @@
 pro tallyTentPersonSwap
 
-  data = mrdfits('countHollywoodResults2021.fits', 1)
+;  data = mrdfits('countHollywoodResults2021.fits', 1)
+  data = mrdfits('countHollywoodResults2021w191902.fits', 1)
   persons = total(data.RAWCOUNTS[0:2], 1)
   tents   = total(data.RAWCOUNTS[6:7], 1)
   vehicles = total(data.RAWCOUNTS[3:5], 1)
@@ -8,7 +9,7 @@ pro tallyTentPersonSwap
 
   ;; get 2020
 ;  d2 = mrdfits('official2020occupancies.fits', 1)
-  d2 = mrdfits('official2020completeOccupancies.fits', 1)
+  d2 = mrdfits('official2020completeOccupanciesW191902.fits', 1)
   d2 = trans2020official(d2, wts = data[0].WTS)
 
   p2020 = d2.TOT_IND
