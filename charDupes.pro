@@ -1,5 +1,6 @@
 pro charDupes, dataFits, $
-               outdir = outdir
+               outdir = outdir, $
+               excl = excl
 
   if NOT keyword_set(outDir) then outdir = './'
 
@@ -102,8 +103,11 @@ pro charDupes, dataFits, $
   ;; this should be equivalent to root(meanTots)
   nsp = sqrt(rtcomp^2) / sqrt(2)
 
-  norm = where(ptracts ne 1901.00, compl = oddTract) ;; known shite tract
-
+  if keyword_set(excl) then $
+     norm = where(ptracts ne excl, compl = oddTract) $;; known shite tract ;;1901.00 for Hwood
+  else $
+     norm = indgen(n_elements(ptracts))
+            
   ;; cut the sample into nths and do the exercise w/ and w/o hot tract
   nsplit = 4
   xs = fltarr(nsplit,2)
@@ -148,8 +152,11 @@ pro charDupes, dataFits, $
   !Y.THICK = 4
 
   cgloadct, 18, /brewer, ncol = 2, clip = [47,220], /rev
-  c2 = '69b498'x;cgcolor(string(0));'8de0b9'x;
-  c1 = 'da8428'x;cgcolor(string(1));          
+  c1 = 'da8428'x                ;cgcolor(string(1));          
+  if keyword_set(excl) then $
+     c2 = '69b498'x $           ;cgcolor(string(0));'8de0b9'x;
+  else $
+     c2 = c1
   nu = greek('nu')
   
   plotsym, 0, /fill
@@ -173,12 +180,20 @@ pro charDupes, dataFits, $
               psym = 8, errcol = c1, col = c1, symsize = 2.7, errthick = 6
   oploterror, f1[-1].LOC, f1[-1].MEAN, f1[-1].SIGMA/sqrt(f1[-1].COUNT), $
               psym = 8, errcol = c2, col = c2, symsize = 2.7, errthick = 6
-  legend, /top, /left, box = 0, $
-          ['tract-level', 'mean', 'mean excl 1901.00', 'Poisson'], $
-          psym = [8,8,8,0], linesty = [0,0,0,4], $
-          col = [0,c1,c2,'0055ff'x], $
-          symsize = [1,2,2,1], pspacing = 1, $
-          thick = [1,1,1,6], spacing = 1.7
+  if keyword_set(excl) then $
+     legend, /top, /left, box = 0, $
+             ['tract-level', 'mean', 'mean excl '+excl, 'Poisson'], $
+             psym = [8,8,8,0], linesty = [0,0,0,4], $
+             col = [0,c1,c2,'0055ff'x], $
+             symsize = [1,2,2,1], pspacing = 1, $
+             thick = [1,1,1,6], spacing = 1.7 $
+  else $
+     legend, /top, /left, box = 0, $
+             ['tract-level', 'mean', 'Poisson'], $
+             psym = [8,8,0], linesty = [0,0,4], $
+             col = [0,c1,'0055ff'x], $
+             symsize = [1,2,1], pspacing = 1, $
+             thick = [1,1,6], spacing = 1.7
 
   device, /close
 ;  spawn, 'open intDupeChar.eps &'

@@ -18,7 +18,9 @@ pro fitsCount, infile, outfile, $
   s = sort(tract)
 
   tflag = bytarr(nLines)
-  tflag[where(strcompress(flag) eq 'T')] = 1
+  bads = where(strcompress(flag) eq 'T', nbads)
+  if nbads gt 0 then $
+     tflag[bads] = 1
   flag = tflag  
   
   zcheck = where(tract eq '0', nbad)

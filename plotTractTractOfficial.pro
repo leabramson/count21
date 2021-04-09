@@ -202,6 +202,6 @@ pro plotTractTractOfficial, newData, $
   device, /close
   spawn, 'open '+outdir+'tractsYrYr.eps &'
   
-  stop
+;  stop
   
 end

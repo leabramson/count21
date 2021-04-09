@@ -427,13 +427,15 @@ pro runmcw, csv
                stderrs = cd5errs
 
   data = mrdfits('mcw/countMidCityResults2021.fits', 1)
-
-  printNeedToKnow, data, lastYEar = 247., region = 'Mid City West'
-  plotHist, data, out = 'mcw/mcw2021Hist.eps', compval = 247.
-  plotTractTractOfficial, 'mcw/countMidCityResults2021.fits', old = 'mcw/2020actualCounts.fits', outdir = 'mcw/'
-
   d = mrdfits('mcw/2020actualCounts.fits', 1)
-  d = trans2020Official(d, wts = getMCWwts())
+  d = trans2020Official(d, wts = getMCWwts())  
+  
+  ly = total(d.TOT_PPL)
+  printNeedToKnow, data, lastYear = ly, region = 'Mid City West'
+  plotHist, data, out = 'mcw/mcw2021Hist.eps', compval = ly
+  plotTractTractOfficial, 'mcw/countMidCityResults2021.fits', $
+                          old = 'mcw/2020actualCounts.fits', outdir = 'mcw/'
+
   r = transpose([[d.TOT_IND], [d.C], [d.V], [d.R], [d.T], [d.M]])
   plotBarNewOld, data, [total(r, 2),0], output = 'mcw/bars.eps'
 
