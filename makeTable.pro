@@ -51,7 +51,7 @@ pro makeTable, resFile, output
      trs = getCountProb(cts[*,ii], [0.05,0.5,0.95], /inv)
      printf, 1, f = '(%"%7.2f & %s & %s & %i & %i & %i--%i \\")', $
              tract[ii], comm[ii], pf[ii], $
-             ncounters[ii], trs[1], trs[0] > 0, trs[-1]
+             ncounters[ii], round(trs[1]), trs[0] > 0, trs[-1]
   endfor
   printf, 1, f = '(%" & & & %i & %i & %i--%i")', $
           total(ncounters), sum[1], sum[0], sum[2]
