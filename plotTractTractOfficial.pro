@@ -147,7 +147,7 @@ pro plotTractTractOfficial, newData, $
   set_plot, 'PS'
   device, filename = outdir+'tractsYrYr.eps', $
           /col, /encap, /decomp, bits_per_pix = 8, $
-          xsize = 8.5, /in
+          xsize = 6, /in
   !X.THICK = 4
   !Y.THICK = 4
   !P.CHARTHICK = 4

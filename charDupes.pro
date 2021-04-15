@@ -102,7 +102,7 @@ pro charDupes, dataFits, $
   ;; normalized spread in counter differences, total
   ;; this should be equivalent to root(meanTots)
   nsp = sqrt(rtcomp^2) / sqrt(2)
-
+  
   if keyword_set(excl) then $
      norm = where(ptracts ne excl, compl = oddTract) $;; known shite tract ;;1901.00 for Hwood
   else $
@@ -239,7 +239,7 @@ pro charDupes, dataFits, $
   !p.charthick = 1
 
   s = sort(meanTots)
-  qui = s[where(ptracts[s] eq 1901.00, compl = use)]
+  qui = s[where(ptracts[s] eq excl, compl = use)]
   use = s[use]
   plotsym, 0, /fill
   plot, meanTots[s], sqrt(rtcomp[s]^2)/rterr[s], psym = 1, $
@@ -254,6 +254,10 @@ pro charDupes, dataFits, $
   oploterror, g.loc, g.mean, g.sigma/sqrt(g.count), psym = 3, errcol = '00a500'x, /nohat
   oploterror, f.loc, f.mean, f.sigma/sqrt(f.count), psym = 3, errcol = 'ffa500'x, /nohat
   print, mean(sqrt(rtcomp[s]^2)/rterr[s], /nan), median(sqrt(rtcomp[s]^2)/rterr[s]), n_elements(s)
+
+  outlier = where(sqrt(rtcomp[s]^2)/rterr[s] gt 3)
+  if n_elements(outlier) gt 0 then $
+     print, ptracts[s[outlier]]
   
 ;  stop
   
@@ -286,7 +290,7 @@ pro charDupes, dataFits, $
   oplot, bb[trips,0], bbb, psym = 1, col = 255
   oploterror, bb[trips,0], bbb, sqrt(bb[trips,0]), sqrt(bbb), psym = 1, /nohat, $
               errcol = 'ff5500'x
-
+  
   d = findgen(101)-50
   del = bb[*,1] - bb[*,0] ;; duplicates
   del = [del, bbb - bb[trips,0]];, bbb-bb[trips,1]] ;; with triplicates to 0th and 1st measurement

@@ -1,9 +1,10 @@
 pro plotBarNewOld, struct, lastYearRaw, $
                    output = output, $
                    eho = eho, $
-                   hwood = hwood
+                   hwood = hwood, $
+                   mo = mo
 
-  cgloadct, 25, /brewer, ncol = 4
+  cgloadct, 25, /brewer, ncol = 8
   col = cgcolor('1')
   errcol = cgcolor('2')
     
@@ -76,6 +77,7 @@ pro plotBarNewOld, struct, lastYearRaw, $
      cgtext, tl[ii], -0.1*!Y.CRANGE[1], orien = 15, align = 0.5, strcompress(tags[ii])
   endfor
   plotsym, 8, /fill
+  if not keyword_set(MO) then mo = 'Feb'
   if keyword_set(HWOOD) then begin
      legend, /top, /right, box=0, $
              ['LAHSA 2020 PIT', 'Feb 2021', '95% CI'], $
@@ -96,7 +98,7 @@ pro plotBarNewOld, struct, lastYearRaw, $
              string(sqrt(total(tyRe^2)) * 2, f = '(I0)'), /data, align = 0
   endif else begin
      legend, /top, /right, box=0, $
-             ['LAHSA 2020 PIT', 'Feb 2021', '95% CI'], $
+             ['LAHSA 2020 PIT', mo+' 2021', '95% CI'], $
              psym = [8,8,0], linesty = [0,0,0], col = ['777777'x, col,0], $
              thick = [1,1,6], pspacing = 0.5
      cgtext, !X.WINDOW[1]-0.025, 0.65, 'LAHSA PIT total . '+string(total(lastYearRaw), f='(I0)')+textoidl('\pm')+$

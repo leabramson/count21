@@ -434,10 +434,10 @@ pro runmcw, csv
   printNeedToKnow, data, lastYear = ly, region = 'Mid City West'
   plotHist, data, out = 'mcw/mcw2021Hist.eps', compval = ly
   plotTractTractOfficial, 'mcw/countMidCityResults2021.fits', $
-                          old = 'mcw/2020actualCounts.fits', outdir = 'mcw/'
+                          oldData = 'mcw/2020actualCounts.fits', outdir = 'mcw/'
 
   r = transpose([[d.TOT_IND], [d.C], [d.V], [d.R], [d.T], [d.M]])
-  plotBarNewOld, data, [total(r, 2),0], output = 'mcw/bars.eps'
+  plotBarNewOld, data, [total(r, 2),0], output = 'mcw/bars.eps', mo = 'Mar'
 
 end
 

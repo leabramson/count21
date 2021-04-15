@@ -48,7 +48,7 @@ pro mergeSplits, dataFits, outname
 
   s = sort(outTract)
   output = output[*,s]
-  outTract = outTract[s]
+  outTract = strcompress(outTract[s],/rem)
   outCount = outCount[s]
 
   outFlag = bytarr(nout)
