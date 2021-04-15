@@ -40,7 +40,7 @@
 %\maketitle
 
 \begin{center}
-	\Large\bf Unsheltered Homelessness in Mid City West Is Consistent with January 2020 Levels\\
+	\Large\bf Mid City West's Unsheltered Population Is Unchanged from 2020\\
 	\vspace{1ex}
 	{\normalsize\rm Louis Abramson, PhD, and Brian Kohan\\ \today 
 	}%{\bfr \texttt{ -- NOT FOR DISTRIBUTION}}
@@ -65,7 +65,7 @@ unhoused people.
 \begin{tabular}{lcccccccccc}
 \toprule
  & Persons & Car & Van & RV & Tent & Makeshift & {\bf 2021 Total} & {\bf 2020 Total} & {\bf \% change*} \\ \cmidrule{1-10}
-Counts & 114 & 6 & 11 & 5 & 49 & 31 & {\bf 219} & {\bf 217} & {\bf $<$1\%}  \\
+Counts & 114 & 6 & 11 & 5 & 49 & 31 & {\bf 219} & {\bf 217} & {\bf $-$1\%}  \\
 Inhabitants & 114 (16) & 11 (6) & 20 (8) & 8 (6) & 72 (14) & 52 (13) & {\bf 278 (38)} & {\bf 260} & {\bf 7\% (15\%)}\\
 Category share & 0.41 (0.06) & 0.04 (0.02) & 0.07 (0.03) & 0.03 (0.02) & 0.26 (0.05) & 0.19 (0.05) & $-$ & $-$ & $-$
 \\ \bottomrule
@@ -102,47 +102,62 @@ West\footnote{{\bfr ORGS} and resident organizers.} conducted a grassroots enume
 people experiencing unsheltered homelessness 
 in all 19 census tracts comprising that community on March 31, 2021 (Figure \ref{fig:tcomp}).\\
 
-\begin{wrapfigure}{r}{0.625\linewidth}
+\begin{wrapfigure}{r}{0.6\linewidth}
 	\centering
 	\includegraphics[width=\linewidth, trim = 0cm 0cm 0cm 0cm]{map}
-	\caption{The count area with census tracts colored by  
+	\includegraphics[width=\linewidth, trim = 0cm 0cm 0cm 0cm]{mcw2021Hist}
+	\caption{{\it Top:} count area with census tracts colored by  
 			changes in unsheltered population from 2020 (red$+$, blue$-$).
 			Tracts 2140.00 and 1920.01 saw the largest changes, with the former losing
 			10 people and the latter rising by 20. 
+			{\it Bottom:} Probability distributions for the total unsheltered population 
+			in Mid City West.
 			Explore the data at \url{https://pit.demoply.org}.}
 	\label{fig:tcomp}
 \end{wrapfigure} 
 
 \noindent {\bf Results:} The population estimates in Table \ref{tbl:summary} reflect all 
-people, cars, vans, RVs, tents, and makeshift structure seen that night with each
-dwelling weighted by its average occupancy. The latter are defined by the area-weighted 
-average of the weights in the LAHSA-defined 
+identified persons, cars, vans, RVs, tents, and makeshift structures with each
+dwelling weighted by its average occupancy. The occupancies were set as the area-weighted 
+average of those in the LAHSA-defined 
 \href{https://www.lahsa.org/documents?id=4686-2020-greater-los-angeles-city-community-homelessness-report-service-planning-area-4.pdf}{communities} of Fairfax (30\%), Mid Wilshire (30\%), and 
 Beverly Grove (40\%) from which Mid City West is constituted. Results are unchanged if 
 the \href{https://www.lahsa.org/documents?id=4635-usc-2018-2020-multipliers-and-estimates-overview}
 {SPA4/CD5} or \href{https://www.lahsa.org/documents?id=4693-2020-greater-los-angeles-homeless-count-cvrtm-conversion-factors}{SPA4-wide} occupancies are used instead, or if the tent weight is 
-updated based on a March survey performed by {\it The People Concern}.\footnote{Outreach teams 
+updated based on a survey performed by {\it The People Concern}.\footnote{Outreach teams 
 assessed that 52 people occupied 39 surveyed tents in or around the Mid City West Community,
 yielding an estimated $1.33\pm0.18$ people per tent vs.~LAHSA's 2020 value of $1.49\pm0.11$.}
 
-Most formally, from 10,000 simulations based on the results of the Mid City Count, 22 out of 100 surveys 
-would find an unsheltered population lower than 2020's (Figure \ref{fig:hist}). This probability is too 
-high compared to the 5 out of 100 benchmark to support claims that the observed 7\% increase is real.
+Most formally, using Monte Carlo methods, 22 out of 100 simulated Mid City Counts would find an 
+unsheltered population lower than 2020's (Figure \ref{fig:hist}). This probability is too high compared to 
+the 5/100 benchmark to support claims that the 7\% increase observed in the real Mid City Count is
+meaningful.
 
-\begin{wrapfigure}{r}{0.625\linewidth}
-	\centering
-	\includegraphics[width=\linewidth, trim = 0cm 0cm 0cm 0cm]{mcw2021Hist}
-	\caption{Probability distributions for the total unsheltered population in Mid City West.}
-	\label{fig:hist}
-\end{wrapfigure} 
+%\begin{wrapfigure}{l}{0.625\linewidth}
+%	\centering
+%	\includegraphics[width=\linewidth, trim = 0cm 0cm 0cm 0cm]{mcw2021Hist}
+%	\caption{Probability distributions for the total unsheltered population in Mid City West.}
+%	\label{fig:hist}
+%\end{wrapfigure} 
 
-Given turnout, 14 out of 19 total tracts were counted at least twice (Table \ref{tbl:allTracts}). 
-Comparisons of total and per-category counts by those tracts' independent surveyors
-suggests that visual tally errors are consistent with the random mistakes already accounted for 
-in the above analysis. The total count uncertainty is 10\% (95\% CI) with the remainder 
-of the 15\% total population error due to uncertainties in dwelling occupancies.\\
+Fourteen out of 19 total tracts were counted at least twice (Table \ref{tbl:allTracts}). 
+Comparisons of total and per-category results from these independent counting teams
+show visual tally errors to be consistent with the random errors built into the above analysis. 
+As such, the total count uncertainty is 10\% (95\% CI). The remainder of the 15\% total 
+population error is due to uncertainties in dwelling occupancies.\\
 
-\begin{table}[b]
+\noindent {\bf Comments:} These results reflect a $\sim$20\% drop in the number
+of adult individuals seen on the street---mirroring trends in neighboring 
+\href{https://www.latimes.com/homeless-housing/story/2021-04-13/despite-appearances-15-fewer-homeless-people-were-on-hollywood-streets-this-year}{Hollywood}---offset by a doubling in tents and 
+makeshift structures. Government initiatives to stop evictions and move people indoors and may be 
+responsible. If \href{https://www.lahsa.org/documents?id=4664-2020-homeless-count-council-district-5}{CD5's} 3.4\% share of \href{https://www.lahsa.org/documents?id=4585-2020-greater-los-angeles-homeless-count-los-angeles-continuum-of-care-coc-}{LA County's unsheltered seniors} 
+is an indication, 60 CD5 residents might have been in any of Project Roomkey's 
+\href{https://projectroomkeytracker.com/}{1770 active rooms} on the night of the count. Others
+may have been in Pan Pacific Park's COVID-activated emergency beds. Coordinated Entry System data 
+will show if the above scenarios are true.
+
+If there are no more people on the street compared to 2020, however, their quality of life has worsened. \begin{wraptable}{r}{0.6\linewidth}
+%\begin{table}[t]
 \caption{Census Tract-level Unsheltered Data}
 %\resizebox{\textwidth}{!}{%
 \centering
@@ -176,19 +191,9 @@ Tract & Counter & Passes & Median Est. & 90\% CI \\ \cmidrule{1-5}
 \caption*{$^{\rm a}$Pan Pacific Park counted by professional outreach teams
 31 March and volunteers 14 April; home to known emergency shelter.}
 \label{tbl:allTracts}
-\end{table}
+%\end{table}
+\end{wraptable}
 
-\noindent {\bf Comments:} The change we find mainly reflects a $\sim$30\% drop in the raw number
-of adult individuals seen on the street. This fact has caused the total number of unsheltered people to shrink 
-even as tents more than doubled in 28\% of tracts. Government initiatives to stop evictions and move 
-people indoors and may be responsible. If \href{https://www.lahsa.org/documents?id=4672-2020-homeless-count-council-district-13}{CD13's} 6.5\% share of \href{https://www.lahsa.org/documents?id=4585-2020-greater-los-angeles-homeless-count-los-angeles-continuum-of-care-coc-}{LA County's unsheltered seniors} 
-is an indication, 100 Greater Hollywood residents might have been in any of Project Roomkey's 
-\href{https://projectroomkeytracker.com/}{1608 active rooms} on the night of the count---about half the 
-inferred change. The new Riverside \href{https://www.lamayor.org/ABridgeHome}
-{\it A Bridge Home} and 120 PATH supportive housing units may also have contributed.
-Coordinated Entry System data will show if the above scenarios are true.
-
-If there are fewer people on the street, however, their quality of life is worse. 
 COVID has restricted or eliminated access to restaurant bathrooms, libraries 
 (\href{https://www.lapl.org/homeless-resources/the-source}{\it The Source}), DPSS 
 (EBT, Medi-Cal), DMV (IDs), and DMH facilities. Physical limits on client access at 
@@ -196,15 +201,13 @@ hospitals has also kept caseworkers from managing successful discharges. These h
 are reflected by a 25\% increase in 
 \href{https://www.latimes.com/california/story/2021-01-07/the-powerful-synthetic-opioid-fentanyl-is-behind-rising-deaths-in-the-homeless-population}{overdose deaths} and made more visible by \href{https://clkrep.lacity.org/onlinedocs/2020/20-0147_misc_3-17-20_p.pdf}{suspended}
 tent folding and sanitation practices as tents increased in many places. 
-Of course, a decline of just 12\% means substantial coming challenges
+Of course, a null change in unsheltered homelessness implies substantial coming challenges
  \href{https://www.latimes.com/california/story/2021-01-12/new-report-foresees-tens-of-thousands-losing-homes-by-2023}
 {as eviction moratoriums lapse}.
 
-If our data support the effectiveness of programs aimed at reducing street homelessness, 
-they do {\it not} suggest that the state of homelessness has improved. In the fight to rebuild lives---as well 
-as build homes---that fact must remain paramount.
-
-Learn more about the count at \url{https://hollywood4wrd.live/2021-homeless-count}.
+The data support the effectiveness of programs aimed at curbing a rise in street homelessness.
+Yet, they do {\it not} suggest that the state of homelessness has improved. In the fight to rebuild 
+lives as we build homes, that fact must remain paramount.
 
 %\clearpage
 
