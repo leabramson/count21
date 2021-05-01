@@ -445,6 +445,40 @@ end
 ;;
 ;;
 
+pro runhper, csv
+
+  cd14wts = [1.51,1.77,1.42,1.48,1.68]
+  cd14Errs = [0.25,0.42,0.28,0.11,0.31]
+  
+  fitscount, csv, 'hper/countHPER2021.fits'
+  countRegion, 'hper/countHPER2021.fits', 1d4, $
+               output = 'hper/countHPERResults2021.fits', $
+               regName = 'HP+ER', $
+               peaks = getHPERwts(), $
+               stderrs = cd14errs
+
+  data = mrdfits('hper/countHPERResults2021.fits', 1)
+  d = mrdfits('hper/2020actualCounts.fits', 1)
+  excl = where(d.tract eq 1861.00, compl = use)
+  d = d[use]
+  d = trans2020Official(d, wts = getMCWwts())  
+
+  
+  ly = total(d.TOT_PPL)
+  printNeedToKnow, data, lastYear = ly, region = 'HP+ER'
+  plotHist, data, out = 'hper/hper2021Hist.eps', compval = ly
+  plotTractTractOfficial, 'hper/countHPERResults2021.fits', $
+                          oldData = 'hper/2020actualCounts.fits', outdir = 'hper/'
+
+  r = transpose([[d.TOT_IND], [d.C], [d.V], [d.R], [d.T], [d.M]])
+  plotBarNewOld, data, [total(r, 2),0], output = 'hper/bars.eps', mo = 'Apr'
+
+end
+
+;;
+;;
+;;
+
 pro runit, csv
   fitsCount, csv, 'epSandbox/epSandbox.fits'
   countRegion, 'epSandbox/epSandbox.fits', 1d4, $
