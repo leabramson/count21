@@ -1,0 +1,25 @@
+TIMESTAMP,TEAM,TRACT,Adult,TAY,Minor,Cars,Van,RV,Tent,Makeshift,Families,Verify,Flag,NOTES
+4-29-21 7:00 PM,jack bentele,1810.00,22,0,0,1,0,6,16,2,0,T,,E
+4-29-21 7:00 PM,chris bertolet,1813.00,9,0,0,1,2,4,7,2,0,T,,E
+4-29-21 7:00 PM,nathan wong,1814.00,3,0,0,3,0,8,0,1,0,T,,E
+4-29-21 7:00 PM,bryan kramer,1815.00,0,0,0,0,0,3,0,0,0,T,,E+H
+4-29-21 7:00 PM,brandie posey,1816.00,1,0,0,0,0,1,0,0,0,T,,E
+4-29-21 7:00 PM,Michelle & Evangel,1831.01,7,0,0,0,3,3,10,0,0,T,,H
+4-29-21 7:00 PM,Elliot & Davi,1831.03,2,0,0,0,0,4,3,17,0,T,,H
+4-29-21 7:00 PM,Francie & Ryan,1831.04,0,0,0,0,0,1,0,0,0,T,,H
+4-29-21 7:00 PM,KatieNicTate,1832.20,3,0,0,0,0,1,0,1,0,T,,H
+4-29-21 8:00 PM,Natalie & Cooper,1832.21,1,0,0,0,1,0,0,0,0,T,,E+H
+4-29-21 10:40 PM,Sasha Rappaport,1832.22,0,1,0,1,0,1,0,0,0,T,,E+H
+4-29-21 7:00 PM,Eric & Jon,1833.00,0,0,0,1,1,5,0,0,0,T,,H
+4-29-21 7:00 PM,Natalie & Matt,1834.01,1,0,0,0,0,0,2,0,0,T,,E+H
+4-29-21 8:00 PM,Natalie & Matt,1834.02,0,0,0,0,2,5,0,1,0,T,,E+H
+4-29-21 7:00 PM,Traci & Greg,1835.10,1,0,0,0,1,2,0,0,0,T,,H
+4-29-21 7:00 PM,FlorLisaAmelia,1835.20,0,0,0,1,2,0,0,0,0,T,,H
+4-29-21 7:00 PM,Any & Duncan,1836.10,2,0,0,0,3,4,0,1,0,T,,H
+4-29-21 7:00 PM,Ella & Owen,1836.20,1,0,0,0,0,0,0,0,0,T,,H
+4-29-21 3:00 PM,Natalie & Cooper,1837.01,3,1,0,0,0,2,3,2,0,T,,H
+4-29-21 9:00 PM,Sasha Rappaport,1838.10,2,0,0,8,1,3,0,1,0,T,,H
+4-29-21 3:00 PM,Natalie & Cooper,1838.20,0,0,0,1,1,0,0,0,0,T,,H
+4-29-21 7:00 PM,anne shapiro,1861.00,0,0,0,0,1,1,0,0,0,T,T,Incomplete tract; only Block 3 counted
+4-29-21 7:00 PM,cat kiim,1862.01,1,0,0,1,0,0,0,1,0,T,,E
+4-29-21 7:00 PM,Amanda & Savanah,1862.03,0,0,0,0,0,1,0,1,0,T,,H
