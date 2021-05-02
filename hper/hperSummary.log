@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  1 MAY 2021 14:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  2 MAY 2021 10:31
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -351,7 +351,7 @@ Package: everypage 2007/06/20 1.1 Hooks to run on every page
 )
 \sc@wm@fontsize=\skip47
 )
-No file hperSummary.aux.
+(./hperSummary.aux)
 \openout1 = `hperSummary.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
@@ -369,6 +369,7 @@ LaTeX Font Info:    ... okay on input line 39.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 39.
 LaTeX Font Info:    ... okay on input line 39.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 39.
+
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
@@ -433,6 +434,8 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 39.
 LaTeX Info: Redefining \pageref on input line 39.
 LaTeX Info: Redefining \nameref on input line 39.
+
+(./hperSummary.out) (./hperSummary.out)
 \@outlinefile=\write3
 \openout3 = `hperSummary.out'.
 
@@ -499,183 +502,144 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
-
-
-LaTeX Warning: Reference `fig:rawCounts' on page 1 undefined on input line 53.
-
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 62.
 Package epstopdf Info: Source file: <bars.eps>
-(epstopdf)                    date: 2021-05-01 12:22:57
-(epstopdf)                    size: 27166 bytes
+(epstopdf)                    date: 2021-05-02 09:45:34
+(epstopdf)                    size: 27529 bytes
 (epstopdf)             Output file: <bars-eps-converted-to.pdf>
+(epstopdf)                    date: 2021-05-02 09:45:38
+(epstopdf)                    size: 15034 bytes
 (epstopdf)             Command: <epstopdf --outfile=bars-eps-converted-to.pdf b
 ars.eps>
 (epstopdf)             \includegraphics on input line 80.
-runsystem(epstopdf --outfile=bars-eps-converted-to.pdf bars.eps)...executed.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <bars-eps-converted-to.pdf>
-(epstopdf)                    date: 2021-05-01 14:18:45
-(epstopdf)                    size: 14846 bytes.
-<bars-eps-converted-to.pdf, id=4, 433.62pt x 361.35pt>
+<bars-eps-converted-to.pdf, id=5, 433.62pt x 361.35pt>
 File: bars-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bars-eps-converted-to.pdf>
 Package pdftex.def Info: bars-eps-converted-to.pdf used on input line 80.
 (pdftex.def)             Requested size: 220.78543pt x 181.40762pt.
 Package epstopdf Info: Source file: <tractsYrYr.eps>
-(epstopdf)                    date: 2021-05-01 12:22:28
-(epstopdf)                    size: 54919 bytes
+(epstopdf)                    date: 2021-05-02 09:45:34
+(epstopdf)                    size: 53992 bytes
 (epstopdf)             Output file: <tractsYrYr-eps-converted-to.pdf>
+(epstopdf)                    date: 2021-05-02 09:45:38
+(epstopdf)                    size: 28962 bytes
 (epstopdf)             Command: <epstopdf --outfile=tractsYrYr-eps-converted-to
 .pdf tractsYrYr.eps>
 (epstopdf)             \includegraphics on input line 81.
-runsystem(epstopdf --outfile=tractsYrYr-eps-converted-to.pdf tractsYrYr.eps)...
-executed.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <tractsYrYr-eps-converted-to.pdf>
-(epstopdf)                    date: 2021-05-01 14:18:46
-(epstopdf)                    size: 28957 bytes.
-
-<tractsYrYr-eps-converted-to.pdf, id=5, 433.62pt x 361.35pt>
+<tractsYrYr-eps-converted-to.pdf, id=6, 433.62pt x 361.35pt>
 File: tractsYrYr-eps-converted-to.pdf Graphic file (type pdf)
 
 <use tractsYrYr-eps-converted-to.pdf>
 Package pdftex.def Info: tractsYrYr-eps-converted-to.pdf used on input line 81.
 
 (pdftex.def)             Requested size: 220.78543pt x 169.50105pt.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
-
-
-LaTeX Warning: Reference `fig:tcomp' on page 1 undefined on input line 90.
-
-
-LaTeX Warning: Reference `tbl:allTracts' on page 1 undefined on input line 90.
-
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
-
-LaTeX Warning: Reference `fig:tcomp' on page 1 undefined on input line 90.
-
-
-LaTeX Warning: Reference `tbl:allTracts' on page 1 undefined on input line 90.
-
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 89.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 100.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 99.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 100.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 99.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 100.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 99.
 
-LaTeX Warning: Reference `fig:tcomp' on page 1 undefined on input line 102.
+Underfull \hbox (badness 10000) in paragraph at lines 96--102
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 97--104
-
- []
-
-
-./hperSummary.tex:107: LaTeX Error: File `map' not found.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.107 ...=\linewidth, trim = 0cm 0cm 0cm 0cm]{map}
-                                                  
-? 
-Package epstopdf Info: Source file: <hper2021Hist.eps>
-(epstopdf)                    date: 2021-05-01 12:22:24
-(epstopdf)                    size: 112114 bytes
-(epstopdf)             Output file: <hper2021Hist-eps-converted-to.pdf>
-(epstopdf)             Command: <epstopdf --outfile=hper2021Hist-eps-converted-
-to.pdf hper2021Hist.eps>
-(epstopdf)             \includegraphics on input line 108.
-runsystem(epstopdf --outfile=hper2021Hist-eps-converted-to.pdf hper2021Hist.eps
-)...executed.
-
-Package epstopdf Info: Result file: <hper2021Hist-eps-converted-to.pdf>
-(epstopdf)                    date: 2021-05-01 14:18:47
-(epstopdf)                    size: 58928 bytes.
-<hper2021Hist-eps-converted-to.pdf, id=8, 505.89pt x 361.35pt>
-File: hper2021Hist-eps-converted-to.pdf Graphic file (type pdf)
-
-<use hper2021Hist-eps-converted-to.pdf>
-Package pdftex.def Info: hper2021Hist-eps-converted-to.pdf used on input line 1
-08.
-(pdftex.def)             Requested size: 281.85587pt x 201.32906pt.
-
-
-LaTeX Warning: Reference `tbl:summary' on page 1 undefined on input line 120.
-
-
-LaTeX Warning: Reference `tbl:allTracts' on page 1 undefined on input line 120.
-
-
-
-Underfull \hbox (badness 1365) in paragraph at lines 120--131
-\OT1/ptm/m/n/10.95 per-sons, cars, vans, RVs, tents, and
- []
-
-
-Underfull \hbox (badness 2932) in paragraph at lines 120--131
-[][]\OT1/ptm/m/n/10.95 com-mu-ni-ties[][] of Fair-fax (30%), Mid
- []
-
-
-Underfull \hbox (badness 3343) in paragraph at lines 120--131
-\OT1/ptm/m/n/10.95 Wilshire (30%), and Bev-erly Grove
  []
 
 [1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
- <./bars-eps-converted-to.pdf> <./tractsYrYr-eps-converted-to.pdf> <./hper2021H
-ist-eps-converted-to.pdf>]
+ <./bars-eps-converted-to.pdf> <./tractsYrYr-eps-converted-to.pdf>]
+<map.png, id=34, 861.2175pt x 442.65375pt>
+File: map.png Graphic file (type png)
+ <use map.png>
+Package pdftex.def Info: map.png used on input line 105.
+(pdftex.def)             Requested size: 281.85587pt x 144.8739pt.
+Package epstopdf Info: Source file: <hper2021Hist.eps>
+(epstopdf)                    date: 2021-05-02 09:45:34
+(epstopdf)                    size: 110514 bytes
+(epstopdf)             Output file: <hper2021Hist-eps-converted-to.pdf>
+(epstopdf)                    date: 2021-05-02 09:45:38
+(epstopdf)                    size: 55015 bytes
+(epstopdf)             Command: <epstopdf --outfile=hper2021Hist-eps-converted-
+to.pdf hper2021Hist.eps>
+(epstopdf)             \includegraphics on input line 106.
+Package epstopdf Info: Output file is already uptodate.
 
-LaTeX Warning: Reference `fig:tcomp' on page 2 undefined on input line 136.
+<hper2021Hist-eps-converted-to.pdf, id=36, 433.62pt x 361.35pt>
+File: hper2021Hist-eps-converted-to.pdf Graphic file (type pdf)
+
+<use hper2021Hist-eps-converted-to.pdf>
+Package pdftex.def Info: hper2021Hist-eps-converted-to.pdf used on input line 1
+06.
+(pdftex.def)             Requested size: 281.85587pt x 234.89125pt.
+
+Underfull \hbox (badness 1540) in paragraph at lines 117--127
+\OT1/ptm/m/n/10.95 were set as the [][]SPA4/CD14 weights[][]
+ []
+
+
+Underfull \hbox (badness 1275) in paragraph at lines 117--127
+\OT1/ptm/m/n/10.95 mu-nity Sum-maries[][]. Re-sults are un-
+ []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 136.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 132.
 
-LaTeX Warning: Reference `tbl:allTracts' on page 2 undefined on input line 146.
+Overfull \hbox (11.69296pt too wide) in paragraph at lines 132--134
+[]\OT1/ptm/b/n/10.95 Using Monte Carlo meth-ods, HPER's
+ []
 
 
+Underfull \hbox (badness 1173) in paragraph at lines 132--134
+\OT1/ptm/b/n/10.95 ure [][]2[][], bot-tom). The in-ferred 5%
+ []
 
-Underfull \hbox (badness 10000) in paragraph at lines 146--151
+
+Underfull \hbox (badness 1565) in paragraph at lines 142--149
+[]\OT1/ptm/m/n/10.95 Each of the 24 to-tal tracts were
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--149
 
  []
 
-[2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 220.
+
+Overfull \hbox (1.36389pt too wide) in paragraph at lines 150--161
+\OT1/ptm/m/n/10.95 mirroring trends in [][]Hol-ly-wood[][] and Mid City West---
+combined with a \OT1/ptm/b/n/10.95 65% drop in iden-ti-fied van dwellings\OT1/p
+tm/m/n/10.95 ,
+ []
+
+[2 <./map.png> <./hper2021Hist-eps-converted-to.pdf>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 218.
  [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 220.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 218.
  (./hperSummary.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 220.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 220.
-
-
-Package rerunfilecheck Warning: File `hperSummary.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `hperSummary.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
-
-LaTeX Warning: There were undefined references.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 218.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 218.
+Package rerunfilecheck Info: File `hperSummary.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 220.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 218.
  ) 
 Here is how much of TeX's memory you used:
- 7769 strings out of 493117
- 119076 string characters out of 6135433
- 213839 words of memory out of 5000000
- 11083 multiletter control sequences out of 15000+600000
+ 7781 strings out of 493117
+ 119249 string characters out of 6135433
+ 215290 words of memory out of 5000000
+ 11087 multiletter control sequences out of 15000+600000
  54419 words of font info for 119 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,10n,39p,753b,400s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,11n,39p,766b,399s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
 xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
@@ -685,10 +649,10 @@ e/2014/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/tex
 mf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/f
 onts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on hperSummary.pdf (3 pages, 182688 bytes).
+Output written on hperSummary.pdf (3 pages, 1606145 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 72 compressed objects within 1 object stream
- 9 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 110 PDF objects out of 1000 (max. 8388607)
+ 88 compressed objects within 1 object stream
+ 11 named destinations out of 1000 (max. 500000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
